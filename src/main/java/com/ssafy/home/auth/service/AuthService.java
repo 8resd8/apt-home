@@ -9,4 +9,6 @@ public interface AuthService {
     ResponseSignUp signUpBroker(RequestBrokerSignUp requestDto);
 
     ResponseLoginDto login(RequestLoginDto requestLoginDto);
+
+    void logout();
 }

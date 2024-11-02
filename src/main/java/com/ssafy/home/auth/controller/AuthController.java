@@ -38,4 +38,10 @@ public class AuthController {
         ResponseLoginDto responseLogin = authService.login(requestLoginDto);
         return new ResponseEntity<>(responseLogin, HttpStatus.CREATED);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        authService.logout();
+        return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
 }

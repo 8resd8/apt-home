@@ -67,6 +67,11 @@ public class AuthServiceImpl implements AuthService {
         throw new LoginFailedException(); // 로그인 실패
     }
 
+    @Override
+    public void logout() {
+        session.invalidate();
+    }
+
     private ResponseLoginDto BrokerLogin(RequestLoginDto requestLoginDto, Optional<Broker> brokerOptional) {
         Broker broker = brokerOptional.get();
         checkPassword(broker.getPassword(), requestLoginDto.password());
