@@ -6,6 +6,8 @@ import com.ssafy.home.auth.dto.*;
 import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
+import com.ssafy.home.enums.Session;
+import com.ssafy.home.enums.UserType;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-
-    public static final String MEMBER_ID = "MEMBER_ID";
-    public static final String MEMBER = "MEMBER";
-    public static final String TYPE = "TYPE";
-    public static final String BROKER = "BROKER";
-    public static final String BROKER_ID = "BROKER_ID";
 
     private final MemberMapper memberMapper;
     private final BrokerMapper brokerMapper;
@@ -75,20 +71,20 @@ public class AuthServiceImpl implements AuthService {
         Broker broker = brokerOptional.get();
         checkPassword(broker.getPassword(), requestLoginDto.password());
 
-        session.setAttribute(BROKER_ID, broker.getId());
-        session.setAttribute(TYPE, BROKER);
+        session.setAttribute(Session.BROKER_ID.name(), broker.getId());
+        session.setAttribute(Session.TYPE.name(), UserType.BROKER.name());
 
-        return new ResponseLoginDto(broker.getId(), broker.getName(), broker.getEmail(), BROKER, session.getId());
+        return new ResponseLoginDto(broker.getId(), broker.getName(), broker.getEmail(), UserType.BROKER.name(), session.getId());
     }
 
     private ResponseLoginDto MemberLogin(RequestLoginDto requestLoginDto, Optional<Member> memberOptional) {
         Member member = memberOptional.get();
         checkPassword(member.getPassword(), requestLoginDto.password());
 
-        session.setAttribute(MEMBER_ID, member.getId());
-        session.setAttribute(TYPE, MEMBER);
+        session.setAttribute(Session.MEMBER_ID.name(), member.getId());
+        session.setAttribute(Session.TYPE.name(), UserType.MEMBER.name());
 
-        return new ResponseLoginDto(member.getId(), member.getName(), member.getEmail(), MEMBER, session.getId());
+        return new ResponseLoginDto(member.getId(), member.getName(), member.getEmail(), UserType.MEMBER.name(), session.getId());
     }
 
 
