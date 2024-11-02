@@ -43,6 +43,9 @@ dependencies {
 	// redis 설정
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	// 암호화 라이브러리
+	implementation 'org.springframework.security:spring-security-crypto'
 }
 
 
