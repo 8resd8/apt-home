@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `ssafyhome`.`broker` (
     `license_num` VARCHAR(45) NOT NULL,
     `password` VARCHAR(45) NULL,
     `salt` VARCHAR(45) NOT NULL,
+    `email` VARCHAR(45) NOT NULL,
     `last_login` DATETIME NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
