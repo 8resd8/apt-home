@@ -1,9 +1,11 @@
 package com.ssafy.home.auth.repository;
 
+import com.ssafy.home.auth.domain.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Mapper
 public interface MemberMapper {
@@ -17,4 +19,5 @@ public interface MemberMapper {
                       @Param("createdAt") LocalDateTime createdAt,
                       @Param("updatedAt") LocalDateTime updatedAt);
 
+    Optional<Member> findById(@Param("id") String id);
 }
