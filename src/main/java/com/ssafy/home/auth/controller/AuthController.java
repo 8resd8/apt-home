@@ -1,8 +1,6 @@
 package com.ssafy.home.auth.controller;
 
-import com.ssafy.home.auth.dto.RequestBrokerSignUp;
-import com.ssafy.home.auth.dto.RequestMemberSignUp;
-import com.ssafy.home.auth.dto.ResponseSignUp;
+import com.ssafy.home.auth.dto.*;
 import com.ssafy.home.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +22,20 @@ public class AuthController {
 
     @PostMapping("/signup/member")
     public ResponseEntity<ResponseSignUp> signUpMember(@Validated @RequestBody RequestMemberSignUp requestDto) {
-        ResponseSignUp responseDto = authService.signUpMember(requestDto);
+        ResponseSignUp responseMember = authService.signUpMember(requestDto);
 
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED); // code: 201
+        return new ResponseEntity<>(responseMember, HttpStatus.CREATED);
     }
 
     @PostMapping("/signup/broker")
     public ResponseEntity<ResponseSignUp> signUpBroker(@Validated @RequestBody RequestBrokerSignUp requestDto) {
-        ResponseSignUp responseDto = authService.signUpBroker(requestDto);
-        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+        ResponseSignUp responseBroker = authService.signUpBroker(requestDto);
+        return new ResponseEntity<>(responseBroker, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponseLoginDto> login(@Validated @RequestBody RequestLoginDto requestLoginDto) {
+        ResponseLoginDto responseLogin = authService.login(requestLoginDto);
+        return new ResponseEntity<>(responseLogin, HttpStatus.CREATED);
     }
 }
