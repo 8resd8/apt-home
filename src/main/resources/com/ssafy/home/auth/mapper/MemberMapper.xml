@@ -6,6 +6,10 @@
         INSERT INTO member (id, password, salt, email, phone_num, name, created_at, updated_at)
         VALUES (#{id}, #{password}, #{salt}, #{email}, #{phoneNum}, #{name}, #{createdAt}, #{updatedAt})
     </insert>
-</mapper>
 
-<!-- 위치: resources/com/ssafy/home/auth/mapper/MemberMapper.xml -->
+    <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Member">
+        SELECT * FROM member WHERE id = #{id}
+    </select>
+
+
+</mapper>
