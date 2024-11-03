@@ -19,6 +19,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class AuthLoginResolver implements HandlerMethodArgumentResolver {
 
+    private final MemberMapper memberMapper;
+    private final BrokerMapper brokerMapper;
+
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -40,16 +43,23 @@ public class AuthLoginResolver implements HandlerMethodArgumentResolver {
 
         String type = (String) session.getAttribute(Session.TYPE.name()); // 로그인 타입 조회
 
+
         // 브로커인 경우 브로커 객체 꺼냄
         if (type.equals(UserType.BROKER.name()) && Broker.class.equals(parameter.getParameterType())) {
-            return (Broker) session.getAttribute(Session.BROKER_ID.name());
+            String brokerId = getId (session, type);
+            return brokerMapper.findById(brokerId).orElse(null);
         }
 
         // 멤버인 경우 멤버 객체 꺼냄
         if (type.equals(UserType.MEMBER.name()) && Member.class.equals(parameter.getParameterType())) {
-            return (Member) session.getAttribute(Session.MEMBER_ID.name());
+            String memberId = getId(session, type);
+            return memberMapper.findById(memberId).orElse(null);
         }
 
         return null;
+    }
+
+    private static String getId(HttpSession session, String type) {
+        return (String) session.getAttribute(type.equals(UserType.MEMBER.name()));
     }
 }
