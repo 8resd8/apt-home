@@ -20,10 +20,10 @@ public class LogAspect {
         Object[] args = joinPoint.getArgs();
 
         if (args.length == 0) {
-            log.info("[{}] - [START]", methodName);
+            log.info("[{}] - [START]\n", methodName);
             return;
         }
-        log.info("[{}] - [START] - [요청 파라미터]: {}", methodName, args);
+        log.info("[{}] - [START] - [요청 파라미터]: {}\n", methodName, args);
     }
 
     // RestController의 응답 값
@@ -38,7 +38,7 @@ public class LogAspect {
         }
 
         // RestController의 응답 값 (실제 값)
-        log.info("[{}] - [END] - 응답 값: {}\n", name, result);
+        log.info("[{}] - [END] - 응답 값: {}", name, result);
     }
 
 }
