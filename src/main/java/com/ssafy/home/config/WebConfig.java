@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/signup", "/", "/error", "/css/**");
+                .excludePathPatterns("api/auth/login", "api/auth/signup", "/", "/error", "/css/**");
     }
 
     @Override
