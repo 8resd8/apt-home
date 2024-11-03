@@ -84,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
         Broker broker = brokerOptional.get();
         checkPassword(broker.getPassword(), requestLoginDto.password(), broker.getSalt());
 
-        session.setAttribute(Session.BROKER_ID.name(), broker);
+        session.setAttribute(Session.BROKER_ID.name(), broker.getId());
         session.setAttribute(Session.TYPE.name(), UserType.BROKER.name());
 
         return new ResponseLoginDto(broker.getId(), broker.getName(), broker.getEmail(), UserType.BROKER.name(), session.getId());
@@ -94,7 +94,7 @@ public class AuthServiceImpl implements AuthService {
         Member member = memberOptional.get();
         checkPassword(member.getPassword(), requestLoginDto.password(), member.getSalt());
 
-        session.setAttribute(Session.MEMBER_ID.name(), member);
+        session.setAttribute(Session.MEMBER_ID.name(), member.getId());
         session.setAttribute(Session.TYPE.name(), UserType.MEMBER.name());
 
         return new ResponseLoginDto(member.getId(), member.getName(), member.getEmail(), UserType.MEMBER.name(), session.getId());
