@@ -2,7 +2,7 @@ package com.ssafy.home.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record RequestLoginDto (
+public record LoginRequest(
         @NotBlank(message = "${required.field}")
         String id,
 

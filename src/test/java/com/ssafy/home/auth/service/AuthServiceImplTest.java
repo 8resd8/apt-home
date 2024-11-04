@@ -33,15 +33,15 @@ class AuthServiceImplTest {
     private BrokerMapper brokerMapper;
 
 
-    private RequestMemberSignUp memberSignUpDto;
-    private RequestBrokerSignUp brokerSignUpDto;
+    private MemberSignUpRequest memberSignUpDto;
+    private BrokerSignUpRequest brokerSignUpDto;
     private MockHttpSession session;
 
     @BeforeEach
     void setUp() {
         session = new MockHttpSession();
         // 테스트용 RequestMemberSignUp 객체 생성
-        memberSignUpDto = new RequestMemberSignUp(
+        memberSignUpDto = new MemberSignUpRequest(
                 "member1",
                 "password123",
                 "member@test.com",
@@ -50,7 +50,7 @@ class AuthServiceImplTest {
         );
 
         // 테스트용 RequestBrokerSignUp 객체 생성
-        brokerSignUpDto = new RequestBrokerSignUp(
+        brokerSignUpDto = new BrokerSignUpRequest(
                 "broker1",
                 "password456",
                 "Test Office",
@@ -71,7 +71,7 @@ class AuthServiceImplTest {
     @DisplayName("Member 회원가입")
     void signUpMember() {
         // when
-        ResponseSignUp response = authService.signUpMember(memberSignUpDto);
+        SignUpResponse response = authService.signUpMember(memberSignUpDto);
 
         // then
         assertThat(response).isNotNull();
@@ -86,7 +86,7 @@ class AuthServiceImplTest {
     @DisplayName("Broker 회원가입")
     void signUpBroker() {
         // when
-        ResponseSignUp response = authService.signUpBroker(brokerSignUpDto);
+        SignUpResponse response = authService.signUpBroker(brokerSignUpDto);
 
         // then
         assertThat(response).isNotNull();
@@ -102,10 +102,10 @@ class AuthServiceImplTest {
     void loginMember_success() {
         // Given: 회원가입된 회원으로 로그인 요청
         authService.signUpMember(memberSignUpDto);
-        RequestLoginDto loginDto = new RequestLoginDto(memberSignUpDto.id(), memberSignUpDto.password());
+        LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), memberSignUpDto.password());
 
         // When: 로그인 요청
-        ResponseLoginDto response = authService.login(loginDto);
+        LoginDtoResponse response = authService.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
@@ -119,10 +119,10 @@ class AuthServiceImplTest {
     void loginBroker_success() {
         // Given: 회원가입된 브로커로 로그인 요청
         authService.signUpBroker(brokerSignUpDto);
-        RequestLoginDto loginDto = new RequestLoginDto(brokerSignUpDto.id(), brokerSignUpDto.password());
+        LoginRequest loginDto = new LoginRequest(brokerSignUpDto.id(), brokerSignUpDto.password());
 
         // When: 로그인 요청
-        ResponseLoginDto response = authService.login(loginDto);
+        LoginDtoResponse response = authService.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
@@ -136,7 +136,7 @@ class AuthServiceImplTest {
     void login_fail_wrongPassword() {
         // Given: 회원가입된 회원으로 잘못된 비밀번호로 로그인 요청
         authService.signUpMember(memberSignUpDto);
-        RequestLoginDto loginDto = new RequestLoginDto(memberSignUpDto.id(), "wrong_password");
+        LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), "wrong_password");
 
         // When & Then: 로그인 실패 예외 발생
         assertThatThrownBy(() -> authService.login(loginDto))
@@ -147,7 +147,7 @@ class AuthServiceImplTest {
     @DisplayName("존재하지 않는 사용자 로그인")
     void login_fail_nonExistentUser() {
         // Given: 존재하지 않는 사용자로 로그인 요청
-        RequestLoginDto loginDto = new RequestLoginDto("nonexistent", "password123");
+        LoginRequest loginDto = new LoginRequest("nonexistent", "password123");
 
         // When & Then: 로그인 실패 예외 발생
         assertThatThrownBy(() -> authService.login(loginDto))
@@ -159,7 +159,7 @@ class AuthServiceImplTest {
     void logout_success() {
         // Given: 회원가입 후 로그인하여 세션에 저장
         authService.signUpMember(memberSignUpDto);
-        RequestLoginDto loginDto = new RequestLoginDto(memberSignUpDto.id(), memberSignUpDto.password());
+        LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), memberSignUpDto.password());
         authService.login(loginDto);
 
         // When: 로그아웃 호출

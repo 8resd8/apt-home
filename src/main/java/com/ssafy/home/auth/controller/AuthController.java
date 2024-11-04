@@ -21,21 +21,21 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup/member")
-    public ResponseEntity<ResponseSignUp> signUpMember(@Validated @RequestBody RequestMemberSignUp requestDto) {
-        ResponseSignUp responseMember = authService.signUpMember(requestDto);
+    public ResponseEntity<SignUpResponse> signUpMember(@Validated @RequestBody MemberSignUpRequest requestDto) {
+        SignUpResponse responseMember = authService.signUpMember(requestDto);
 
         return new ResponseEntity<>(responseMember, HttpStatus.CREATED);
     }
 
     @PostMapping("/signup/broker")
-    public ResponseEntity<ResponseSignUp> signUpBroker(@Validated @RequestBody RequestBrokerSignUp requestDto) {
-        ResponseSignUp responseBroker = authService.signUpBroker(requestDto);
+    public ResponseEntity<SignUpResponse> signUpBroker(@Validated @RequestBody BrokerSignUpRequest requestDto) {
+        SignUpResponse responseBroker = authService.signUpBroker(requestDto);
         return new ResponseEntity<>(responseBroker, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseLoginDto> login(@Validated @RequestBody RequestLoginDto requestLoginDto) {
-        ResponseLoginDto responseLogin = authService.login(requestLoginDto);
+    public ResponseEntity<LoginDtoResponse> login(@Validated @RequestBody LoginRequest loginRequest) {
+        LoginDtoResponse responseLogin = authService.login(loginRequest);
         return new ResponseEntity<>(responseLogin, HttpStatus.CREATED);
     }
 
