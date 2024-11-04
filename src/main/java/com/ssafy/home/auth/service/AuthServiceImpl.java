@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public ResponseSignUp signUpMember(RequestMemberSignUp requestDto) {
+    public SignUpResponse signUpMember(MemberSignUpRequest requestDto) {
         checkDuplicatedId(requestDto.id());
 
         String salt = generateSalt();
@@ -42,12 +42,12 @@ public class AuthServiceImpl implements AuthService {
                 requestDto.id(), hashedPassword, salt, requestDto.email(),
                 requestDto.phoneNum(), requestDto.name(), now, now);
 
-        return new ResponseSignUp(requestDto.id(), requestDto.email(), now);
+        return new SignUpResponse(requestDto.id(), requestDto.email(), now);
     }
 
 
     @Override
-    public ResponseSignUp signUpBroker(RequestBrokerSignUp requestDto) {
+    public SignUpResponse signUpBroker(BrokerSignUpRequest requestDto) {
         checkDuplicatedId(requestDto.id());
 
         String salt = generateSalt();
@@ -58,20 +58,20 @@ public class AuthServiceImpl implements AuthService {
                 requestDto.address(), requestDto.licenseNum(), hashedPassword, salt, requestDto.email(), now.toLocalDateTime(), now, now);
 
 
-        return new ResponseSignUp(requestDto.id(), requestDto.email(), now);
+        return new SignUpResponse(requestDto.id(), requestDto.email(), now);
     }
 
     @Override
-    public ResponseLoginDto login(RequestLoginDto requestLoginDto) {
-        Optional<Member> memberOptional = memberMapper.findById(requestLoginDto.id());
-        Optional<Broker> brokerOptional = brokerMapper.findById(requestLoginDto.id());
+    public LoginDtoResponse login(LoginRequest loginRequest) {
+        Optional<Member> memberOptional = memberMapper.findById(loginRequest.id());
+        Optional<Broker> brokerOptional = brokerMapper.findById(loginRequest.id());
 
         if (memberOptional.isPresent()) {
-            return MemberLogin(requestLoginDto, memberOptional);
+            return MemberLogin(loginRequest, memberOptional);
         }
 
         if (brokerOptional.isPresent()) {
-            return BrokerLogin(requestLoginDto, brokerOptional);
+            return BrokerLogin(loginRequest, brokerOptional);
         }
 
         throw new LoginFailedException();
@@ -83,24 +83,24 @@ public class AuthServiceImpl implements AuthService {
     }
 
 
-    private ResponseLoginDto BrokerLogin(RequestLoginDto requestLoginDto, Optional<Broker> brokerOptional) {
+    private LoginDtoResponse BrokerLogin(LoginRequest loginRequest, Optional<Broker> brokerOptional) {
         Broker broker = brokerOptional.get();
-        checkPassword(broker.getPassword(), requestLoginDto.password(), broker.getSalt());
+        checkPassword(broker.getPassword(), loginRequest.password(), broker.getSalt());
 
         session.setAttribute(Session.BROKER_ID.name(), broker.getBid());
         session.setAttribute(Session.TYPE.name(), UserType.BROKER.name());
 
-        return new ResponseLoginDto(broker.getBid(), broker.getBrokerName(), broker.getEmail(), UserType.BROKER.name(), session.getId());
+        return new LoginDtoResponse(broker.getBid(), broker.getBrokerName(), broker.getEmail(), UserType.BROKER.name(), session.getId());
     }
 
-    private ResponseLoginDto MemberLogin(RequestLoginDto requestLoginDto, Optional<Member> memberOptional) {
+    private LoginDtoResponse MemberLogin(LoginRequest loginRequest, Optional<Member> memberOptional) {
         Member member = memberOptional.get();
-        checkPassword(member.getPassword(), requestLoginDto.password(), member.getSalt());
+        checkPassword(member.getPassword(), loginRequest.password(), member.getSalt());
 
         session.setAttribute(Session.MEMBER_ID.name(), member.getMid());
         session.setAttribute(Session.TYPE.name(), UserType.MEMBER.name());
 
-        return new ResponseLoginDto(member.getMid(), member.getName(), member.getEmail(), UserType.MEMBER.name(), session.getId());
+        return new LoginDtoResponse(member.getMid(), member.getName(), member.getEmail(), UserType.MEMBER.name(), session.getId());
     }
 
     private String hashPassword(String password, String salt) {

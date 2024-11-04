@@ -4,11 +4,11 @@ import com.ssafy.home.auth.dto.*;
 
 
 public interface AuthService {
-    ResponseSignUp signUpMember(RequestMemberSignUp requestDto);
+    SignUpResponse signUpMember(MemberSignUpRequest requestDto);
 
-    ResponseSignUp signUpBroker(RequestBrokerSignUp requestDto);
+    SignUpResponse signUpBroker(BrokerSignUpRequest requestDto);
 
-    ResponseLoginDto login(RequestLoginDto requestLoginDto);
+    LoginDtoResponse login(LoginRequest loginRequest);
 
     void logout();
 }

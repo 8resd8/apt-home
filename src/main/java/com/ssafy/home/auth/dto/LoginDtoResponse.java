@@ -1,6 +1,6 @@
 package com.ssafy.home.auth.dto;
 
-public record ResponseLoginDto(
+public record LoginDtoResponse(
         String id,
         String name,
         String email,
