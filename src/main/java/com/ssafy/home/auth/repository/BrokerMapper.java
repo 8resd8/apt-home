@@ -4,6 +4,7 @@ import com.ssafy.home.auth.domain.Broker;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -20,8 +21,8 @@ public interface BrokerMapper {
                       @Param("salt") String salt,
                       @Param("email") String email,
                       @Param("lastLogin") LocalDateTime lastLogin,
-                      @Param("createdAt") LocalDateTime createdAt,
-                      @Param("updatedAt") LocalDateTime updatedAt);
+                      @Param("createdAt") Timestamp createdAt,
+                      @Param("updatedAt") Timestamp updatedAt);
 
     Optional<Broker> findById(@Param("id") String id);
 }

@@ -3,12 +3,12 @@
 
 <mapper namespace="com.ssafy.home.auth.repository.MemberMapper">
     <insert id="insertMember">
-        INSERT INTO member (id, password, salt, email, phone_num, name, created_at, updated_at)
+        INSERT INTO member (mid, password, salt, email, phone_num, name, created_at, updated_at)
         VALUES (#{id}, #{password}, #{salt}, #{email}, #{phoneNum}, #{name}, #{createdAt}, #{updatedAt})
     </insert>
 
     <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Member">
-        SELECT * FROM member WHERE id = #{id}
+        SELECT * FROM member WHERE mid = #{id}
     </select>
 
 

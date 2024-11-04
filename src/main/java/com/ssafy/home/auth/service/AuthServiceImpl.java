@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
 
         String salt = generateSalt();
         String hashedPassword = hashPassword(requestDto.password(), salt);
-        LocalDateTime now = LocalDateTime.now();
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         memberMapper.insertMember(
                 requestDto.id(), hashedPassword, salt, requestDto.email(),
@@ -51,10 +52,10 @@ public class AuthServiceImpl implements AuthService {
 
         String salt = generateSalt();
         String hashedPassword = hashPassword(requestDto.password(), salt);
-        LocalDateTime now = LocalDateTime.now();
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         brokerMapper.insertBroker(requestDto.id(), requestDto.officeName(), requestDto.name(), requestDto.phoneNum(),
-                requestDto.address(), requestDto.licenseNum(), hashedPassword, salt, requestDto.email(), now, now, now);
+                requestDto.address(), requestDto.licenseNum(), hashedPassword, salt, requestDto.email(), now.toLocalDateTime(), now, now);
 
 
         return new ResponseSignUp(requestDto.id(), requestDto.email(), now);
@@ -86,20 +87,20 @@ public class AuthServiceImpl implements AuthService {
         Broker broker = brokerOptional.get();
         checkPassword(broker.getPassword(), requestLoginDto.password(), broker.getSalt());
 
-        session.setAttribute(Session.BROKER_ID.name(), broker);
+        session.setAttribute(Session.BROKER_ID.name(), broker.getBid());
         session.setAttribute(Session.TYPE.name(), UserType.BROKER.name());
 
-        return new ResponseLoginDto(broker.getId(), broker.getName(), broker.getEmail(), UserType.BROKER.name(), session.getId());
+        return new ResponseLoginDto(broker.getBid(), broker.getBrokerName(), broker.getEmail(), UserType.BROKER.name(), session.getId());
     }
 
     private ResponseLoginDto MemberLogin(RequestLoginDto requestLoginDto, Optional<Member> memberOptional) {
         Member member = memberOptional.get();
         checkPassword(member.getPassword(), requestLoginDto.password(), member.getSalt());
 
-        session.setAttribute(Session.MEMBER_ID.name(), member);
+        session.setAttribute(Session.MEMBER_ID.name(), member.getMid());
         session.setAttribute(Session.TYPE.name(), UserType.MEMBER.name());
 
-        return new ResponseLoginDto(member.getId(), member.getName(), member.getEmail(), UserType.MEMBER.name(), session.getId());
+        return new ResponseLoginDto(member.getMid(), member.getName(), member.getEmail(), UserType.MEMBER.name(), session.getId());
     }
 
     private String hashPassword(String password, String salt) {

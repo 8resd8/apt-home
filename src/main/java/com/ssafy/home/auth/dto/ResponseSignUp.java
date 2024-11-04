@@ -1,7 +1,7 @@
 package com.ssafy.home.auth.dto;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 
-public record ResponseSignUp(String id, String email, LocalDateTime createdAt) {
+public record ResponseSignUp(String id, String email, Timestamp createdAt) {
 }

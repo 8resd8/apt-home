@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -27,35 +28,36 @@ class BrokerMapperTest {
     @BeforeEach
     void setUp() {
         for (int i = 1; i <= 30; i++) {
-            String id = "broker" + i;
+            Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+            String bid = "broker" + i;
             Broker broker = Broker.builder()
-                    .id(id)
+                    .bid(bid)
                     .officeName("Test Office " + i)
-                    .name("John Doe " + i)
+                    .brokerName("John Doe " + i)
                     .phoneNum("010-1234-567" + i)
                     .address("Seoul " + i)
                     .licenseNum("123-45-678" + i)
                     .password("hashed_password_" + i)
                     .salt("random_salt_" + i)
                     .email("broker" + i + "@test.com")
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
+                    .createdAt(now)
+                    .updatedAt(now)
                     .lastLogin(LocalDateTime.now())
                     .build();
 
             brokerMapper.insertBroker(
-                    broker.getId(),
+                    broker.getBid(),
                     broker.getOfficeName(),
-                    broker.getName(),
+                    broker.getBrokerName(),
                     broker.getPhoneNum(),
                     broker.getAddress(),
                     broker.getLicenseNum(),
                     broker.getPassword(),
                     broker.getSalt(),
                     broker.getEmail(),
-                    broker.getCreatedAt(),
+                    broker.getLastLogin(),
                     broker.getUpdatedAt(),
-                    broker.getLastLogin()
+                    broker.getCreatedAt()
             );
         }
     }
@@ -69,7 +71,7 @@ class BrokerMapperTest {
         assertTrue(broker.isPresent());
 
         Broker broker1 = broker.get();
-        Assertions.assertThat(broker1.getId()).isEqualTo("broker2");
+        Assertions.assertThat(broker1.getBid()).isEqualTo("broker2");
         Assertions.assertThat(broker1.getPassword()).isEqualTo("hashed_password_2");
 
     }

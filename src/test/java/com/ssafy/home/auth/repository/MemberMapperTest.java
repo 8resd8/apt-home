@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -27,21 +28,22 @@ class MemberMapperTest {
     @BeforeEach
     void setUp() {
         for (int i = 1; i <= 30; i++) {
-            String id = "member" + i;
+            Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+            String mid = "member" + i;
             Member member = Member.builder()
-                    .id(id)
+                    .mid(mid)
                     .name("Jane Doe " + i)
                     .phoneNum("010-1234-567" + i)
                     .password("hashed_password_" + i)
                     .salt("random_salt_" + i)
                     .email("member" + i + "@test.com")
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
+                    .createdAt(now)
+                    .updatedAt(now)
                     .lastLogin(LocalDateTime.now())
                     .build();
 
             memberMapper.insertMember(
-                    member.getId(),
+                    member.getMid(),
                     member.getPassword(),
                     member.getSalt(),
                     member.getEmail(),
@@ -61,7 +63,7 @@ class MemberMapperTest {
         assertTrue(member.isPresent());
 
         Member member1 = member.get();
-        Assertions.assertThat(member1.getId()).isEqualTo("member1");
+        Assertions.assertThat(member1.getMid()).isEqualTo("member1");
         Assertions.assertThat(member1.getPassword()).isEqualTo("hashed_password_1");
         Assertions.assertThat(member1.getEmail()).isEqualTo("member1@test.com");
     }
