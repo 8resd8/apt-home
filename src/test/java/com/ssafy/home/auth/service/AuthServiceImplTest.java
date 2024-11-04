@@ -105,7 +105,7 @@ class AuthServiceImplTest {
         LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), memberSignUpDto.password());
 
         // When: 로그인 요청
-        LoginDtoResponse response = authService.login(loginDto);
+        LoginResponse response = authService.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
@@ -122,7 +122,7 @@ class AuthServiceImplTest {
         LoginRequest loginDto = new LoginRequest(brokerSignUpDto.id(), brokerSignUpDto.password());
 
         // When: 로그인 요청
-        LoginDtoResponse response = authService.login(loginDto);
+        LoginResponse response = authService.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();

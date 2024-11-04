@@ -8,7 +8,7 @@ public interface AuthService {
 
     SignUpResponse signUpBroker(BrokerSignUpRequest requestDto);
 
-    LoginDtoResponse login(LoginRequest loginRequest);
+    LoginResponse login(LoginRequest loginRequest);
 
     void logout();
 }
