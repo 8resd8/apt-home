@@ -1,5 +1,7 @@
 package com.ssafy.home.interceptor;
 
+import com.ssafy.home.enums.Session;
+import com.ssafy.home.enums.UserType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -14,8 +16,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
         String requestURI = request.getRequestURI();
 
-        if (session == null || session.getAttribute("TYPE") == null) {
-            response.sendRedirect("/login?redirectURL=" + requestURI);
+        if (session == null || session.getAttribute(Session.TYPE.name()) == null) {
+            response.sendRedirect("/api/auth/login?redirectURL=" + requestURI);
             return false;
         }
 
