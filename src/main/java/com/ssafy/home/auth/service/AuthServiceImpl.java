@@ -119,10 +119,6 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(requestPassword + salt, hashedPassword)) {
             throw new LoginFailedException();
         }
-
-        if (!passwordEncoder.matches(requestPassword + salt, hashedPassword)) {
-            throw new LoginFailedException();
-        }
     }
 
     private String generateSalt() {
