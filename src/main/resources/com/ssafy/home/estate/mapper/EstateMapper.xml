@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.estate.repository.EstateMapper">
+
+    <!-- Insert Broker Estate -->
+    <insert id="insertBrokerEstate">
+        INSERT INTO estate
+            (broker_id, apt_seq, type, floor, total_floor, area, amount, `desc`)
+        VALUES
+            (#{brokerId}, #{brokerEstate.aptSeq}, #{brokerEstate.type},
+             #{brokerEstate.floor}, #{brokerEstate.totalFloor}, #{brokerEstate.area},
+             #{brokerEstate.amount}, #{brokerEstate.desc})
+    </insert>
+
+    <!-- Select Estate Detail -->
+    <select id="selectEstateDetail" resultType="com.ssafy.home.estate.dto.EstateDetailResponseDto">
+        SELECT e.eid, e.type, e.status, e.floor, e.total_floor, e.area, e.amount, e.desc,
+               e.broker_id, b.office_name, b.phone_num, b.address, b.license_num,
+               h.apt_nm, h.build_year, h.road_nm, h.road_nm_bonbun
+        FROM broker b, estate e, houseinfos h
+        WHERE e.eid = #{eid}
+          AND e.apt_seq = h.apt_seq
+          AND b.bid = e.broker_id
+    </select>
+
+    <!-- Select Estate -->
+    <select id="selectEstate" resultType="com.ssafy.home.estate.dto.Estate">
+        SELECT * FROM estate
+        WHERE eid = #{id}
+    </select>
+
+</mapper>
