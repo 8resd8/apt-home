@@ -1,6 +1,6 @@
-package com.ssafy.home.interceptor;
+package com.ssafy.home.global.interceptor;
 
-import com.ssafy.home.annotation.Login;
+import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.repository.BrokerMapper;

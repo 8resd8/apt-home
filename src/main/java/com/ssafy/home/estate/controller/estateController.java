@@ -1,11 +1,10 @@
 package com.ssafy.home.estate.controller;
 
-import com.ssafy.home.annotation.Login;
+import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.estate.dto.EstateDetailResponseDto;
 import com.ssafy.home.estate.dto.RegistEstateRequestDto;
 import com.ssafy.home.estate.service.EstateService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
