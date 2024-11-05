@@ -3,6 +3,8 @@ package com.ssafy.home.interceptor;
 import com.ssafy.home.annotation.Login;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.auth.repository.BrokerMapper;
+import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.enums.Session;
 import com.ssafy.home.enums.UserType;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,13 +48,13 @@ public class AuthLoginResolver implements HandlerMethodArgumentResolver {
 
         // 브로커인 경우 브로커 객체 꺼냄
         if (type.equals(UserType.BROKER.name()) && Broker.class.equals(parameter.getParameterType())) {
-            String brokerId = getId (session, type);
+            String brokerId = getId(session, Session.BROKER_ID.name());
             return brokerMapper.findById(brokerId).orElse(null);
         }
 
         // 멤버인 경우 멤버 객체 꺼냄
         if (type.equals(UserType.MEMBER.name()) && Member.class.equals(parameter.getParameterType())) {
-            String memberId = getId(session, type);
+            String memberId = getId(session, Session.MEMBER_ID.name());
             return memberMapper.findById(memberId).orElse(null);
         }
 
@@ -60,6 +62,6 @@ public class AuthLoginResolver implements HandlerMethodArgumentResolver {
     }
 
     private static String getId(HttpSession session, String type) {
-        return (String) session.getAttribute(type.equals(UserType.MEMBER.name()));
+        return (String) session.getAttribute(type);
     }
 }
