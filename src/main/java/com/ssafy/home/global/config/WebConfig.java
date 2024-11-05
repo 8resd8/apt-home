@@ -1,7 +1,7 @@
-package com.ssafy.home.config;
+package com.ssafy.home.global.config;
 
-import com.ssafy.home.interceptor.AuthInterceptor;
-import com.ssafy.home.interceptor.AuthLoginResolver;
+import com.ssafy.home.global.interceptor.AuthInterceptor;
+import com.ssafy.home.global.interceptor.AuthLoginResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
