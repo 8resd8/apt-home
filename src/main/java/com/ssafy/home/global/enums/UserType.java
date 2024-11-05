@@ -1,4 +1,4 @@
-package com.ssafy.home.enums;
+package com.ssafy.home.global.enums;
 
 public enum UserType {
     MEMBER,

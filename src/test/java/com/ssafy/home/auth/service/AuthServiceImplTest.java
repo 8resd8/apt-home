@@ -4,7 +4,7 @@ import com.ssafy.home.auth.dto.*;
 import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
-import com.ssafy.home.enums.Session;
+import com.ssafy.home.global.enums.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

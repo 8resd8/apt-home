@@ -1,7 +1,6 @@
 package com.ssafy.home.interceptor;
 
-import com.ssafy.home.enums.Session;
-import com.ssafy.home.enums.UserType;
+import com.ssafy.home.global.enums.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
