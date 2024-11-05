@@ -12,4 +12,9 @@ public class AuthExceptionHandler {
     public ResponseEntity<String> handleLogin(LoginFailedException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
+
+    @ExceptionHandler(DuplicateException.class)
+    public ResponseEntity<String> handleDuplicate(DuplicateException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
 }
