@@ -25,4 +25,6 @@ public interface BrokerMapper {
                       @Param("updatedAt") Timestamp updatedAt);
 
     Optional<Broker> findById(@Param("id") String id);
+
+    int deleteById(@Param("id") String userId);
 }

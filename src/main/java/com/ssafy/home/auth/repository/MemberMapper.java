@@ -21,4 +21,6 @@ public interface MemberMapper {
                       @Param("updatedAt") Timestamp updatedAt);
 
     Optional<Member> findById(@Param("id") String id);
+
+    int deleteById(@Param("id") String userId);
 }
