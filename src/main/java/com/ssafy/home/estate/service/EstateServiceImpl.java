@@ -17,7 +17,7 @@ public class EstateServiceImpl implements EstateService {
     private final EstateMapper estateMapper;
 
     @Override
-    public void createBrokerEstate(RegistEstateRequestDto requestDto, Broker broker) {
+    public void createEstate(RegistEstateRequestDto requestDto, Broker broker) {
         estateMapper.insertBrokerEstate(requestDto, broker.getBid());
     }
 

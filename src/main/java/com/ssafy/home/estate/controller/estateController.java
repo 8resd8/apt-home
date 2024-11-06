@@ -21,7 +21,7 @@ public class estateController {
 
     @PostMapping
     public ResponseEntity<?> postEstate(@Validated @RequestBody RegistEstateRequestDto requestDto, @Login Broker broker) {
-        estateService.createBrokerEstate(requestDto, broker);
+        estateService.createEstate(requestDto, broker);
 
         return ResponseEntity.ok().build();
     }
