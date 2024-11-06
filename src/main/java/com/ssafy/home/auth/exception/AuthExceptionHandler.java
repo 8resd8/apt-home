@@ -13,8 +13,13 @@ public class AuthExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
-    @ExceptionHandler(DuplicateException.class)
-    public ResponseEntity<String> handleDuplicate(DuplicateException ex) {
+    @ExceptionHandler(DuplicatedException.class)
+    public ResponseEntity<String> handleDuplicate(DuplicatedException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleDeleteAccount(DeleteAccountFailedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
