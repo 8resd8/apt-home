@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -61,9 +62,9 @@ class MemberMapperTest {
         assertTrue(member.isPresent());
 
         Member member1 = member.get();
-        Assertions.assertThat(member1.getMid()).isEqualTo("member1");
-        Assertions.assertThat(member1.getPassword()).isEqualTo("hashed_password_1");
-        Assertions.assertThat(member1.getEmail()).isEqualTo("member1@test.com");
+        assertThat(member1.getMid()).isEqualTo("member1");
+        assertThat(member1.getPassword()).isEqualTo("hashed_password_1");
+        assertThat(member1.getEmail()).isEqualTo("member1@test.com");
     }
 
     @Test
@@ -72,5 +73,62 @@ class MemberMapperTest {
         Optional<Member> member = memberMapper.findById("member0");
 
         assertFalse(member.isPresent());
+    }
+
+    @Test
+    @DisplayName("이메일로 멤버 찾기 성공")
+    void findByEmail_success() {
+        Optional<Member> member = memberMapper.findByEmail("member1@test.com");
+
+        assertTrue(member.isPresent());
+
+        Member findMember = member.get();
+        assertThat(findMember.getEmail()).isEqualTo("member1@test.com");
+        assertThat(findMember.getMid()).isEqualTo("member1");
+    }
+
+    @Test
+    @DisplayName("이메일로 멤버 찾기 실패")
+    void findByEmail_fail() {
+        Optional<Member> member = memberMapper.findByEmail("nonexistent@test.com");
+
+        assertFalse(member.isPresent());
+    }
+
+    @Test
+    @DisplayName("멤버 삭제 성공")
+    void deleteById_success() {
+        String memberId = "member1";
+
+        int result = memberMapper.deleteById(memberId);
+
+        assertThat(result).isEqualTo(1);
+        assertThat(memberMapper.findById(memberId)).isNotPresent();
+    }
+
+    @Test
+    @DisplayName("멤버 삭제 실패")
+    void deleteById_fail() {
+        String nonExistentId = "nonexistentMember";
+
+        int result = memberMapper.deleteById(nonExistentId);
+
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("마지막 로그인 시간 업데이트 성공")
+    void updateLastLogin_success() {
+        String memberId = "member1";
+        memberMapper.updateLastLogin(memberId);
+
+        Optional<Member> memberOptional = memberMapper.findById(memberId);
+
+        assertThat(memberOptional).isPresent();
+        Member member = memberOptional.get();
+        assertThat(member.getLastLogin()).isNotNull();
+
+        LocalDateTime now = LocalDateTime.now();
+        assertThat(member.getLastLogin()).isAfter(now.minusMinutes(1));
     }
 }

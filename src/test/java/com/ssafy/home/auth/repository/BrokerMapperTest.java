@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -68,8 +69,8 @@ class BrokerMapperTest {
         assertTrue(broker.isPresent());
 
         Broker broker1 = broker.get();
-        Assertions.assertThat(broker1.getBid()).isEqualTo("broker2");
-        Assertions.assertThat(broker1.getPassword()).isEqualTo("hashed_password_2");
+        assertThat(broker1.getBid()).isEqualTo("broker2");
+        assertThat(broker1.getPassword()).isEqualTo("hashed_password_2");
 
     }
 
@@ -79,5 +80,60 @@ class BrokerMapperTest {
         Optional<Broker> broker = brokerMapper.findById("broker0");
 
         assertFalse(broker.isPresent());
+    }
+
+    @Test
+    @DisplayName("이메일로 Broker 조회 성공")
+    void findByEmail_success() {
+        Optional<Object> findBroker = brokerMapper.findByEmail("broker1@test.com");
+
+        assertThat(findBroker).isPresent();
+        Broker broker = (Broker) findBroker.get();
+        assertThat(broker.getEmail()).isEqualTo("broker1@test.com");
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 이메일로 Broker 조회 실패")
+    void findByEmail_fail() {
+        Optional<Object> foundBroker = brokerMapper.findByEmail("nonexistent@test.com");
+
+        assertThat(foundBroker).isNotPresent();
+    }
+
+    @Test
+    @DisplayName("ID로 Broker 삭제 성공")
+    void deleteById_success() {
+        String brokerId = "broker1";
+
+        int result = brokerMapper.deleteById(brokerId);
+
+        assertThat(result).isEqualTo(1);
+        assertThat(brokerMapper.findById(brokerId)).isNotPresent();
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 ID로 Broker 삭제 실패")
+    void deleteById_fail() {
+        String nonExistentId = "nonexistentBroker";
+
+        int result = brokerMapper.deleteById(nonExistentId);
+
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("마지막 로그인 시간 업데이트 성공")
+    void updateLastLogin_success() {
+        String brokerId = "broker1";
+        brokerMapper.updateLastLogin(brokerId);
+
+        Optional<Broker> brokerOptional = brokerMapper.findById(brokerId);
+
+        assertThat(brokerOptional).isPresent();
+        Broker broker = brokerOptional.get();
+        assertThat(broker.getLastLogin()).isNotNull();
+
+        LocalDateTime now = LocalDateTime.now();
+        assertThat(broker.getLastLogin()).isAfter(now.minusMinutes(1));
     }
 }
