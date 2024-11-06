@@ -1,10 +1,12 @@
 package com.ssafy.home.auth.service;
 
 import com.ssafy.home.auth.dto.*;
+import com.ssafy.home.auth.exception.DeleteAccountFailedException;
 import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.enums.Session;
+import com.ssafy.home.enums.UserType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,15 +35,15 @@ class AuthServiceImplTest {
     private BrokerMapper brokerMapper;
 
 
-    private MemberSignUpRequest memberSignUpDto;
-    private BrokerSignUpRequest brokerSignUpDto;
+    private MemberSignUpRequest memberSignUp;
+    private BrokerSignUpRequest brokerSignUp;
     private MockHttpSession session;
 
     @BeforeEach
     void setUp() {
         session = new MockHttpSession();
         // 테스트용 RequestMemberSignUp 객체 생성
-        memberSignUpDto = new MemberSignUpRequest(
+        memberSignUp = new MemberSignUpRequest(
                 "member1",
                 "password123",
                 "member@test.com",
@@ -50,7 +52,7 @@ class AuthServiceImplTest {
         );
 
         // 테스트용 RequestBrokerSignUp 객체 생성
-        brokerSignUpDto = new BrokerSignUpRequest(
+        brokerSignUp = new BrokerSignUpRequest(
                 "broker1",
                 "password456",
                 "Test Office",
@@ -71,7 +73,7 @@ class AuthServiceImplTest {
     @DisplayName("Member 회원가입")
     void signUpMember() {
         // when
-        SignUpResponse response = authService.signUpMember(memberSignUpDto);
+        SignUpResponse response = authService.signUpMember(memberSignUp);
 
         // then
         assertThat(response).isNotNull();
@@ -86,7 +88,7 @@ class AuthServiceImplTest {
     @DisplayName("Broker 회원가입")
     void signUpBroker() {
         // when
-        SignUpResponse response = authService.signUpBroker(brokerSignUpDto);
+        SignUpResponse response = authService.signUpBroker(brokerSignUp);
 
         // then
         assertThat(response).isNotNull();
@@ -101,16 +103,16 @@ class AuthServiceImplTest {
     @DisplayName("Member 로그인 요청")
     void loginMember_success() {
         // Given: 회원가입된 회원으로 로그인 요청
-        authService.signUpMember(memberSignUpDto);
-        LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), memberSignUpDto.password());
+        authService.signUpMember(memberSignUp);
+        LoginRequest loginDto = new LoginRequest(memberSignUp.id(), memberSignUp.password());
 
         // When: 로그인 요청
         LoginDtoResponse response = authService.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
-        assertThat(response.id()).isEqualTo(memberSignUpDto.id());
-        assertThat(response.email()).isEqualTo(memberSignUpDto.email());
+        assertThat(response.id()).isEqualTo(memberSignUp.id());
+        assertThat(response.email()).isEqualTo(memberSignUp.email());
         assertThat(response.userType()).isEqualTo("MEMBER");
     }
 
@@ -118,16 +120,16 @@ class AuthServiceImplTest {
     @DisplayName("Broker 로그인 요청")
     void loginBroker_success() {
         // Given: 회원가입된 브로커로 로그인 요청
-        authService.signUpBroker(brokerSignUpDto);
-        LoginRequest loginDto = new LoginRequest(brokerSignUpDto.id(), brokerSignUpDto.password());
+        authService.signUpBroker(brokerSignUp);
+        LoginRequest loginDto = new LoginRequest(brokerSignUp.id(), brokerSignUp.password());
 
         // When: 로그인 요청
         LoginDtoResponse response = authService.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
-        assertThat(response.id()).isEqualTo(brokerSignUpDto.id());
-        assertThat(response.email()).isEqualTo(brokerSignUpDto.email());
+        assertThat(response.id()).isEqualTo(brokerSignUp.id());
+        assertThat(response.email()).isEqualTo(brokerSignUp.email());
         assertThat(response.userType()).isEqualTo("BROKER");
     }
 
@@ -135,8 +137,8 @@ class AuthServiceImplTest {
     @DisplayName("잘못된 비밀번호 로그인")
     void login_fail_wrongPassword() {
         // Given: 회원가입된 회원으로 잘못된 비밀번호로 로그인 요청
-        authService.signUpMember(memberSignUpDto);
-        LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), "wrong_password");
+        authService.signUpMember(memberSignUp);
+        LoginRequest loginDto = new LoginRequest(memberSignUp.id(), "wrong_password");
 
         // When & Then: 로그인 실패 예외 발생
         assertThatThrownBy(() -> authService.login(loginDto))
@@ -158,8 +160,8 @@ class AuthServiceImplTest {
     @DisplayName("회원가입_로그인_로그아웃_세션 비어있음 확인")
     void logout_success() {
         // Given: 회원가입 후 로그인하여 세션에 저장
-        authService.signUpMember(memberSignUpDto);
-        LoginRequest loginDto = new LoginRequest(memberSignUpDto.id(), memberSignUpDto.password());
+        authService.signUpMember(memberSignUp);
+        LoginRequest loginDto = new LoginRequest(memberSignUp.id(), memberSignUp.password());
         authService.login(loginDto);
 
         // When: 로그아웃 호출
@@ -170,4 +172,56 @@ class AuthServiceImplTest {
         assertThat(session.getAttribute(Session.TYPE.name())).isNull();
     }
 
+    @Test
+    @DisplayName("회원 삭제 성공")
+    void deleteMemberAccount_success() {
+        SignUpResponse member = authService.signUpMember(memberSignUp);
+        String userId = member.id();
+
+        boolean isSuccess = authService.deleteAccount(userId, UserType.MEMBER.name());
+
+        assertThat(isSuccess).isTrue();
+    }
+
+    @Test
+    @DisplayName("중개사 삭제 성공")
+    void deleteBrokerAccount_success() {
+        SignUpResponse broker = authService.signUpBroker(brokerSignUp);
+        String userId = broker.id();
+
+        boolean isSuccess = authService.deleteAccount(userId, UserType.BROKER.name());
+
+        assertThat(isSuccess).isTrue();
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 회원 삭제 시 예외 발생")
+    void deleteMemberAccount_notFound() {
+        String userId = "nonexistentMember";
+
+        assertThatThrownBy(() -> authService.deleteAccount(userId, UserType.MEMBER.name()))
+                .isInstanceOf(DeleteAccountFailedException.class)
+                .hasMessage("해당 회원이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 중개사 삭제 시 예외 발생")
+    void deleteBrokerAccount_notFound() {
+        String userId = "nonexistentBroker";
+
+        assertThatThrownBy(() -> authService.deleteAccount(userId, UserType.BROKER.name()))
+                .isInstanceOf(DeleteAccountFailedException.class)
+                .hasMessage("해당 중개사가 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("잘못된 회원 유형 삭제 요청 시 예외 발생")
+    void deleteAccount_invalidUserType() {
+        String userId = "member1";
+        String invalidUserType = "INVALID";
+
+        assertThatThrownBy(() -> authService.deleteAccount(userId, invalidUserType))
+                .isInstanceOf(DeleteAccountFailedException.class)
+                .hasMessage("잘못된 회원 유형입니다.");
+    }
 }
