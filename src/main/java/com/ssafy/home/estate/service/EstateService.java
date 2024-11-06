@@ -6,7 +6,7 @@ import com.ssafy.home.estate.dto.EstateDetailResponseDto;
 import com.ssafy.home.estate.dto.RegistEstateRequestDto;
 
 public interface EstateService {
-    void createEstate(RegistEstateRequestDto requestDto, Broker broker);
+    Long createEstate(RegistEstateRequestDto requestDto, Broker broker);
 
     Estate findEstateById(Long id);
 
