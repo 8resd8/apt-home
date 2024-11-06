@@ -15,4 +15,11 @@
         DELETE FROM member WHERE mid = #{id}
     </delete>
 
+    <update id="updateLastLogin" parameterType="String">
+        UPDATE member
+        SET last_login = NOW()
+        WHERE mid = #{id}
+    </update>
+
+
 </mapper>

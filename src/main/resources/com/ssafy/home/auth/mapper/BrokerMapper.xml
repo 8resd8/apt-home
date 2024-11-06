@@ -15,4 +15,11 @@
         DELETE FROM broker WHERE bid = #{id}
     </delete>
 
+    <update id="updateLastLogin" parameterType="String">
+        UPDATE broker
+        SET last_login = NOW()
+        WHERE bid = #{id}
+    </update>
+
+
 </mapper>
