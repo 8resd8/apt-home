@@ -48,9 +48,7 @@ class MemberMapperTest {
                     member.getSalt(),
                     member.getEmail(),
                     member.getPhoneNum(),
-                    member.getName(),
-                    member.getCreatedAt(),
-                    member.getUpdatedAt()
+                    member.getName()
             );
         }
     }

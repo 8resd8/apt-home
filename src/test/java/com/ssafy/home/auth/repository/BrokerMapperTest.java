@@ -54,10 +54,7 @@ class BrokerMapperTest {
                     broker.getLicenseNum(),
                     broker.getPassword(),
                     broker.getSalt(),
-                    broker.getEmail(),
-                    broker.getLastLogin(),
-                    broker.getUpdatedAt(),
-                    broker.getCreatedAt()
+                    broker.getEmail()
             );
         }
     }

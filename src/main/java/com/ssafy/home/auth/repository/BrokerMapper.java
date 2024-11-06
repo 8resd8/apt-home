@@ -19,10 +19,7 @@ public interface BrokerMapper {
                       @Param("licenseNum") String licenseNum,
                       @Param("password") String password,
                       @Param("salt") String salt,
-                      @Param("email") String email,
-                      @Param("lastLogin") LocalDateTime lastLogin,
-                      @Param("createdAt") Timestamp createdAt,
-                      @Param("updatedAt") Timestamp updatedAt);
+                      @Param("email") String email);
 
     Optional<Broker> findById(@Param("id") String id);
 

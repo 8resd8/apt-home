@@ -3,8 +3,8 @@
 
 <mapper namespace="com.ssafy.home.auth.repository.BrokerMapper">
     <insert id="insertBroker">
-        INSERT INTO broker (bid, office_name, broker_name, phone_num, address, license_num, password, salt, email, created_at, updated_at, last_login)
-        VALUES (#{id}, #{officeName}, #{name}, #{phoneNum}, #{address}, #{licenseNum}, #{password}, #{salt}, #{email}, #{createdAt}, #{updatedAt}, #{lastLogin})
+        INSERT INTO broker (bid, office_name, broker_name, phone_num, address, license_num, password, salt, email)
+        VALUES (#{id}, #{officeName}, #{name}, #{phoneNum}, #{address}, #{licenseNum}, #{password}, #{salt}, #{email})
     </insert>
 
     <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Broker">

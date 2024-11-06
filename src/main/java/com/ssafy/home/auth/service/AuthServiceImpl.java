@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
 
         memberMapper.insertMember(
                 requestDto.id(), hashedPassword, salt, requestDto.email(),
-                requestDto.phoneNum(), requestDto.name(), now, now);
+                requestDto.phoneNum(), requestDto.name());
 
         return new SignUpResponse(requestDto.id(), requestDto.email(), now);
     }
@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         brokerMapper.insertBroker(requestDto.id(), requestDto.officeName(), requestDto.name(), requestDto.phoneNum(),
-                requestDto.address(), requestDto.licenseNum(), hashedPassword, salt, requestDto.email(), now.toLocalDateTime(), now, now);
+                requestDto.address(), requestDto.licenseNum(), hashedPassword, salt, requestDto.email());
 
 
         return new SignUpResponse(requestDto.id(), requestDto.email(), now);

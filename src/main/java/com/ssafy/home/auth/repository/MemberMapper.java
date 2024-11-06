@@ -16,9 +16,7 @@ public interface MemberMapper {
                       @Param("salt") String salt,
                       @Param("email") String email,
                       @Param("phoneNum") String phoneNum,
-                      @Param("name") String name,
-                      @Param("createdAt") Timestamp createdAt,
-                      @Param("updatedAt") Timestamp updatedAt);
+                      @Param("name") String name);
 
     Optional<Member> findById(@Param("id") String id);
 
