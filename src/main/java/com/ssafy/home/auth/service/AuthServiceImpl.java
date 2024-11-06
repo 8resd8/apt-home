@@ -115,6 +115,8 @@ public class AuthServiceImpl implements AuthService {
         Broker broker = brokerOptional.get();
         checkPassword(broker.getPassword(), loginRequest.password(), broker.getSalt());
 
+        brokerMapper.updateLastLogin(broker.getBid());
+
         session.setAttribute(Session.BROKER_ID.name(), broker.getBid());
         session.setAttribute(Session.TYPE.name(), UserType.BROKER.name());
 
@@ -124,6 +126,8 @@ public class AuthServiceImpl implements AuthService {
     private LoginDtoResponse MemberLogin(LoginRequest loginRequest, Optional<Member> memberOptional) {
         Member member = memberOptional.get();
         checkPassword(member.getPassword(), loginRequest.password(), member.getSalt());
+
+        memberMapper.updateLastLogin(member.getMid());
 
         session.setAttribute(Session.MEMBER_ID.name(), member.getMid());
         session.setAttribute(Session.TYPE.name(), UserType.MEMBER.name());
