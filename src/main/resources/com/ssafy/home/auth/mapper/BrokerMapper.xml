@@ -10,4 +10,9 @@
     <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Broker">
         SELECT * FROM broker WHERE bid = #{id}
     </select>
+
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM broker WHERE bid = #{id}
+    </delete>
+
 </mapper>

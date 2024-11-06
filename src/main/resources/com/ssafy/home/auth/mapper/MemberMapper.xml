@@ -11,5 +11,8 @@
         SELECT * FROM member WHERE mid = #{id}
     </select>
 
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM member WHERE mid = #{id}
+    </delete>
 
 </mapper>
