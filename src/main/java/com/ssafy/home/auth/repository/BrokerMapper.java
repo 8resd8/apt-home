@@ -26,4 +26,6 @@ public interface BrokerMapper {
     int deleteById(@Param("id") String userId);
 
     void updateLastLogin(@Param("id") String id);
+
+    Optional<Object> findByEmail(@Param("email") String email);
 }

@@ -23,4 +23,6 @@ public interface MemberMapper {
     int deleteById(@Param("id") String userId);
 
     void updateLastLogin(@Param("id") String id);
+
+    Optional<Member> findByEmail(@Param("email") String email);
 }
