@@ -78,13 +78,13 @@ class AuthInterceptorTest {
     @DisplayName("비로그인 사용자는 멤버 경로에 접근 불가")
     void guestCannotAccessMemberPath() throws Exception {
         mockMvc.perform(post("/member/some-path"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
     @DisplayName("비로그인 사용자는 브로커 경로에 접근 불가")
     void guestCannotAccessBrokerPath() throws Exception {
         mockMvc.perform(post("/broker/some-path"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isUnauthorized());
     }
 }
