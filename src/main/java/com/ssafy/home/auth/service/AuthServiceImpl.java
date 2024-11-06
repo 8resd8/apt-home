@@ -4,7 +4,8 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.dto.*;
 import com.ssafy.home.auth.exception.DeleteAccountFailedException;
-import com.ssafy.home.auth.exception.DuplicatedException;
+import com.ssafy.home.auth.exception.DuplicatedEmailException;
+import com.ssafy.home.auth.exception.DuplicatedIdException;
 import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
@@ -28,38 +29,40 @@ public class AuthServiceImpl implements AuthService {
     private final MemberMapper memberMapper;
     private final BrokerMapper brokerMapper;
     private final HttpSession session;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
-    public SignUpResponse signUpMember(MemberSignUpRequest requestDto) {
-        checkDuplicatedId(requestDto.id());
+    public SignUpResponse signUpMember(MemberSignUpRequest memberRequest) {
+        checkDuplicatedId(memberRequest.id());
+        checkDuplicatedEmail(memberRequest.email());
 
         String salt = generateSalt();
-        String hashedPassword = hashPassword(requestDto.password(), salt);
+        String hashedPassword = hashPassword(memberRequest.password(), salt);
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         memberMapper.insertMember(
-                requestDto.id(), hashedPassword, salt, requestDto.email(),
-                requestDto.phoneNum(), requestDto.name());
+                memberRequest.id(), hashedPassword, salt, memberRequest.email(),
+                memberRequest.phoneNum(), memberRequest.name());
 
-        return new SignUpResponse(requestDto.id(), requestDto.email(), now);
+        return new SignUpResponse(memberRequest.id(), memberRequest.email(), now);
     }
 
 
     @Override
-    public SignUpResponse signUpBroker(BrokerSignUpRequest requestDto) {
-        checkDuplicatedId(requestDto.id());
+    public SignUpResponse signUpBroker(BrokerSignUpRequest brokerRequest) {
+        checkDuplicatedId(brokerRequest.id());
+        checkDuplicatedEmail(brokerRequest.email());
 
         String salt = generateSalt();
-        String hashedPassword = hashPassword(requestDto.password(), salt);
+        String hashedPassword = hashPassword(brokerRequest.password(), salt);
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
-        brokerMapper.insertBroker(requestDto.id(), requestDto.officeName(), requestDto.name(), requestDto.phoneNum(),
-                requestDto.address(), requestDto.licenseNum(), hashedPassword, salt, requestDto.email());
+        brokerMapper.insertBroker(brokerRequest.id(), brokerRequest.officeName(), brokerRequest.name(), brokerRequest.phoneNum(),
+                brokerRequest.address(), brokerRequest.licenseNum(), hashedPassword, salt, brokerRequest.email());
 
 
-        return new SignUpResponse(requestDto.id(), requestDto.email(), now);
+        return new SignUpResponse(brokerRequest.id(), brokerRequest.email(), now);
     }
 
     @Override
@@ -139,10 +142,17 @@ public class AuthServiceImpl implements AuthService {
         return passwordEncoder.encode(password + salt);
     }
 
+    // 이메일 중복 검사
+    private void checkDuplicatedEmail(String email) {
+        if (memberMapper.findByEmail(email).isPresent() || brokerMapper.findByEmail(email).isPresent()) {
+            throw new DuplicatedEmailException();
+        }
+    }
+
     // 아이디 중복 검사
     private void checkDuplicatedId(String id) {
         if (memberMapper.findById(id).isPresent() || brokerMapper.findById(id).isPresent()) {
-            throw new DuplicatedException();
+            throw new DuplicatedIdException();
         }
     }
 
