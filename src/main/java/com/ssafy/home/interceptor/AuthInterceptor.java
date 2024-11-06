@@ -18,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 로그인 여부 확인
         if (session == null || session.getAttribute(Session.TYPE.name()) == null) {
-            response.sendRedirect("/api/auth/login?redirectURL=" + requestURI);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그인이 필요합니다.");
             return false;
         }
 
