@@ -11,4 +11,6 @@ public interface AuthService {
     LoginDtoResponse login(LoginRequest loginRequest);
 
     void logout();
+
+    boolean deleteAccount(String userId, String userType);
 }
