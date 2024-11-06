@@ -3,7 +3,8 @@ package com.ssafy.home.auth.service;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.dto.*;
-import com.ssafy.home.auth.exception.DuplicateException;
+import com.ssafy.home.auth.exception.DeleteAccountFailedException;
+import com.ssafy.home.auth.exception.DuplicatedException;
 import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
@@ -82,6 +83,33 @@ public class AuthServiceImpl implements AuthService {
         session.invalidate();
     }
 
+    @Override
+    public boolean deleteAccount(String userId, String userType) {
+        if (userType.equals(UserType.MEMBER.name())) {
+            deleteMember(userId);
+            return true;
+        }
+
+        if (userType.equals(UserType.BROKER.name())) {
+            deleteBroker(userId);
+            return true;
+        }
+
+        throw new DeleteAccountFailedException("잘못된 회원 유형입니다.");
+    }
+
+    private void deleteBroker(String userId) {
+        if (brokerMapper.deleteById(userId) == 0) {
+            throw new DeleteAccountFailedException("해당 중개사가 존재하지 않습니다.");
+        }
+    }
+
+    private void deleteMember(String userId) {
+        if (memberMapper.deleteById(userId) == 0) {
+            throw new DeleteAccountFailedException("해당 회원이 존재하지 않습니다.");
+        }
+    }
+
 
     private LoginDtoResponse BrokerLogin(LoginRequest loginRequest, Optional<Broker> brokerOptional) {
         Broker broker = brokerOptional.get();
@@ -110,7 +138,7 @@ public class AuthServiceImpl implements AuthService {
     // 아이디 중복 검사
     private void checkDuplicatedId(String id) {
         if (memberMapper.findById(id).isPresent() || brokerMapper.findById(id).isPresent()) {
-            throw new DuplicateException();
+            throw new DuplicatedException();
         }
     }
 
