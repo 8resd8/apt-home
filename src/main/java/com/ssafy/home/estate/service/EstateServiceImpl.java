@@ -5,6 +5,7 @@ import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponseDto;
 import com.ssafy.home.estate.repository.EstateMapper;
 import com.ssafy.home.estate.dto.RegistEstateRequestDto;
+import com.ssafy.home.global.repository.UtilMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class EstateServiceImpl implements EstateService {
 
     private final EstateMapper estateMapper;
+    private final UtilMapper utilMapper;
 
     @Override
-    public void createEstate(RegistEstateRequestDto requestDto, Broker broker) {
+    public Long createEstate(RegistEstateRequestDto requestDto, Broker broker) {
+
         estateMapper.insertBrokerEstate(requestDto, broker.getBid());
+
+        return utilMapper.selectLastInsertId();
     }
 
     @Override
