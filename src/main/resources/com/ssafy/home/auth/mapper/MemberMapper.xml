@@ -11,6 +11,12 @@
         SELECT * FROM member WHERE mid = #{id}
     </select>
 
+    <select id="findByEmail" parameterType="String" resultType="com.ssafy.home.auth.domain.Member">
+        SELECT *
+        FROM member
+        WHERE email = #{email}
+    </select>
+
     <delete id="deleteById" parameterType="String">
         DELETE FROM member WHERE mid = #{id}
     </delete>

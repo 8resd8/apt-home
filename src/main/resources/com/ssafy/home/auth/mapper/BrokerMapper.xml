@@ -11,6 +11,12 @@
         SELECT * FROM broker WHERE bid = #{id}
     </select>
 
+    <select id="findByEmail" parameterType="String" resultType="com.ssafy.home.auth.domain.Broker">
+        SELECT *
+        FROM broker
+        WHERE email = #{email}
+    </select>
+
     <delete id="deleteById" parameterType="String">
         DELETE FROM broker WHERE bid = #{id}
     </delete>
