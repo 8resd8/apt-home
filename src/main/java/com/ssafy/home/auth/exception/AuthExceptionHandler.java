@@ -9,17 +9,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class AuthExceptionHandler {
 
     @ExceptionHandler(LoginFailedException.class)
-    public ResponseEntity<String> handleLogin(LoginFailedException ex) {
+    public ResponseEntity<String> loginFailed(LoginFailedException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
-    @ExceptionHandler(DuplicatedException.class)
-    public ResponseEntity<String> handleDuplicate(DuplicatedException ex) {
+    @ExceptionHandler(DuplicatedIdException.class)
+    public ResponseEntity<String> duplicatedId(DuplicatedIdException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleDeleteAccount(DeleteAccountFailedException ex) {
+    public ResponseEntity<String> duplicatedEmail(DuplicatedEmailException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> deletedAccount(DeleteAccountFailedException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
 }
