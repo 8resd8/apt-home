@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -39,9 +36,15 @@ public class AuthController {
         return new ResponseEntity<>(responseLogin, HttpStatus.CREATED);
     }
 
-    @PostMapping("/logout")
+    @DeleteMapping("/logout")
     public ResponseEntity<String> logout() {
         authService.logout();
         return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
+
+    @DeleteMapping("/delete/{userType}/{userId}")
+    public ResponseEntity<String> deleteAccount(@PathVariable String userId, @PathVariable String userType) {
+        authService.deleteAccount(userId, userType);
+        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
     }
 }
