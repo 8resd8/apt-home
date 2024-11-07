@@ -14,12 +14,11 @@ public class BrokerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
-        String requestURI = request.getRequestURI();
 
         String type = (String) session.getAttribute(Session.TYPE.name());
 
-        if (UserType.BROKER.name().equals(type) && requestURI.startsWith("/member")) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근 권한이 없습니다.");
+        if (!UserType.BROKER.name().equals(type)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "브로커만 접근할 수 있습니다.");
             return false;
         }
 
