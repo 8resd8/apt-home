@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AuthInterceptorTest {
+class BrokerInterceptorTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -36,10 +36,12 @@ class AuthInterceptorTest {
         // 멤버 세션 설정
         memberSession = new MockHttpSession();
         memberSession.setAttribute(Session.TYPE.name(), UserType.MEMBER.name());
+        memberSession.setAttribute(Session.MEMBER_ID.name(), "member1");
 
         // 브로커 세션 설정
         brokerSession = new MockHttpSession();
         brokerSession.setAttribute(Session.TYPE.name(), UserType.BROKER.name());
+        memberSession.setAttribute(Session.BROKER_ID.name(), "broker1");
     }
 
     @Test
