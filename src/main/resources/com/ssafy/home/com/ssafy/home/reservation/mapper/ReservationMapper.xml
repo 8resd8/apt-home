@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.reservation.repository.ReservationMapper">
+
+    <!-- 예약 추가 -->
+    <insert id="insertReservation">
+        INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status, created_at,
+                                 updated_at)
+        VALUES (#{reservation.memberId}, #{reservation.brokerId}, #{reservation.startTime}, #{reservation.endTime},
+                #{reservation.clientMemo}, #{reservation.status}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    </insert>
+
+    <!-- 예약 수정 -->
+    <update id="updateReservation">
+        UPDATE reservation
+        SET start_time  = #{reservation.startTime},
+            end_time    = #{reservation.endTime},
+            client_memo = #{reservation.clientMemo},
+            updated_at  = CURRENT_TIMESTAMP
+        WHERE rid = #{reservation.rid}
+    </update>
+
+    <!-- 예약 삭제 -->
+    <delete id="deleteReservation">
+        DELETE
+        FROM reservation
+        WHERE rid = #{rid}
+    </delete>
+
+    <!-- ID 예약 조회 -->
+    <select id="findReservationById" resultType="com.ssafy.home.reservation.domain.Reservation">
+        SELECT rid,
+               member_id   AS memberId,
+               broker_id   AS brokerId,
+               start_time  AS startTime,
+               end_time    AS endTime,
+               status,
+               client_memo AS clientMemo,
+               broker_memo AS brokerMemo,
+               broker_name AS brokerName,
+               created_at  AS createdAt,
+               updated_at  AS updatedAt
+        FROM reservation
+        WHERE rid = #{rid}
+    </select>
+
+    <!-- ID 모든 예약 조회 -->
+    <select id="findAllReservationsByMemberId" resultType="com.ssafy.home.reservation.domain.Reservation">
+        SELECT rid,
+               member_id   AS memberId,
+               broker_id   AS brokerId,
+               start_time  AS startTime,
+               end_time    AS endTime,
+               status,
+               client_memo AS clientMemo,
+               broker_memo AS brokerMemo,
+               broker_name AS brokerName,
+               created_at  AS createdAt,
+               updated_at  AS updatedAt
+        FROM reservation
+        WHERE member_id = #{memberId}
+    </select>
+
+</mapper>
