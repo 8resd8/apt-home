@@ -1,10 +1,10 @@
 package com.ssafy.home.favorite.controller;
 
-import com.ssafy.home.annotation.Login;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.favorite.domain.Favorite;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
 import com.ssafy.home.favorite.service.FavoriteService;
+import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
