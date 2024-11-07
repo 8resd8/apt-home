@@ -1,7 +1,7 @@
 package com.ssafy.home.interceptor;
 
-import com.ssafy.home.enums.Session;
-import com.ssafy.home.enums.UserType;
+import com.ssafy.home.global.enums.Session;
+import com.ssafy.home.global.enums.UserType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
