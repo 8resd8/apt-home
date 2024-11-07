@@ -16,8 +16,24 @@ public class AuthInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession(false);
         String requestURI = request.getRequestURI();
 
+        // 로그인 여부 확인
         if (session == null || session.getAttribute(Session.TYPE.name()) == null) {
-            response.sendRedirect("/api/auth/login?redirectURL=" + requestURI);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그인이 필요합니다.");
+            return false;
+        }
+
+        // 사용자 유형 확인
+        String type = (String) session.getAttribute(Session.TYPE.name());
+
+        // 멤버는 /broker 경로 갈 수 없음
+        if (UserType.MEMBER.name().equals(type) && requestURI.startsWith("/broker")) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근 권한이 없습니다.");
+            return false;
+        }
+
+        // 브로커는 /member 경로 갈 수 없음
+        if (UserType.BROKER.name().equals(type) && requestURI.startsWith("/member")) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근 권한이 없습니다.");
             return false;
         }
 
