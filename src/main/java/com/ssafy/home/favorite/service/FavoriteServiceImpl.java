@@ -3,6 +3,7 @@ package com.ssafy.home.favorite.service;
 
 import com.ssafy.home.favorite.domain.Favorite;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
+import com.ssafy.home.favorite.exception.DeleteFailException;
 import com.ssafy.home.favorite.exception.DuplicateFavoriteException;
 import com.ssafy.home.favorite.repository.FavoriteMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public void removeFavorite(FavoriteAddRequest request) {
-        favoriteMapper.deleteFavorite(request.memberId(), request.estateId());
+        if (favoriteMapper.deleteFavorite(request.memberId(), request.estateId()) == 0) {
+            throw new DeleteFailException("삭제 실패했습니다.");
+        }
     }
 
     @Override
