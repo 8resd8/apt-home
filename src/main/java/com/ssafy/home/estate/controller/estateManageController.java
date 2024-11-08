@@ -28,6 +28,14 @@ public class estateManageController {
     @PutMapping
     public ResponseEntity<?> updateEstate(@Validated @RequestBody UpdateEstateRequest requestDto, @Login Broker broker) {
         estateService.updateEstate(requestDto, broker);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{eid}")
+    public ResponseEntity<?> deleteEstate(@PathVariable Long eid, @Login Broker broker) {
+        estateService.deleteEstate(eid, broker);
+
         return ResponseEntity.ok().build();
     }
 }
