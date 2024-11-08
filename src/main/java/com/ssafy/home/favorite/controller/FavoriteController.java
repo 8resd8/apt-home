@@ -31,6 +31,7 @@ public class FavoriteController {
         favoriteService.removeFavorite(new FavoriteAddRequest(member.getMid(), request.estateId()));
     }
 
+    // List 브로커 ID도 같이 응답해야한다.
     @GetMapping
     public ResponseEntity<List<Favorite>> getFavoriteAll(@Login Member member) {
         List<Favorite> favorites = favoriteService.getFavoriteAll(member.getMid());
