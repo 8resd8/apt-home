@@ -28,7 +28,7 @@ public class ReservationServiceImpl implements ReservationService {
                 .status(ReservationStatus.NOT_RESERVED.name()) // 기본 상태
                 .build();
 
-        reservationMapper.insertReservation(reservation);
+        reservationMapper.insertReservation(reservation, memberId);
 
         // 매물 예약 연관 관계 설정
         for (Long estateId : request.estateIds()) {
