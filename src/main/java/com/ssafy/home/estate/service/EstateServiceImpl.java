@@ -42,7 +42,7 @@ public class EstateServiceImpl implements EstateService {
     public void updateEstate(UpdateEstateRequest requestDto, Broker broker) {
         Estate estate = findEstateById(requestDto.eid());
 
-        if(estate.getBrokerId() != broker.getBid())
+        if(!estate.getBrokerId().equals(broker.getBid()))
             throw new ForbiddenException();
 
         int result = estateMapper.updateEstate(requestDto);
