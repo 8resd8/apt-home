@@ -1,7 +1,9 @@
 package com.ssafy.home.global.config;
 
-import com.ssafy.home.global.interceptor.AuthInterceptor;
+import com.ssafy.home.global.interceptor.BrokerInterceptor;
 import com.ssafy.home.global.interceptor.AuthLoginResolver;
+import com.ssafy.home.global.interceptor.LoginInterceptor;
+import com.ssafy.home.global.interceptor.MemberInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -14,15 +16,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final AuthInterceptor authInterceptor;
+    private final BrokerInterceptor brokerInterceptor;
+    private final MemberInterceptor memberInterceptor;
     private final AuthLoginResolver loginUserArgumentResolver;
+    private final LoginInterceptor loginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor)
+        registry.addInterceptor(loginInterceptor)
                 .order(1)
-                .addPathPatterns("/member/**", "/broker/**")
-                .excludePathPatterns("/api/auth/login", "/api/auth/signup/**", "/api/auth/logout",  "/", "/error", "/css/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/api/auth/**",  "/", "/estate/view/**");
+
+        registry.addInterceptor(memberInterceptor)
+                .order(2)
+                .addPathPatterns("/member/**");
+
+        registry.addInterceptor(brokerInterceptor)
+                .order(3)
+                .addPathPatterns("/broker/**");
     }
 
     @Override

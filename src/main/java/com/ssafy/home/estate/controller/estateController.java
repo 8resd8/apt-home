@@ -26,7 +26,7 @@ public class estateController {
         return ResponseEntity.ok().body(createdId);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/view/{id}")
     public ResponseEntity<EstateDetailResponseDto> getEstate(@PathVariable Long id) {
         EstateDetailResponseDto responseDto = estateService.findEstateDetailById(id);
 
