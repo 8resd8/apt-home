@@ -29,7 +29,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public Estate findEstateById(Long id) {
-        return estateMapper.selectEstate(id);
+        return estateMapper.selectEstate(id).orElseThrow();
     }
 
     @Override

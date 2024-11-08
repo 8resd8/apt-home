@@ -6,12 +6,14 @@ import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Optional;
+
 @Mapper
 public interface EstateMapper {
     void insertBrokerEstate(@Param("brokerEstate") RegistEstateRequest requestDto, @Param("brokerId") String brokerId);
 
     EstateDetailResponse selectEstateDetail(@Param("eid") Long id);
 
+    Optional<Estate> selectEstate(@Param("id") Long id);
 
-    Estate selectEstate(@Param("id") Long id);
 }
