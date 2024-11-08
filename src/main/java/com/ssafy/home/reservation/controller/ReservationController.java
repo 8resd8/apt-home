@@ -3,7 +3,7 @@ package com.ssafy.home.reservation.controller;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.reservation.domain.Reservation;
-import com.ssafy.home.reservation.dto.ReservationAddRequest;
+import com.ssafy.home.reservation.dto.ReservationCreateRequest;
 import com.ssafy.home.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,13 +21,13 @@ public class ReservationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addReservation(@Login Member member, @RequestBody ReservationAddRequest request) {
-        reservationService.addReservation(request);
+    public void createReservation(@Login Member member, @RequestBody ReservationCreateRequest request) {
+        reservationService.createReservation(request, member.getMid());
     }
 
     @PutMapping("/{rid}")
-    public ResponseEntity<Void> updateReservation(@PathVariable Long rid, @RequestBody ReservationAddRequest request) {
-        reservationService.updateReservation(rid, request);
+    public ResponseEntity<Void> updateReservation(@Login Member member, @PathVariable Long rid, @RequestBody ReservationCreateRequest request) {
+        reservationService.updateReservation(rid, request, member.getMid());
         return ResponseEntity.ok().build();
     }
 
@@ -45,7 +45,7 @@ public class ReservationController {
 
     @GetMapping
     public ResponseEntity<List<Reservation>> getReservations(@Login Member member) {
-        List<Reservation> reservations = reservationService.getReservationsByMember(member.getMid());
+        List<Reservation> reservations = reservationService.getAllReservationByMember(member.getMid());
         return ResponseEntity.ok(reservations);
     }
 }
