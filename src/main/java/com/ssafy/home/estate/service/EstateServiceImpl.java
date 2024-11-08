@@ -36,4 +36,14 @@ public class EstateServiceImpl implements EstateService {
     public EstateDetailResponse findEstateDetailById(Long id) {
         return estateMapper.selectEstateDetail(id);
     }
+
+    @Override
+    public void updateEstate(UpdateEstateRequest requestDto, Broker broker) {
+        Estate estate = findEstateById(requestDto.eid());
+
+        if(estate.getBrokerId() != broker.getBid())
+            ;
+
+        int result = estateMapper.updateEstate(requestDto);
+    }
 }

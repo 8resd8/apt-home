@@ -24,4 +24,10 @@ public class estateManageController {
 
         return ResponseEntity.ok().body(createdId);
     }
+
+    @PutMapping
+    public ResponseEntity<?> updateEstate(@Validated @RequestBody UpdateEstateRequest requestDto, @Login Broker broker) {
+        estateService.updateEstate(requestDto, broker);
+        return ResponseEntity.ok().build();
+    }
 }
