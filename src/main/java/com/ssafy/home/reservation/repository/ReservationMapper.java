@@ -1,6 +1,5 @@
 package com.ssafy.home.reservation.repository;
 
-import com.ssafy.home.favorite.domain.Favorite;
 import com.ssafy.home.reservation.domain.Reservation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -10,7 +9,7 @@ import java.util.Optional;
 
 @Mapper
 public interface ReservationMapper {
-    int insertReservation(@Param("reservation") Reservation reservation);
+    int insertReservation(@Param("reservation") Reservation reservation, @Param("memberId") String id);
 
     int insertReservationEstate(@Param("reservationId") Long reservationId, @Param("estateId") Long estateId);
 
