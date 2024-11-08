@@ -4,8 +4,8 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.dto.BrokerSignUpRequest;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.service.AuthService;
-import com.ssafy.home.estate.dto.EstateDetailResponseDto;
-import com.ssafy.home.estate.dto.RegistEstateRequestDto;
+import com.ssafy.home.estate.dto.EstateDetailResponse;
+import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.global.enums.estateType;
 import com.ssafy.home.global.repository.UtilMapper;
 import org.junit.jupiter.api.Assertions;
@@ -59,7 +59,7 @@ public class EstateServiceTest {
     @Test
     public void postEstate() {
         //given
-        RegistEstateRequestDto requestDto = new RegistEstateRequestDto(
+        RegistEstateRequest requestDto = new RegistEstateRequest(
                 "11110-100",
                 estateType.매매,
                 "200000",
@@ -82,7 +82,7 @@ public class EstateServiceTest {
     @Test
     public void getEstate() {
         //given
-        RegistEstateRequestDto requestDto = new RegistEstateRequestDto(
+        RegistEstateRequest requestDto = new RegistEstateRequest(
                 "11110-100",
                 estateType.매매,
                 "200000",
@@ -95,7 +95,7 @@ public class EstateServiceTest {
         Long createdId = utilMapper.selectLastInsertId();
 
         //when
-        EstateDetailResponseDto responseDto = estateService.findEstateDetailById(createdId);
+        EstateDetailResponse responseDto = estateService.findEstateDetailById(createdId);
 
         //then
         Assertions.assertNotNull(responseDto);

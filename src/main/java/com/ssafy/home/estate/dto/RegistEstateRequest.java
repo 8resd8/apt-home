@@ -4,7 +4,7 @@ import com.ssafy.home.global.enums.estateType;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
-public record RegistEstateRequestDto(
+public record RegistEstateRequest(
         @NotNull(message = "{required.field}")
         @Length(max = 20, message = "{size.max}")
         String aptSeq,
