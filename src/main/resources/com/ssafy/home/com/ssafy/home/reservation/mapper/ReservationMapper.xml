@@ -5,10 +5,9 @@
 
     <!-- 예약 추가 -->
     <insert id="insertReservation">
-        INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status, created_at,
-                                 updated_at)
+        INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status)
         VALUES (#{reservation.memberId}, #{reservation.brokerId}, #{reservation.startTime}, #{reservation.endTime},
-                #{reservation.clientMemo}, #{reservation.status}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                #{reservation.clientMemo}, #{reservation.status})
     </insert>
 
     <!-- 예약 수정 -->
@@ -16,8 +15,7 @@
         UPDATE reservation
         SET start_time  = #{reservation.startTime},
             end_time    = #{reservation.endTime},
-            client_memo = #{reservation.clientMemo},
-            updated_at  = CURRENT_TIMESTAMP
+            client_memo = #{reservation.clientMemo}
         WHERE rid = #{reservation.rid}
     </update>
 
@@ -61,5 +59,15 @@
         FROM reservation
         WHERE member_id = #{memberId}
     </select>
+
+    <insert id="insertReservation" useGeneratedKeys="true" keyProperty="rid">
+        INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status)
+        VALUES (#{memberId}, #{brokerId}, #{startTime}, #{endTime}, #{clientMemo}, #{status})
+    </insert>
+
+    <insert id="insertReservationEstate">
+        INSERT INTO reservation_estate (reservation_id, estate_id)
+        VALUES (#{reservationId}, #{estateId})
+    </insert>
 
 </mapper>
