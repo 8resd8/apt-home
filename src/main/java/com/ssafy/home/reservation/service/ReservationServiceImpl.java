@@ -1,13 +1,13 @@
 package com.ssafy.home.reservation.service;
 
-import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.reservation.domain.Reservation;
-import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationAddRequest;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -18,30 +18,25 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationMapper reservationMapper;
 
     @Override
-    public void createReservation(ReservationCreateRequest request, String memberId) {
+    public void addReservation(ReservationAddRequest request) {
         Reservation reservation = Reservation.builder()
-                .memberId(memberId)
+                .memberId(request.memberId())
                 .brokerId(request.brokerId())
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .clientMemo(request.clientMemo())
-                .status(ReservationStatus.NOT_RESERVED.name()) // 기본 상태
+                .status("PENDING")
                 .build();
 
-        reservationMapper.insertReservation(reservation, memberId);
-
-        // 매물 예약 연관 관계 설정
-        for (Long estateId : request.estateIds()) {
-            reservationMapper.insertReservationEstate(reservation.getRid(), estateId);
-        }
+        reservationMapper.insertReservation(reservation);
     }
 
-
     @Override
-    public void updateReservation(Long rid, ReservationCreateRequest request, String memberId) {
+    public void updateReservation(Long rid, ReservationAddRequest request) {
         Reservation reservation = Reservation.builder()
                 .rid(rid)
-                .memberId(memberId)
+                .memberId(request.memberId())
+                .brokerId(request.brokerId())
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .clientMemo(request.clientMemo())
@@ -60,7 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> getAllReservationByMember(String memberId) {
+    public List<Reservation> getReservationsByMember(String memberId) {
         return reservationMapper.findAllReservationsByMemberId(memberId);
     }
 }

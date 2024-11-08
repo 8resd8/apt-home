@@ -9,9 +9,7 @@ import java.util.Optional;
 
 @Mapper
 public interface ReservationMapper {
-    int insertReservation(@Param("reservation") Reservation reservation, @Param("memberId") String id);
-
-    int insertReservationEstate(@Param("reservationId") Long reservationId, @Param("estateId") Long estateId);
+    int insertReservation(@Param("reservation") Reservation reservation);
 
     int updateReservation(@Param("reservation") Reservation reservation);
 
@@ -20,6 +18,4 @@ public interface ReservationMapper {
     Optional<Reservation> findReservationById(@Param("rid") Long rid);
 
     List<Reservation> findAllReservationsByMemberId(@Param("memberId") String memberId);
-
-
 }

@@ -1,20 +1,18 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.reservation.domain.Reservation;
-import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationAddRequest;
 
 import java.util.List;
 
 public interface ReservationService {
-    void updateReservation(Long rid, ReservationCreateRequest request, String memberId);
+    void addReservation(ReservationAddRequest request);
+
+    void updateReservation(Long rid, ReservationAddRequest request);
 
     void deleteReservation(Long rid);
 
     Reservation getReservation(Long rid);
 
-    List<Reservation> getAllReservationByMember(String memberId);
-
-    void createReservation(ReservationCreateRequest request, String memberId);
-
-
+    List<Reservation> getReservationsByMember(String memberId);
 }
