@@ -1,6 +1,6 @@
 package com.ssafy.home.estate.dto;
 
-public record EstateDetailResponseDto(
+public record EstateDetailResponse(
         //매물 정보
         Long eid,
         String type,
