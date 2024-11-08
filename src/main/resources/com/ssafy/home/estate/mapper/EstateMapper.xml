@@ -38,4 +38,9 @@
         WHERE eid = #{eid}
     </update>
 
+    <delete id="deleteEstate">
+        DELETE FROM estate
+        WHERE eid = #{eid}
+    </delete>
+
 </mapper>

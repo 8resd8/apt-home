@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -46,5 +48,15 @@ public class EstateServiceImpl implements EstateService {
             throw new ForbiddenException();
 
         int result = estateMapper.updateEstate(requestDto);
+    }
+
+    @Override
+    public void deleteEstate(Long eid, Broker broker) {
+        Estate estate = findEstateById(eid);
+
+        if(!estate.getBrokerId().equals(broker.getBid()))
+            throw new ForbiddenException();
+
+        int result = estateMapper.deleteEstate(eid);
     }
 }

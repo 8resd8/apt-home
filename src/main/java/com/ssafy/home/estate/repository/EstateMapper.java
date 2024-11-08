@@ -17,4 +17,6 @@ public interface EstateMapper {
     Optional<Estate> selectEstate(@Param("id") Long id);
 
     int updateEstate(UpdateEstateRequest requestDto);
+
+    int deleteEstate(Long eid);
 }

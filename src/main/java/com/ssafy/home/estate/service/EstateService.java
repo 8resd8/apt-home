@@ -14,4 +14,6 @@ public interface EstateService {
     EstateDetailResponse findEstateDetailById(Long id);
 
     void updateEstate(UpdateEstateRequest requestDto, Broker broker);
+
+    void deleteEstate(Long eid, Broker broker);
 }
