@@ -4,6 +4,7 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
+import com.ssafy.home.estate.exception.ForbiddenException;
 import com.ssafy.home.estate.repository.EstateMapper;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.global.repository.UtilMapper;
@@ -42,7 +43,7 @@ public class EstateServiceImpl implements EstateService {
         Estate estate = findEstateById(requestDto.eid());
 
         if(estate.getBrokerId() != broker.getBid())
-            ;
+            throw new ForbiddenException();
 
         int result = estateMapper.updateEstate(requestDto);
     }
