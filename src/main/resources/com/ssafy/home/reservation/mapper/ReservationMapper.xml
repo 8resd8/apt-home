@@ -4,11 +4,16 @@
 <mapper namespace="com.ssafy.home.reservation.repository.ReservationMapper">
 
     <!-- 예약 추가 -->
-    <insert id="insertReservation">
+    <insert id="insertReservation" useGeneratedKeys="true" keyProperty="rid">
         INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status)
-        VALUES (#{reservation.memberId}, #{reservation.brokerId}, #{reservation.startTime}, #{reservation.endTime},
-                #{reservation.clientMemo}, #{reservation.status})
+        VALUES (#{memberId}, #{brokerId}, #{startTime}, #{endTime}, #{clientMemo}, #{status})
     </insert>
+
+<!--    <insert id="insertReservation">-->
+<!--        INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status)-->
+<!--        VALUES (#{memberId}, #{reservation.brokerId}, #{reservation.startTime}, #{reservation.endTime},-->
+<!--                #{reservation.clientMemo}, #{reservation.status})-->
+<!--    </insert>-->
 
     <!-- 예약 수정 -->
     <update id="updateReservation">
@@ -59,11 +64,6 @@
         FROM reservation
         WHERE member_id = #{memberId}
     </select>
-
-    <insert id="insertReservation" useGeneratedKeys="true" keyProperty="rid">
-        INSERT INTO reservation (member_id, broker_id, start_time, end_time, client_memo, status)
-        VALUES (#{memberId}, #{brokerId}, #{startTime}, #{endTime}, #{clientMemo}, #{status})
-    </insert>
 
     <insert id="insertReservationEstate">
         INSERT INTO reservation_estate (reservation_id, estate_id)
