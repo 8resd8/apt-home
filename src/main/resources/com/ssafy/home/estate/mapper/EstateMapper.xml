@@ -32,4 +32,10 @@
         WHERE eid = #{id}
     </select>
 
+    <update id="updateEstate">
+        UPDATE estate
+        SET type=#{type}, amount=#{amount}, floor=#{floor}, total_floor=#{totalFloor}, area=#{area}, `desc`=#{desc}
+        WHERE eid = #{eid}
+    </update>
+
 </mapper>
