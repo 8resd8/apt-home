@@ -16,7 +16,7 @@
     </insert>
 
     <!-- Select Estate Detail -->
-    <select id="selectEstateDetail" resultType="com.ssafy.home.estate.dto.EstateDetailResponseDto">
+    <select id="selectEstateDetail" resultType="com.ssafy.home.estate.dto.EstateDetailResponse">
         SELECT e.eid, e.type, e.status, e.floor, e.total_floor, e.area, e.amount, e.desc,
                e.broker_id, b.office_name, b.phone_num, b.address, b.license_num,
                h.apt_nm, h.build_year, h.road_nm, h.road_nm_bonbun
@@ -31,6 +31,23 @@
         SELECT * FROM estate
         WHERE eid = #{id}
     </select>
+
+    <update id="updateEstate">
+        UPDATE estate
+        SET type=#{type},
+            amount=#{amount},
+            floor=#{floor},
+            total_floor=#{totalFloor},
+            area=#{area},
+            `desc`=#{desc}
+        WHERE eid = #{eid}
+    </update>
+
+    <delete id="deleteEstate">
+        DELETE
+        FROM estate
+        WHERE eid = #{eid}
+    </delete>
 
     <!-- broker id 조회 -->
     <select id="findBrokerIdByEstateId" resultType="java.lang.String">
