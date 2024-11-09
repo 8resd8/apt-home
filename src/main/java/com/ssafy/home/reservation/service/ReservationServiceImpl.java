@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,17 +62,24 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationResponse getReservation(Long rid) {
         Reservation reservation = reservationMapper.findReservationById(rid)
                 .orElseThrow(() -> new NotFoundReservation(rid));
+
         return toReservationResponse(reservation);
     }
 
     @Override
     public List<ReservationResponse> getReservationsByMember(String memberId) {
         List<Reservation> allReservations = reservationMapper.findAllReservationsByMemberId(memberId);
-        if (allReservations.isEmpty()) throw new NotFoundReservation();
 
-        return allReservations.stream()
-                .map(this::toReservationResponse)
-                .collect(Collectors.toList());
+        if (allReservations.isEmpty()) {
+            throw new NotFoundReservation();
+        }
+
+        List<ReservationResponse> reservationResponses = new ArrayList<>();
+        for (Reservation reservation : allReservations) {
+            reservationResponses.add(toReservationResponse(reservation));
+        }
+
+        return reservationResponses;
     }
 
     private ReservationResponse toReservationResponse(Reservation reservation) {
