@@ -8,6 +8,7 @@ import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +22,13 @@ public class FavoriteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // code: 201
-    public void addFavorite(@Login Member member, @RequestBody FavoriteAddRequest request) {
+    public void addFavorite(@Login Member member, @Validated @RequestBody FavoriteAddRequest request) {
         favoriteService.addFavorite(new FavoriteAddRequest(member.getMid(), request.estateId()));
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT) // code: 204
-    public void removeFavorite(@Login Member member, @RequestBody FavoriteAddRequest request) {
+    public void removeFavorite(@Login Member member, @Validated @RequestBody FavoriteAddRequest request) {
         favoriteService.removeFavorite(new FavoriteAddRequest(member.getMid(), request.estateId()));
     }
 
