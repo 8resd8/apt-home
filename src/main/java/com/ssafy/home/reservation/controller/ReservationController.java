@@ -35,7 +35,7 @@ public class ReservationController {
     @GetMapping("/{rid}")
     public ResponseEntity<Reservation> getReservation(@PathVariable Long rid) {
         Reservation reservation = reservationService.getReservation(rid);
-        return reservation != null ? ResponseEntity.ok(reservation) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(reservation);
     }
 
     @GetMapping
