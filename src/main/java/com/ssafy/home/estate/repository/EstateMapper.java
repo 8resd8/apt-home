@@ -12,4 +12,6 @@ public interface EstateMapper {
     EstateDetailResponseDto selectEstateDetail(@Param("eid") Long id);
 
     Estate selectEstate(@Param("id") Long id);
+
+    String findBrokerIdByEstateId(Long estateId);
 }

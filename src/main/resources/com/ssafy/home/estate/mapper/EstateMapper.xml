@@ -32,4 +32,12 @@
         WHERE eid = #{id}
     </select>
 
+    <!-- broker id 조회 -->
+    <select id="findBrokerIdByEstateId" resultType="java.lang.String">
+        SELECT broker_id
+        FROM estate
+        WHERE eid = #{estateId}
+    </select>
+
+
 </mapper>
