@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class Estate {
     Long eid;
+    String brokerId;
     estateType type;
     String status;
     Integer floor;
