@@ -9,11 +9,15 @@ import java.util.Optional;
 
 @Mapper
 public interface ReservationMapper {
-    int insertReservation(@Param("reservation") Reservation reservation);
 
-    int updateReservation(@Param("reservation") Reservation reservation);
+    void insertReservation(Reservation reservation);
 
-    int deleteReservation(@Param("rid") Long rid);
+    void insertReservationEstate(@Param("reservationId") Long reservationId,
+                                 @Param("estateId") Long estateId,
+                                 @Param("memo") String memo);
+
+    int updateReservation(Reservation reservation);
+
 
     Optional<Reservation> findReservationById(@Param("rid") Long rid);
 
