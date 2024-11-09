@@ -4,6 +4,7 @@ import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationResponse;
 import com.ssafy.home.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,14 +34,14 @@ public class ReservationController {
     }
 
     @GetMapping("/{rid}")
-    public ResponseEntity<Reservation> getReservation(@PathVariable Long rid) {
-        Reservation reservation = reservationService.getReservation(rid);
+    public ResponseEntity<ReservationResponse> getReservation(@PathVariable Long rid) {
+        ReservationResponse reservation = reservationService.getReservation(rid);
         return ResponseEntity.ok(reservation);
     }
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getReservations(@Login Member member) {
-        List<Reservation> reservations = reservationService.getReservationsByMember(member.getMid());
+    public ResponseEntity<List<ReservationResponse>> getReservations(@Login Member member) {
+        List<ReservationResponse> reservations = reservationService.getReservationsByMember(member.getMid());
         return ResponseEntity.ok(reservations);
     }
 }

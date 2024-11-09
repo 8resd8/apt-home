@@ -1,9 +1,9 @@
 package com.ssafy.home.reservation.service;
 
-import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationResponse;
 import com.ssafy.home.reservation.exception.NotFoundReservation;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,14 +59,33 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation getReservation(Long rid) {
-        return reservationMapper.findReservationById(rid).orElseThrow(() -> new NotFoundReservation(rid));
+    public ReservationResponse getReservation(Long rid) {
+        Reservation reservation = reservationMapper.findReservationById(rid)
+                .orElseThrow(() -> new NotFoundReservation(rid));
+        return toReservationResponse(reservation);
     }
 
     @Override
-    public List<Reservation> getReservationsByMember(String memberId) {
-        List<Reservation> allReservation = reservationMapper.findAllReservationsByMemberId(memberId);
-        if (allReservation.isEmpty()) throw new NotFoundReservation();
-        return allReservation;
+    public List<ReservationResponse> getReservationsByMember(String memberId) {
+        List<Reservation> allReservations = reservationMapper.findAllReservationsByMemberId(memberId);
+        if (allReservations.isEmpty()) throw new NotFoundReservation();
+
+        return allReservations.stream()
+                .map(this::toReservationResponse)
+                .collect(Collectors.toList());
+    }
+
+    private ReservationResponse toReservationResponse(Reservation reservation) {
+        return new ReservationResponse(
+                reservation.getRid(),
+                reservation.getMemberId(),
+                reservation.getBrokerId(),
+                reservation.getStartTime(),
+                reservation.getEndTime(),
+                reservation.getStatus(),
+                reservation.getClientMemo(),
+                reservation.getBrokerMemo(),
+                reservation.getBrokerName()
+        );
     }
 }

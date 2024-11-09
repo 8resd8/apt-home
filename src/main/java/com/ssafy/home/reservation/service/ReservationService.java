@@ -1,7 +1,7 @@
 package com.ssafy.home.reservation.service;
 
-import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface ReservationService {
 
     void updateReservation(Long rid, String memberId, ReservationCreateRequest request);
 
-    Reservation getReservation(Long rid);
+    ReservationResponse getReservation(Long rid);
 
-    List<Reservation> getReservationsByMember(String memberId);
+    List<ReservationResponse> getReservationsByMember(String memberId);
 }
