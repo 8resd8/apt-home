@@ -1,8 +1,8 @@
 package com.ssafy.home.favorite.controller;
 
 import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.favorite.domain.Favorite;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
+import com.ssafy.home.favorite.dto.FavoriteResponse;
 import com.ssafy.home.favorite.service.FavoriteService;
 import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +32,9 @@ public class FavoriteController {
         favoriteService.removeFavorite(new FavoriteAddRequest(member.getMid(), request.estateId()));
     }
 
-    // List 브로커 ID도 같이 응답해야한다.
     @GetMapping
-    public ResponseEntity<List<Favorite>> getFavoriteAll(@Login Member member) {
-        List<Favorite> favorites = favoriteService.getFavoriteAll(member.getMid());
+    public ResponseEntity<List<FavoriteResponse>> getFavoriteAll(@Login Member member) {
+        List<FavoriteResponse> favorites = favoriteService.getFavoriteAll(member.getMid());
         return ResponseEntity.ok().body(favorites);
     }
 
