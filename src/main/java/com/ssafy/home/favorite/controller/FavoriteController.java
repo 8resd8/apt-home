@@ -23,13 +23,13 @@ public class FavoriteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // code: 201
     public void addFavorite(@Login Member member, @Validated @RequestBody FavoriteAddRequest request) {
-        favoriteService.addFavorite(new FavoriteAddRequest(member.getMid(), request.estateId()));
+        favoriteService.addFavorite(member, request);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT) // code: 204
     public void removeFavorite(@Login Member member, @Validated @RequestBody FavoriteAddRequest request) {
-        favoriteService.removeFavorite(new FavoriteAddRequest(member.getMid(), request.estateId()));
+        favoriteService.removeFavorite(member, request);
     }
 
     @GetMapping
