@@ -1,7 +1,16 @@
 package com.ssafy.home.global.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ReservationStatus {
-    NOT_RESERVED,
-    RESERVED,
-    COMPLETED
+    CREATED("Created"),
+    RESERVED("Reserved"),
+    COMPLETED("Completed");
+
+    private final String value;
+
+    ReservationStatus(String value) {
+        this.value = value;
+    }
 }
