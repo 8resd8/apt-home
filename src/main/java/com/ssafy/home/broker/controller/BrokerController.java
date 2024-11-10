@@ -2,6 +2,7 @@ package com.ssafy.home.broker.controller;
 
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.broker.dto.BrokerInfoResponse;
+import com.ssafy.home.broker.dto.BrokerUpdateRequest;
 import com.ssafy.home.broker.service.BrokerService;
 import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,12 @@ public class BrokerController {
         BrokerInfoResponse responseDto = brokerService.getBrokerInfo(broker);
 
         return ResponseEntity.ok().body(responseDto);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateBroker(@Login Broker broker, @RequestBody BrokerUpdateRequest requestDto) {
+        brokerService.updateBroker(broker, requestDto);
+
+        return ResponseEntity.ok().build();
     }
 }
