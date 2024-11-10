@@ -14,7 +14,7 @@ public class ReviewExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleNotComplete(NotCompleteReviewRxception ex) {
+    public ResponseEntity<String> handleNotComplete(NotCompleteReviewException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
