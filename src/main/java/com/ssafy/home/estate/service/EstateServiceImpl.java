@@ -30,11 +30,13 @@ public class EstateServiceImpl implements EstateService {
         return utilMapper.selectLastInsertId();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Estate findEstateById(Long id) {
         return estateMapper.selectEstate(id).orElseThrow(() -> new NoSuchElementException("해당 매물을 찾을 수 없습니다."));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public EstateDetailResponse findEstateDetailById(Long id) {
         return estateMapper.selectEstateDetail(id);
