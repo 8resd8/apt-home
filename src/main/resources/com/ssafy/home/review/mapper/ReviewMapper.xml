@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.review.repository.ReviewMapper">
+
+    <!-- 리뷰 작성 -->
+    <insert id="insertReview">
+        INSERT INTO review (reservation_id, member_id, broker_id, review_content, review_rating)
+        VALUES (#{reservationId}, #{memberId}, #{brokerId}, #{reviewContent}, #{reviewRating})
+    </insert>
+
+    <!-- 리뷰 조회 - 특정 예약에 대한 리뷰가 있는지 확인 -->
+    <select id="findReviewById" resultType="com.ssafy.home.review.domain.Review">
+        SELECT review_id      AS reviewId,
+               reservation_id AS reservationId,
+               member_id      AS memberId,
+               broker_id      AS brokerId,
+               review_content AS reviewContent,
+               broker_comment AS brokerComment,
+               review_rating  AS reviewRating,
+               created_at     AS createdAt
+        FROM review
+        WHERE reservation_id = #{rId}
+    </select>
+
+</mapper>
