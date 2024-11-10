@@ -65,5 +65,9 @@ public class EstateServiceImpl implements EstateService {
         if(estateMapper.deleteEstate(eid) == 0)
             throw new CustomException(HttpStatus.NOT_FOUND, "삭제에 실패했습니다.");
     }
+
+    @Override
+    public List<Estate> getEstateListByRegionCode(String sgg, String umd) {
+        return estateMapper.getEstateListByRegionCode(sgg, umd);
     }
 }

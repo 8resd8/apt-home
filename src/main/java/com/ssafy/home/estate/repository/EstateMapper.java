@@ -6,6 +6,7 @@ import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -19,4 +20,6 @@ public interface EstateMapper {
     int updateEstate(UpdateEstateRequest requestDto);
 
     int deleteEstate(Long eid);
+
+    List<Estate> getEstateListByRegionCode(@Param("sgg") String sgg, @Param("umd") String umd);
 }

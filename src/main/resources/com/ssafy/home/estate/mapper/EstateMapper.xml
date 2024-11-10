@@ -43,4 +43,14 @@
         WHERE eid = #{eid}
     </delete>
 
+    <select id="getEstateListByRegionCode">
+        SELECT *
+        FROM estate e
+        WHERE e.apt_seq IN (
+            SELECT apt_seq
+            FROM houseinfos
+            WHERE sgg_cd=#{sgg} AND umd_cd=#{umd}
+        );
+    </select>
+
 </mapper>
