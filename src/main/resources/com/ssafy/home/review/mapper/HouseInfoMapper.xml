@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.review.repository.HouseInfoMapper">
+
+    <select id="findHouseInfoById" resultType="com.ssafy.home.review.domain.HouseInfo">
+        SELECT hi.*
+        FROM reservation r
+                 JOIN reservation_estate re ON r.rid = re.reservation_id
+                 JOIN estate e ON re.estate_id = e.eid
+                 JOIN houseinfos hi ON e.apt_seq = hi.apt_seq
+        WHERE r.rid = #{rid}
+    </select>
+
+</mapper>
