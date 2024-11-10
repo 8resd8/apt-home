@@ -31,4 +31,16 @@ public class estateController {
 
         return ResponseEntity.ok().body(list);
     }
+
+    @GetMapping
+    public ResponseEntity<List<Estate>> getPropertiesByCoordinates(
+            @RequestParam("lat_min") double latMin,
+            @RequestParam("lat_max") double latMax,
+            @RequestParam("lng_min") double lngMin,
+            @RequestParam("lng_max") double lngMax) {
+
+        List list = estateService.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
+
+        return ResponseEntity.ok().body(list);
+    }
 }

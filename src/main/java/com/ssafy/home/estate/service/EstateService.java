@@ -19,4 +19,6 @@ public interface EstateService {
     void deleteEstate(Long eid, Broker broker);
 
     List<Estate> getEstateListByRegionCode(String sgg, String umd);
+
+    List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax);
 }

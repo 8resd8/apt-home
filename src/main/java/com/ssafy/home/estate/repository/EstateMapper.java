@@ -22,4 +22,6 @@ public interface EstateMapper {
     int deleteEstate(Long eid);
 
     List<Estate> getEstateListByRegionCode(@Param("sgg") String sgg, @Param("umd") String umd);
+
+    List<Estate> getEstateListByPosition(@Param("latMin") double latMin, @Param("latMax") double latMax, @Param("lngMin") double lngMin, @Param("lngMax") double lngMax);
 }

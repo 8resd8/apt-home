@@ -70,4 +70,9 @@ public class EstateServiceImpl implements EstateService {
     public List<Estate> getEstateListByRegionCode(String sgg, String umd) {
         return estateMapper.getEstateListByRegionCode(sgg, umd);
     }
+
+    @Override
+    public List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax) {
+        return estateMapper.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
+    }
 }
