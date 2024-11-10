@@ -5,6 +5,8 @@ import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.review.dto.ReviewCreateRequest;
 import com.ssafy.home.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ChatModel chatModel;
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -21,9 +25,10 @@ public class ReviewController {
         reviewService.addReview(member, request);
     }
 
-    @GetMapping("/ai")
+    @PostMapping("/ai")
     @ResponseStatus(HttpStatus.CREATED)
     public String aiContent(@Login Member member) {
-        return "AI가 만든 추천 메시지..";
+        String call = chatModel.call("1+1");
+        return call;
     }
 }
