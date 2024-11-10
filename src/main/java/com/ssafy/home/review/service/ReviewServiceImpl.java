@@ -1,6 +1,7 @@
 package com.ssafy.home.review.service;
 
 import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.global.util.PromptGenerator;
 import com.ssafy.home.review.domain.HouseInfo;
 import com.ssafy.home.review.domain.Review;
 import com.ssafy.home.review.dto.ReviewAIRequest;
@@ -49,30 +50,8 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public String addAIReview(Member member, ReviewAIRequest aiRequest) {
         HouseInfo houseInfo = houseInfoMapper.findHouseInfoById(aiRequest.reservationId());
-        String prompt = getPrompt(member, houseInfo);
+        String prompt = PromptGenerator.generateReviewPrompt(member, houseInfo);
 
         return chatModel.call(prompt);
-    }
-
-    private static String getPrompt(Member member, HouseInfo houseInfo) {
-        return String.format(
-                "Imagine you are writing a thoughtful review for a real estate agent after visiting the apartment below. " +
-                        "Express genuine impressions and appreciation for the agent's assistance during the visit.\n" +
-                        "Details:\n" +
-                        "- Apartment: %s\n" +
-                        "- Address: %s, %s, %s\n" +
-                        "- Built in: %d\n" +
-                        "- Location: %s, %s\n" +
-                        "- Visitor: %s\n\n" +
-                        "Mention the apartment's atmosphere, any unique aspects that stood out, and convey your feelings about the overall experience in a friendly and grateful tone, within 30-50 words. For Korean\n",
-                houseInfo.getAptNm(),
-                houseInfo.getRoadNm(),
-                houseInfo.getRoadNmBonbun(),
-                houseInfo.getUmdNm(),
-                houseInfo.getBuildYear(),
-                houseInfo.getLatitude(),
-                houseInfo.getLongitude(),
-                member.getName()
-        );
     }
 }
