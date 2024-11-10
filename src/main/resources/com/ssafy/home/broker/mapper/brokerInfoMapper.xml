@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.broker.repository.BrokerInfoMapper">
+
+    <update id="updateBroker">
+        UPDATE broker
+        SET office_name=#{requestDto.officeName}, broker_name=#{requestDto.brokerName},
+            phone_num=#{requestDto.phoneNum}, address=#{requestDto.address},
+            license_num=#{requestDto.licenseNum}
+        WHERE bid=#{bid}
+    </update>
+
+</mapper>
