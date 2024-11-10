@@ -2,12 +2,12 @@ package com.ssafy.home.review.controller;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
-import com.ssafy.home.review.dto.ReviewCreateRequest;
+import com.ssafy.home.review.dto.ReviewAIRequest;
+import com.ssafy.home.review.dto.ReviewRequest;
 import com.ssafy.home.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,19 +16,17 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final ChatModel chatModel;
 
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveReview(@Login Member member, ReviewCreateRequest request) {
+    public void saveReview(@Login Member member, @Validated @RequestBody ReviewRequest request) {
         reviewService.addReview(member, request);
     }
 
     @PostMapping("/ai")
     @ResponseStatus(HttpStatus.CREATED)
-    public String aiContent(@Login Member member) {
-        String call = chatModel.call("1+1");
-        return call;
+    public String aiContent(@Login Member member, @Validated @RequestBody ReviewAIRequest aiRequest) {
+        return reviewService.addAIReview(member, aiRequest);
     }
 }
