@@ -2,7 +2,7 @@ package com.ssafy.home.review.controller;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
-import com.ssafy.home.review.dto.ReviewAIRequest;
+import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
 import com.ssafy.home.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class ReviewController {
 
     @PostMapping("/ai")
     @ResponseStatus(HttpStatus.CREATED)
-    public String aiContent(@Login Member member, @Validated @RequestBody ReviewAIRequest aiRequest) {
+    public String aiContent(@Login Member member, @Validated @RequestBody ReviewAISummaryRequest aiRequest) {
         return reviewService.addAIReview(member, aiRequest);
     }
 }
