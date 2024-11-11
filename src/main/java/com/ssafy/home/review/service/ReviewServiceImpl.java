@@ -2,9 +2,8 @@ package com.ssafy.home.review.service;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.util.PromptGenerator;
-import com.ssafy.home.review.domain.HouseInfo;
 import com.ssafy.home.review.domain.Review;
-import com.ssafy.home.review.dto.ReviewAIRequest;
+import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
 import com.ssafy.home.review.exception.DuplicateReviewException;
 import com.ssafy.home.review.repository.HouseInfoMapper;
@@ -48,10 +47,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public String addAIReview(Member member, ReviewAIRequest aiRequest) {
-        HouseInfo houseInfo = houseInfoMapper.findHouseInfoById(aiRequest.reservationId());
-        String prompt = PromptGenerator.generateReviewPrompt(member, houseInfo);
-
+    public String addAIReview(Member member, ReviewAISummaryRequest aiRequest) {
+        String prompt = PromptGenerator.userMassageSummary(member, aiRequest.massage());
         return chatModel.call(prompt);
     }
 }
