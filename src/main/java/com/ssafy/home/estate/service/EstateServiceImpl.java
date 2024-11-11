@@ -7,14 +7,11 @@ import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import com.ssafy.home.estate.exception.ForbiddenException;
 import com.ssafy.home.estate.repository.EstateMapper;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
-import com.ssafy.home.global.exception.CustomException;
 import com.ssafy.home.global.repository.UtilMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
@@ -50,9 +47,7 @@ public class EstateServiceImpl implements EstateService {
         if(!estate.getBrokerId().equals(broker.getBid()))
             throw new ForbiddenException();
 
-        if(estateMapper.updateEstate(requestDto) == 0) {
-            throw new CustomException(HttpStatus.NOT_FOUND, "업데이트에 실패했습니다.");
-        }
+        int result = estateMapper.updateEstate(requestDto);
     }
 
     @Override
@@ -62,17 +57,6 @@ public class EstateServiceImpl implements EstateService {
         if(!estate.getBrokerId().equals(broker.getBid()))
             throw new ForbiddenException();
 
-        if(estateMapper.deleteEstate(eid) == 0)
-            throw new CustomException(HttpStatus.NOT_FOUND, "삭제에 실패했습니다.");
-    }
-
-    @Override
-    public List<Estate> getEstateListByRegionCode(String sgg, String umd) {
-        return estateMapper.getEstateListByRegionCode(sgg, umd);
-    }
-
-    @Override
-    public List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax) {
-        return estateMapper.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
+        int result = estateMapper.deleteEstate(eid);
     }
 }

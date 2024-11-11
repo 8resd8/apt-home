@@ -43,21 +43,4 @@
         WHERE eid = #{eid}
     </delete>
 
-    <select id="getEstateListByRegionCode">
-        SELECT e.*
-        FROM estate e
-        JOIN houseinfos h ON e.apt_seq = h.apt_seq
-        WHERE h.sgg_cd = #{sgg}
-          AND h.umd_cd = #{umd}
-          AND e.status = '판매중'
-    </select>
-
-    <select id="getEstateListByPosition">
-        SELECT e.*
-        FROM estate e
-        JOIN houseinfos h ON e.apt_seq = h.apt_seq
-        WHERE h.latitude BETWEEN #{latMin} AND #{latMax}
-          AND h.longitude BETWEEN #{lngMin} AND #{lngMax}
-    </select>
-
 </mapper>
