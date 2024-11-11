@@ -1,12 +1,13 @@
 package com.ssafy.home.review.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 public record ReviewRequest(
         @NotNull(message = "${required.filed}") Long reservationId,
-        @NotNull(message = "${required.filed}") Long brokerId,
-        @NotNull(message = "${required.filed}") @Size(min = 1, max = 5) Integer reviewRating,
+        @NotNull(message = "${required.filed}") String brokerId,
+        @NotNull(message = "${required.filed}") @Min(1) @Max(5) Integer reviewRating,
         String reviewContent
 ) {
 }
