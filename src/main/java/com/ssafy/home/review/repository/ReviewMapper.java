@@ -12,7 +12,7 @@ public interface ReviewMapper {
     void insertReview(
             @Param("reservationId") Long reservationId,
             @Param("memberId") String memberId,
-            @Param("brokerId") Long brokerId,
+            @Param("brokerId") String brokerId,
             @Param("reviewContent") String reviewContent,
             @Param("reviewRating") Integer reviewRating
     );
