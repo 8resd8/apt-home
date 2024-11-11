@@ -20,7 +20,7 @@
                review_rating  AS reviewRating,
                created_at     AS createdAt
         FROM review
-        WHERE reservation_id = #{rId}
+        WHERE reservation_id = #{reviewId}
     </select>
 
     <!--  broker 리뷰 답글  -->
