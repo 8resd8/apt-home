@@ -7,8 +7,6 @@ import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.exception.NotFoundReservation;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import com.ssafy.home.review.domain.Review;
-import com.ssafy.home.review.dto.ReplyCommentRequest;
-import com.ssafy.home.review.dto.ReplyCommentResponse;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
 import com.ssafy.home.review.exception.DuplicateReviewException;
@@ -19,7 +17,6 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -32,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ChatModel chatModel;
 
     @Override
-    public void addReview(Member member, ReviewRequest request) {
+    public void createReview(Member member, ReviewRequest request) {
         isValidReview(request);
 
         // 리뷰 작성
@@ -68,25 +65,10 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+
     @Override
-    public String addAIReview(Member member, ReviewAISummaryRequest aiRequest) {
+    public String createAIReview(Member member, ReviewAISummaryRequest aiRequest) {
         String prompt = PromptGenerator.userMassageSummary(member, aiRequest.massage());
         return chatModel.call(prompt);
-    }
-
-    @Override
-    public ReplyCommentResponse createReply(Long reviewId, ReplyCommentRequest request) {
-        LocalDateTime now = LocalDateTime.now();
-        reviewMapper.insertReply(reviewId, request.replyComment(), now);
-
-        return new ReplyCommentResponse(reviewId, request.replyComment(), now);
-    }
-
-    @Override
-    public ReplyCommentResponse updateReply(Long reviewId, ReplyCommentRequest request) {
-        LocalDateTime now = LocalDateTime.now();
-        reviewMapper.updateReply(reviewId, request.replyComment(), now);
-
-        return new ReplyCommentResponse(reviewId, request.replyComment(), now);
     }
 }
