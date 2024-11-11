@@ -27,7 +27,7 @@ public class EstateController {
 
     @GetMapping("/regions/{sgg}/{umd}")
     public ResponseEntity<List<Estate>> getEstateListByRegionCode(@PathVariable String sgg, @PathVariable String umd) {
-        List list = estateService.getEstateListByRegionCode(sgg, umd);
+        List<Estate> list = estateService.getEstateListByRegionCode(sgg, umd);
 
         return ResponseEntity.ok().body(list);
     }
@@ -39,7 +39,7 @@ public class EstateController {
             @RequestParam("lng_min") double lngMin,
             @RequestParam("lng_max") double lngMax) {
 
-        List list = estateService.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
+        List<Estate> list = estateService.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
 
         return ResponseEntity.ok().body(list);
     }
