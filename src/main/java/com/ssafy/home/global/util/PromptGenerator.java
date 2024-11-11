@@ -29,4 +29,31 @@ public class PromptGenerator {
                 member.getName()
         );
     }
+
+    public static String userMassageSummary(Member member, String memberMassage) {
+        return String.format(
+                """
+                        - member: %s
+                        A member selected a real estate agent to sell and lease apartments, and this is a review left by that member.
+                        I left a review like below, so please summarize it into about 20 lines Write only the body. 
+                        For Korean
+                        - memberMassage: %s
+                        """,
+                member.getName(),
+                memberMassage
+        );
+    }
+
+    public static String brokerReviewGenerator(String memberMassage) {
+        return String.format(
+                """
+                        For apartment sales and lease transactions, I showed the apartment sales to the members through door-to-door reservations.
+                        The review left by the member is below.
+                        Write a sincere reply to this review For Korean
+                        [member massage]
+                        %s
+                        """,
+                memberMassage
+        );
+    }
 }
