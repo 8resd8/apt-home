@@ -22,6 +22,11 @@ public class ReplyServiceImpl implements ReplyService {
     private final ReviewMapper reviewMapper;
     private final ChatModel chatModel;
 
+    /**
+     * 시간 통일을 위해 서버에서 생성 후 db에 직접 값을 넣는다.
+     * 공인중개사는 답글을 반드시 적어야하고 공백으로 적을 수 없다.
+     */
+
     @Override
     public ReplyCommentResponse createReply(Long reviewId, ReplyCommentRequest request) {
         LocalDateTime now = LocalDateTime.now();
@@ -30,6 +35,11 @@ public class ReplyServiceImpl implements ReplyService {
         return new ReplyCommentResponse(reviewId, request.replyComment(), now);
     }
 
+    /**
+     * 공인중개사는 리뷰를 항상 수정이 가능하다.
+     * 확장 todo: 리뷰 생성일 기준 %d일 뒤부터는 수정이 불가능 하도록 추가
+     */
+
     @Override
     public ReplyCommentResponse updateReply(Long reviewId, ReplyCommentRequest request) {
         LocalDateTime now = LocalDateTime.now();
@@ -37,6 +47,11 @@ public class ReplyServiceImpl implements ReplyService {
 
         return new ReplyCommentResponse(reviewId, request.replyComment(), now);
     }
+
+    /**
+     * 공인중개사는 항상 답글을 달아야 하기 때문에 AI 도움을 받을 수 있다.
+     * 사용자가 입력한 리뷰 내용으로 답글 내용을 추천해주고 문자열을 반환한다.
+     */
 
     @Override
     public String createAIReply(Long reviewId) {

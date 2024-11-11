@@ -29,9 +29,16 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReservationMapper reservationMapper;
     private final ChatModel chatModel;
 
+    /**
+     * 리뷰 생성은 예약 ID를 통해 생성한다.
+     * 1. 예약이 실제 있는 경우만 리뷰를 남길 수 있음
+     * 2. 이미 존재할 경우 추가 리뷰 생성은 불가능
+     * 3. 예약이 완료(Completed)되지 않았다면 리뷰남길 수 없음
+     */
+
     @Override
     public void createReview(Member member, Long reservationId, ReviewRequest request) {
-        isValidReview(request, reservationId);
+        isValidReview(reservationId);
 
         reviewMapper.insertReview(
                 reservationId,
@@ -42,7 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
         );
     }
 
-    private void isValidReview(ReviewRequest request, Long reservationId) {
+    private void isValidReview(Long reservationId) {
         // 1. 예약 존재 확인
         Optional<Reservation> findReservation = reservationMapper.findReservationById(reservationId);
 
@@ -65,6 +72,10 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
+    /**
+     * 리뷰 수정은 공인중개사가 답글을 남기지 않을 때만 수정이 가능하다.
+     */
+
     @Override
     public void updateReview(Member member, Long reservationId, ReviewRequest request) {
         int update = reviewMapper.updateReview(reservationId, request.reviewContent(), request.reviewRating());
@@ -74,7 +85,9 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
-
+    /**
+     * 사용자가 작성한 리뷰를 기반으로 내용을 AI 요약 후 문자열을 리턴한다
+     */
     @Override
     public String createAIReviewSummary(Member member, ReviewAISummaryRequest aiRequest) {
         String prompt = PromptGenerator.userMassageSummary(member, aiRequest.massage());
