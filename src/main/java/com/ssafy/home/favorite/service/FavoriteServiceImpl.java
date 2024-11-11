@@ -45,8 +45,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Transactional(readOnly = true)
     public List<FavoriteResponse> getFavoriteAll(String memberId) {
         List<Favorite> favorites = favoriteMapper.findAllFavoriteByMemberId(memberId);
+
         if (favorites.isEmpty()) {
-            throw new EmptyFavoriteException();
+            return new ArrayList<>();
         }
 
 
@@ -60,7 +61,7 @@ public class FavoriteServiceImpl implements FavoriteService {
                     favorite.getEstateId(),
                     favorite.getCreatedAt(),
                     favorite.getUpdatedAt(),
-                    List.of(brokerId) // brokerId를 리스트 형태로 저장
+                    brokerId
             );
 
             favoriteResponses.add(favoriteResponse);
