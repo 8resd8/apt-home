@@ -15,11 +15,6 @@
           AND estate_id = #{estateId}
     </delete>
 
-    <select id="findAllFavoriteByMemberId" resultType="com.ssafy.home.favorite.domain.Favorite">
-        SELECT fid, member_id AS memberId, estate_id AS estateId, created_at AS createdAt, updated_at AS updatedAt
-        FROM favorite
-        WHERE member_id = #{memberId}
-    </select>
 
     <select id="findFavorite" resultType="com.ssafy.home.favorite.domain.Favorite">
         SELECT fid, member_id AS memberId, estate_id AS estateId, created_at AS createdAt, updated_at AS updatedAt
@@ -28,5 +23,17 @@
           AND estate_id = #{estateId}
     </select>
 
+    <select id="findAllFavorite" resultType="com.ssafy.home.favorite.dto.FavoriteResponse">
+        SELECT f.fid,
+               f.member_id  AS memberId,
+               f.estate_id  AS estateId,
+               f.created_at AS createdAt,
+               f.updated_at AS updatedAt,
+               e.broker_id  AS brokerId
+        FROM favorite f
+                 JOIN
+             estate e ON f.estate_id = e.eid
+        WHERE f.member_id = #{memberId}
+    </select>
 
 </mapper>

@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value = { CustomException.class })
+    @ExceptionHandler(value = {CustomException.class})
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e, WebRequest request) {
         return ErrorResponse.toResponseEntity(e.getStatus(), e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }

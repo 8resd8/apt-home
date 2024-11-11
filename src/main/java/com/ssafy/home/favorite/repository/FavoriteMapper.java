@@ -1,6 +1,7 @@
 package com.ssafy.home.favorite.repository;
 
 import com.ssafy.home.favorite.domain.Favorite;
+import com.ssafy.home.favorite.dto.FavoriteResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +15,7 @@ public interface FavoriteMapper {
 
     int deleteFavorite(@Param("memberId") String memberId, @Param("estateId") Long estateId);
 
-    List<Favorite> findAllFavoriteByMemberId(@Param("memberId") String memberId);
+    List<FavoriteResponse> findAllFavorite(@Param("memberId") String memberId);
 
     Optional<Favorite> findFavorite(@Param("memberId") String memberId, @Param("estateId") Long estateId);
 

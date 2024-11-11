@@ -44,7 +44,7 @@ public class EstateServiceImpl implements EstateService {
     public void updateEstate(UpdateEstateRequest requestDto, Broker broker) {
         Estate estate = findEstateById(requestDto.eid());
 
-        if(!estate.getBrokerId().equals(broker.getBid()))
+        if (!estate.getBrokerId().equals(broker.getBid()))
             throw new ForbiddenException();
 
         int result = estateMapper.updateEstate(requestDto);
@@ -54,7 +54,7 @@ public class EstateServiceImpl implements EstateService {
     public void deleteEstate(Long eid, Broker broker) {
         Estate estate = findEstateById(eid);
 
-        if(!estate.getBrokerId().equals(broker.getBid()))
+        if (!estate.getBrokerId().equals(broker.getBid()))
             throw new ForbiddenException();
 
         int result = estateMapper.deleteEstate(eid);
