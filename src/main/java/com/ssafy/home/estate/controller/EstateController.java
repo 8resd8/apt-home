@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/estate")
 @RestController
-public class estateController {
+public class EstateController {
 
     private final EstateService estateService;
 
