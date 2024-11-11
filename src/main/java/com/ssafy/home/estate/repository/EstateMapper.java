@@ -19,4 +19,6 @@ public interface EstateMapper {
     int updateEstate(UpdateEstateRequest requestDto);
 
     int deleteEstate(Long eid);
+
+    String findBrokerIdByEstateId(Long estateId);
 }

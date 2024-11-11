@@ -1,4 +1,4 @@
-package com.ssafy.home.favorite.exception;
+package com.ssafy.home.reservation.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,15 +6,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class FavoriteExceptionHandler {
+public class ReservationExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<String> handleDeleteFavorite(DeleteFailException ex) {
+    public ResponseEntity<String> handleNotFoundReservation(NotFoundReservation ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> handleEmptyFavorite(EmptyFavoriteException ex) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
     }
 }

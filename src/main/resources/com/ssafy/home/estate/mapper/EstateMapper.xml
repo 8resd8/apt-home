@@ -34,13 +34,27 @@
 
     <update id="updateEstate">
         UPDATE estate
-        SET type=#{type}, amount=#{amount}, floor=#{floor}, total_floor=#{totalFloor}, area=#{area}, `desc`=#{desc}
+        SET type=#{type},
+            amount=#{amount},
+            floor=#{floor},
+            total_floor=#{totalFloor},
+            area=#{area},
+            `desc`=#{desc}
         WHERE eid = #{eid}
     </update>
 
     <delete id="deleteEstate">
-        DELETE FROM estate
+        DELETE
+        FROM estate
         WHERE eid = #{eid}
     </delete>
+
+    <!-- broker id 조회 -->
+    <select id="findBrokerIdByEstateId" resultType="java.lang.String">
+        SELECT broker_id
+        FROM estate
+        WHERE eid = #{estateId}
+    </select>
+
 
 </mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.reservation.repository.ReservationMapper">
+
+    <!-- 예약 생성 -->
+    <insert id="insertReservation" parameterType="com.ssafy.home.reservation.domain.Reservation" useGeneratedKeys="true"
+            keyProperty="rid">
+        INSERT INTO reservation (member_id, broker_id, broker_name, start_time, end_time, status, client_memo,
+                                 broker_memo)
+        SELECT #{memberId},
+               #{brokerId},
+               b.broker_name,
+               #{startTime},
+               #{endTime},
+               #{status},
+               #{clientMemo},
+               #{brokerMemo}
+        FROM broker b
+        WHERE b.bid = #{brokerId}
+    </insert>
+
+    <!-- 예약 수정 쿼리 -->
+    <update id="updateReservation" parameterType="com.ssafy.home.reservation.domain.Reservation">
+        UPDATE
+            reservation r
+                INNER JOIN broker b ON b.bid = #{brokerId}
+        SET r.broker_id   = #{brokerId},
+            r.broker_name = b.broker_name,
+            r.start_time  = #{startTime},
+            r.end_time    = #{endTime},
+            r.client_memo = #{clientMemo},
+            r.broker_memo = #{brokerMemo},
+            r.status      = #{status},
+            r.updated_at  = CURRENT_TIMESTAMP
+        WHERE r.rid = #{rid}
+          AND r.member_id = #{memberId}
+    </update>
+
+    <!-- 매물 예약 연결 추가 -->
+    <insert id="insertReservationEstate">
+        INSERT INTO reservation_estate (reservation_id, estate_id, memo)
+        VALUES (#{reservationId}, #{estateId}, #{memo})
+    </insert>
+
+    <!-- id로 매물 찾기 추가 -->
+    <select id="findReservationById" parameterType="long" resultType="com.ssafy.home.reservation.domain.Reservation">
+        SELECT r.*,
+               b.broker_name AS brokerName
+        FROM reservation r
+                 JOIN broker b ON r.broker_id = b.bid
+        WHERE r.rid = #{rid}
+    </select>
+
+
+    <!-- 멤버의 예약 모두 찾기 -->
+    <select id="findAllReservationsByMemberId" parameterType="string"
+            resultType="com.ssafy.home.reservation.domain.Reservation">
+        SELECT r.*,
+               b.broker_name AS brokerName
+        FROM reservation r
+                 JOIN broker b ON r.broker_id = b.bid
+        WHERE r.member_id = #{memberId}
+    </select>
+</mapper>
