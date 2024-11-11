@@ -1,9 +1,8 @@
 package com.ssafy.home.review.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record ReviewAISummaryRequest(
-        @NotNull(message = "${required.filed}") Long reservationId,
-        String massage
+        @NotBlank(message = "${required.filed}") String massage
 ) {
 }
