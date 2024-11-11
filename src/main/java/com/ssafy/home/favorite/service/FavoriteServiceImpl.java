@@ -44,29 +44,6 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional(readOnly = true)
     public List<FavoriteResponse> getFavoriteAll(String memberId) {
-        List<Favorite> favorites = favoriteMapper.findAllFavoriteByMemberId(memberId);
-
-        if (favorites.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-
-        List<FavoriteResponse> favoriteResponses = new ArrayList<>();
-        for (Favorite favorite : favorites) {
-            String brokerId = estateMapper.findBrokerIdByEstateId(favorite.getEstateId());
-
-            FavoriteResponse favoriteResponse = new FavoriteResponse(
-                    favorite.getFid(),
-                    favorite.getMemberId(),
-                    favorite.getEstateId(),
-                    favorite.getCreatedAt(),
-                    favorite.getUpdatedAt(),
-                    brokerId
-            );
-
-            favoriteResponses.add(favoriteResponse);
-        }
-
-        return favoriteResponses;
+        return favoriteMapper.findAllFavorite(memberId);
     }
 }
