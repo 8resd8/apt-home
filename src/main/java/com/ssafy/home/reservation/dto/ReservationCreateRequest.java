@@ -18,7 +18,6 @@ public record ReservationCreateRequest(
         @NotNull(message = "{required.field}")
         LocalDateTime endTime,
 
-        String clientMemo,
-        String broker_memo
+        String clientMemo
 ) {
 }

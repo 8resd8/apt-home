@@ -29,7 +29,6 @@ public class ReservationServiceImpl implements ReservationService {
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .clientMemo(request.clientMemo())
-                .brokerMemo(request.broker_memo())
                 .status(ReservationStatus.CREATED.getValue())
                 .build();
 
@@ -51,7 +50,6 @@ public class ReservationServiceImpl implements ReservationService {
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .clientMemo(request.clientMemo())
-                .brokerMemo(request.broker_memo())
                 .status(ReservationStatus.CREATED.getValue())
                 .build();
 
