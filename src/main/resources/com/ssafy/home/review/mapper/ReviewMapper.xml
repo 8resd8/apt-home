@@ -23,4 +23,22 @@
         WHERE reservation_id = #{rId}
     </select>
 
+    <!--  broker 리뷰 답글  -->
+    <update id="insertReply">
+        UPDATE review
+        SET broker_comment    = #{comment},
+            broker_replied_at = #{now}
+        WHERE review_id = #{reviewId}
+          AND broker_comment IS NOT NULL
+    </update>
+
+    <!--  broker 리뷰 업데이트  -->
+    <update id="updateReply">
+        UPDATE review
+        SET broker_comment    = #{comment},
+            broker_replied_at =#{now}
+        WHERE review_id = #{reviewId}
+          AND broker_comment IS NOT NULL
+    </update>
+
 </mapper>
