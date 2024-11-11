@@ -5,7 +5,6 @@ import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
-import java.util.List;
 
 public interface EstateService {
     Long createEstate(RegistEstateRequest requestDto, Broker broker);
@@ -17,8 +16,4 @@ public interface EstateService {
     void updateEstate(UpdateEstateRequest requestDto, Broker broker);
 
     void deleteEstate(Long eid, Broker broker);
-
-    List<Estate> getEstateListByRegionCode(String sgg, String umd);
-
-    List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax);
 }
