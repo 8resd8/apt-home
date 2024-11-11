@@ -5,9 +5,9 @@ import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
 
 public interface ReviewService {
-    void createReview(Member member, ReviewRequest request);
+    void createReview(Member member, Long reservationId, ReviewRequest request);
 
-    String createAIReview(Member member, ReviewAISummaryRequest aiRequest);
+    String createAIReviewSummary(Member member, ReviewAISummaryRequest aiRequest);
 
-
+    void updateReview(Member member, Long reservationId, ReviewRequest request);
 }
