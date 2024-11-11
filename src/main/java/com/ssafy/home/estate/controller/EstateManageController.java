@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/broker/estate")
 @RestController
-public class estateManageController {
+public class EstateManageController {
     private final EstateService estateService;
 
     @PostMapping
