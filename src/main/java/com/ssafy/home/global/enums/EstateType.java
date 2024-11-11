@@ -1,6 +1,6 @@
 package com.ssafy.home.global.enums;
 
-public enum estateType {
+public enum EstateType {
     전세,
     매매,
 }

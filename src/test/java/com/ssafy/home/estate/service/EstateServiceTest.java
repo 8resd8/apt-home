@@ -6,7 +6,7 @@ import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.service.AuthService;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
-import com.ssafy.home.global.enums.estateType;
+import com.ssafy.home.global.enums.EstateType;
 import com.ssafy.home.global.repository.UtilMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ public class EstateServiceTest {
         //given
         RegistEstateRequest requestDto = new RegistEstateRequest(
                 "11110-100",
-                estateType.매매,
+                EstateType.매매,
                 "200000",
                 3,
                 7,
@@ -84,7 +84,7 @@ public class EstateServiceTest {
         //given
         RegistEstateRequest requestDto = new RegistEstateRequest(
                 "11110-100",
-                estateType.매매,
+                EstateType.매매,
                 "200000",
                 3,
                 7,
