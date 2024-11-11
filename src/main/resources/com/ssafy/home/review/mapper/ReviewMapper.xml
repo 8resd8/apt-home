@@ -23,6 +23,15 @@
         WHERE reservation_id = #{reviewId}
     </select>
 
+    <!--  리뷰 수정  -->
+    <update id="updateReview">
+        UPDATE review
+        SET review_content = #{reviewContent},
+            review_rating  = #{reviewRating}
+        WHERE reservation_id = #{reservationId}
+          AND broker_comment IS NULL
+    </update>
+
     <!--  broker 리뷰 답글  -->
     <update id="insertReply">
         UPDATE review

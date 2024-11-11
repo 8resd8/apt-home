@@ -17,6 +17,12 @@ public interface ReviewMapper {
             @Param("reviewRating") Integer reviewRating
     );
 
+    int updateReview(
+            @Param("reservationId") Long reservationId,
+            @Param("reviewContent") String reviewContent,
+            @Param("reviewRating") Integer reviewRating
+    );
+
     Optional<Review> findReviewById(@Param("reviewId") Long rId);
 
     void insertReply(@Param("reviewId") Long reviewId, @Param("comment") String comment, @Param("now") LocalDateTime now);
