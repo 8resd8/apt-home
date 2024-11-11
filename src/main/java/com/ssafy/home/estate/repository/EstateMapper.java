@@ -6,6 +6,7 @@ import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -20,5 +21,8 @@ public interface EstateMapper {
 
     int deleteEstate(Long eid);
 
-    String findBrokerIdByEstateId(Long estateId);
+
+    List<Estate> getEstateListByRegionCode(@Param("sgg") String sgg, @Param("umd") String umd);
+
+    List<Estate> getEstateListByPosition(@Param("latMin") double latMin, @Param("latMax") double latMax, @Param("lngMin") double lngMin, @Param("lngMax") double lngMax);
 }
