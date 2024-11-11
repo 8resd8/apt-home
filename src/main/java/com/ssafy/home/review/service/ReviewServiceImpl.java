@@ -9,6 +9,7 @@ import com.ssafy.home.reservation.repository.ReservationMapper;
 import com.ssafy.home.review.domain.Review;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
+import com.ssafy.home.review.exception.CannotUpdateReviewException;
 import com.ssafy.home.review.exception.DuplicateReviewException;
 import com.ssafy.home.review.exception.NotCompleteReviewException;
 import com.ssafy.home.review.repository.ReviewMapper;
@@ -29,12 +30,11 @@ public class ReviewServiceImpl implements ReviewService {
     private final ChatModel chatModel;
 
     @Override
-    public void createReview(Member member, ReviewRequest request) {
-        isValidReview(request);
+    public void createReview(Member member, Long reservationId, ReviewRequest request) {
+        isValidReview(request, reservationId);
 
-        // 리뷰 작성
         reviewMapper.insertReview(
-                request.reservationId(),
+                reservationId,
                 member.getMid(),
                 request.brokerId(),
                 request.reviewContent(),
@@ -42,9 +42,9 @@ public class ReviewServiceImpl implements ReviewService {
         );
     }
 
-    private void isValidReview(ReviewRequest request) {
+    private void isValidReview(ReviewRequest request, Long reservationId) {
         // 1. 예약 존재 확인
-        Optional<Reservation> findReservation = reservationMapper.findReservationById(request.reservationId());
+        Optional<Reservation> findReservation = reservationMapper.findReservationById(reservationId);
 
         if (findReservation.isEmpty()) {
             throw new NotFoundReservation();
@@ -53,21 +53,30 @@ public class ReviewServiceImpl implements ReviewService {
         Reservation reservation = findReservation.get();
 
         // 2. 예약 Status 확인 (Completed)
-        if (!reservation.getStatus().equals(ReservationStatus.COMPLETED.toString())) {
+        if (!reservation.getStatus().equals(ReservationStatus.COMPLETED.getValue())) {
             throw new NotCompleteReviewException();
         }
 
         // 3. 이미 남겨진 리뷰인지 확인
-        Optional<Review> findReview = reviewMapper.findReviewById(request.reservationId());
+        Optional<Review> findReview = reviewMapper.findReviewById(reservationId);
 
-        if (findReview.isEmpty()) {
+        if (findReview.isPresent()) {
             throw new DuplicateReviewException();
+        }
+    }
+
+    @Override
+    public void updateReview(Member member, Long reservationId, ReviewRequest request) {
+        int update = reviewMapper.updateReview(reservationId, request.reviewContent(), request.reviewRating());
+
+        if (update == 0) {
+            throw new CannotUpdateReviewException();
         }
     }
 
 
     @Override
-    public String createAIReview(Member member, ReviewAISummaryRequest aiRequest) {
+    public String createAIReviewSummary(Member member, ReviewAISummaryRequest aiRequest) {
         String prompt = PromptGenerator.userMassageSummary(member, aiRequest.massage());
         return chatModel.call(prompt);
     }
