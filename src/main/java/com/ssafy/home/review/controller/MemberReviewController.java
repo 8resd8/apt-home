@@ -18,15 +18,22 @@ public class MemberReviewController {
     private final ReviewService reviewService;
 
 
-    @PostMapping
+    @PostMapping("/{reservationId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createReview(@Login Member member, @Validated @RequestBody ReviewRequest request) {
-        reviewService.createReview(member, request);
+    public void createReview(@Login Member member, @PathVariable Long reservationId, @Validated @RequestBody ReviewRequest request) {
+        reviewService.createReview(member, reservationId, request);
     }
 
-    @PostMapping("/ai")
+    @PutMapping("/{reservationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateReview(@Login Member member, @PathVariable Long reservationId, @Validated @RequestBody ReviewRequest request) {
+        reviewService.updateReview(member, reservationId, request);
+    }
+
+
+    @PutMapping("/ai")
     @ResponseStatus(HttpStatus.CREATED)
     public String aiContent(@Login Member member, @Validated @RequestBody ReviewAISummaryRequest aiRequest) {
-        return reviewService.createAIReview(member, aiRequest);
+        return reviewService.createAIReviewSummary(member, aiRequest);
     }
 }
