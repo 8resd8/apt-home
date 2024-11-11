@@ -20,13 +20,13 @@ public class MemberReviewController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveReview(@Login Member member, @Validated @RequestBody ReviewRequest request) {
-        reviewService.addReview(member, request);
+    public void createReview(@Login Member member, @Validated @RequestBody ReviewRequest request) {
+        reviewService.createReview(member, request);
     }
 
     @PostMapping("/ai")
     @ResponseStatus(HttpStatus.CREATED)
     public String aiContent(@Login Member member, @Validated @RequestBody ReviewAISummaryRequest aiRequest) {
-        return reviewService.addAIReview(member, aiRequest);
+        return reviewService.createAIReview(member, aiRequest);
     }
 }
