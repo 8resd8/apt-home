@@ -1,13 +1,13 @@
 package com.ssafy.home.estate.dto;
 
-import com.ssafy.home.global.enums.estateType;
+import com.ssafy.home.global.enums.EstateType;
 import lombok.Getter;
 
 @Getter
 public class Estate {
     Long eid;
     String brokerId;
-    estateType type;
+    EstateType type;
     String status;
     Integer floor;
     Integer totalFloor;
