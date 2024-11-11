@@ -1,7 +1,6 @@
 package com.ssafy.home.favorite.dto;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 public record FavoriteResponse(
         Long fid,
@@ -9,6 +8,6 @@ public record FavoriteResponse(
         Long estateId,
         Timestamp createdAt,
         Timestamp updatedAt,
-        List<String> brokerId
+        String brokerId
 ) {
 }
