@@ -15,15 +15,15 @@ public class BrokerReservationController {
     private final BrokerReservationService brokerReservationService;
 
 
-    @PostMapping("/reserve/{reservationId}")
+    @PatchMapping("/{reservationId}/reserve")
     @ResponseStatus(HttpStatus.OK)
     public void reserveReservation(@PathVariable Long reservationId, @Login Broker broker, @RequestParam String brokerMemo) {
         brokerReservationService.reserveReservation(reservationId, broker, brokerMemo);
     }
 
-    @GetMapping("/complete/{reservationId}")
+    @PatchMapping("/{reservationId}/complete")
     @ResponseStatus(HttpStatus.OK)
-    public void getReservations(@PathVariable Long reservationId, @Login Broker broker) {
+    public void completeReservation(@PathVariable Long reservationId, @Login Broker broker) {
         brokerReservationService.completeReservation(reservationId, broker);
     }
 }
