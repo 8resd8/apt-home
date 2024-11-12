@@ -4,7 +4,7 @@
 <mapper namespace="com.ssafy.home.profile.member.repository.MemberProfileMapper">
 
     <!-- 회원 정보 조회 -->
-    <select id="findMemberProfile" resultType="com.ssafy.home.member.dto.MemberProfileResponse">
+    <select id="findMemberById" resultType="com.ssafy.home.profile.member.dto.MemberResponse">
         SELECT mid, phone_num, email, last_login, created_at, updated_at
         FROM member
         WHERE mid = #{memberId}
@@ -14,11 +14,11 @@
     <update id="updateMemberProfile">
         UPDATE member
         SET phone_num = #{request.phoneNum}, name = #{request.name}
-        WHERE mid = #{memberId} AND password = #{request.password}
+        WHERE mid = #{memberId}
     </update>
 
     <!-- 회원 탈퇴 -->
-    <delete id="deleteMember">
+    <delete id="deleteMemberProfile">
         DELETE FROM member WHERE mid = #{memberId}
     </delete>
 
