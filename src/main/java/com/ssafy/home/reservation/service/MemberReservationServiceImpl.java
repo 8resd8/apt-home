@@ -4,7 +4,7 @@ import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
 import com.ssafy.home.reservation.dto.ReservationResponse;
-import com.ssafy.home.reservation.exception.ReservationNotFound;
+import com.ssafy.home.reservation.exception.ReservationNotFoundException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,7 @@ public class MemberReservationServiceImpl implements MemberReservationService {
     @Override
     public ReservationResponse getReservation(Long rid) {
         Reservation reservation = reservationMapper.findReservationById(rid)
-                .orElseThrow(() -> new ReservationNotFound(rid));
+                .orElseThrow(() -> new ReservationNotFoundException(rid));
 
         return toReservationResponse(reservation);
     }
@@ -69,7 +69,7 @@ public class MemberReservationServiceImpl implements MemberReservationService {
         List<Reservation> allReservations = reservationMapper.findAllReservationsByMemberId(memberId);
 
         if (allReservations.isEmpty()) {
-            throw new ReservationNotFound();
+            throw new ReservationNotFoundException();
         }
 
         List<ReservationResponse> reservationResponses = new ArrayList<>();
