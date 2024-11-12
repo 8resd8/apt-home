@@ -1,16 +1,17 @@
 package com.ssafy.home.profile.member.service;
 
-import com.ssafy.home.profile.member.dto.MemberProfileResponse;
+import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.profile.member.dto.MemberResponse;
 import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
 import com.ssafy.home.profile.member.dto.PasswordChangeRequest;
 import com.ssafy.home.profile.member.dto.PasswordResetRequest;
 
 public interface MemberProfileService {
-    MemberProfileResponse findMemberById(String memberId);
+    MemberResponse findMemberById(Member memberResponse);
 
-    int updateMember(String memberId, MemberUpdateRequest updateRequest);
+    MemberResponse updateMember(Member memberResponse, MemberUpdateRequest updateRequest);
 
-    int deleteMember(String memberId, String requestPassword);
+    void deleteMember(Member memberResponse, String requestPassword);
 
     void resetPassword(PasswordResetRequest passwordResetRequest);
 
