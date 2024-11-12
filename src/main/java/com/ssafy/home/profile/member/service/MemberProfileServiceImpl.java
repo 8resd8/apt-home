@@ -86,27 +86,26 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     }
 
     private void checkCurrentPassword(Member member, MemberUpdateRequest request) {
-        Optional<Member> optionalMember = memberMapper.findById(member.getMid());
-        if (optionalMember.isEmpty()) {
-            throw new NotFoundMemberException();
-        }
-
-        Member findMember = optionalMember.get();
-        String originPwd = findMember.getPassword();
+        String originPwd = getOriginPwd(member);
 
         checkPassword(originPwd, request.password(), member.getSalt());
     }
 
     private void checkCurrentPassword(Member member, PasswordChangeRequest passwordChangeRequest) {
+        String originPwd = getOriginPwd(member);
+
+        checkPassword(originPwd, passwordChangeRequest.currentPassword(), member.getSalt());
+    }
+
+    private String getOriginPwd(Member member) {
         Optional<Member> optionalMember = memberMapper.findById(member.getMid());
         if (optionalMember.isEmpty()) {
             throw new NotFoundMemberException();
         }
 
         Member findMember = optionalMember.get();
-        String originPwd = findMember.getPassword();
 
-        checkPassword(originPwd, passwordChangeRequest.currentPassword(), member.getSalt());
+        return findMember.getPassword();
     }
 
     private MemberResponse getFindMember(Optional<MemberResponse> findMember) {
