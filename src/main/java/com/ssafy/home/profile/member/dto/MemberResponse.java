@@ -2,7 +2,7 @@ package com.ssafy.home.profile.member.dto;
 
 import java.time.LocalDateTime;
 
-public record MemberProfileResponse(
+public record MemberResponse(
         String memberId,
         String phoneNum,
         String email,
