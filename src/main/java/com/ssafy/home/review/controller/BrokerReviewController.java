@@ -19,17 +19,23 @@ public class BrokerReviewController {
 
     @PostMapping("/{reviewId}")
     public ResponseEntity<ReplyCommentResponse> replyCreateComment(@PathVariable Long reviewId, @Validated @RequestBody ReplyCommentRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(replyService.createReply(reviewId, request));
+        ReplyCommentResponse response = replyService.createReply(reviewId, request);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{reviewId}")
     public ResponseEntity<ReplyCommentResponse> replyCommentUpdate(@PathVariable Long reviewId, @Validated @RequestBody ReplyCommentRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(replyService.updateReply(reviewId, request));
+        ReplyCommentResponse response = replyService.updateReply(reviewId, request);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/ai/{reviewId}")
     public ResponseEntity<String> replyCreateAIComment(@PathVariable Long reviewId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(replyService.createAIReply(reviewId));
+        String aiReply = replyService.createAIReply(reviewId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(aiReply);
     }
 
 }
