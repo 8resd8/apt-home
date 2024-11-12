@@ -60,7 +60,9 @@ public class ReplyServiceImpl implements ReplyService {
             throw new NotFoundReservation();
         }
 
-        String message = PromptGenerator.brokerReviewGenerator(findReview.get().getReviewContent());
+        String memberReviewComment = findReview.get().getReviewContent();
+        String message = PromptGenerator.brokerReviewGenerator(memberReviewComment);
+
         return chatModel.call(message);
     }
 }
