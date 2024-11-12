@@ -15,7 +15,7 @@ public interface MemberProfileService {
 
     void resetPassword(PasswordResetRequest passwordResetRequest);
 
-    void changePassword(PasswordChangeRequest passwordChangeRequest);
+    void changePassword(Member member, PasswordChangeRequest passwordChangeRequest);
 
 
 }

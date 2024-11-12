@@ -1,7 +1,6 @@
 package com.ssafy.home.profile.member.service;
 
 import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.profile.member.dto.MemberResponse;
 import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
@@ -11,7 +10,6 @@ import com.ssafy.home.profile.member.exception.CannotUpdateMemberException;
 import com.ssafy.home.profile.member.exception.NotFoundMemberException;
 import com.ssafy.home.profile.member.exception.ValidPasswordException;
 import com.ssafy.home.profile.member.repository.MemberProfileMapper;
-import jakarta.xml.bind.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,8 +66,34 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     }
 
     @Override
-    public void changePassword(PasswordChangeRequest passwordChangeRequest) {
-        // todo 현재비밀번호, 새로운 비밀번호 1 비밀번호 2 일치확인
+    public void changePassword(Member member, PasswordChangeRequest passwordChangeRequest) {
+        // 1. 입력한 기존 비밀번호는 저장된 번호와 일치해야 한다.
+        checkCurrentPassword(member, passwordChangeRequest);
+
+        // 2. 새 비밀번호는 일치해야한다.
+        if (!passwordChangeRequest.newPassword1().equals(passwordChangeRequest.newPassword2())) {
+            throw new ValidPasswordException("새로운 비밀번호가 서로 맞지 않습니다.");
+        }
+
+        // 3. 비밀번호 변경
+        String newSalt = generateSalt();
+        int updateCount = memberProfileMapper.updatePassword(member.getMid(), passwordChangeRequest.newPassword1(), newSalt);
+
+        if (updateCount == 0) {
+            throw new CannotUpdateMemberException("비밀번호 변경에 실패했습니다.");
+        }
+    }
+
+    private void checkCurrentPassword(Member member, PasswordChangeRequest passwordChangeRequest) {
+        Optional<Member> optionalMember = memberMapper.findById(member.getMid());
+        if (optionalMember.isEmpty()) {
+            throw new NotFoundMemberException();
+        }
+
+        Member findMember = optionalMember.get();
+        String originPwd = findMember.getPassword();
+
+        checkPassword(originPwd, passwordChangeRequest.currentPassword(), member.getSalt());
     }
 
     private MemberResponse getFindMember(Optional<MemberResponse> findMember) {
@@ -84,5 +108,9 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         if (!bCryptPasswordEncoder.matches(requestPassword + salt, hashedPassword)) {
             throw new ValidPasswordException();
         }
+    }
+
+    private String generateSalt() {
+        return Long.toHexString(Double.doubleToLongBits(Math.random()));
     }
 }
