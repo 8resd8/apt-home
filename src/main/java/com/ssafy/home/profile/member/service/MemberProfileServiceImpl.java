@@ -2,14 +2,15 @@ package com.ssafy.home.profile.member.service;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.repository.MemberMapper;
+import com.ssafy.home.profile.member.dto.MemberDeleteRequest;
 import com.ssafy.home.profile.member.dto.MemberResponse;
 import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
 import com.ssafy.home.profile.member.dto.PasswordChangeRequest;
-import com.ssafy.home.profile.member.dto.PasswordResetRequest;
 import com.ssafy.home.profile.member.exception.CannotUpdateMemberException;
 import com.ssafy.home.profile.member.exception.NotFoundMemberException;
 import com.ssafy.home.profile.member.exception.ValidPasswordException;
 import com.ssafy.home.profile.member.repository.MemberProfileMapper;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     private final MemberMapper memberMapper;
     private final MemberProfileMapper memberProfileMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final HttpSession httpSession;
 
     @Override
     public MemberResponse findMemberById(Member member) {
@@ -39,6 +41,8 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         if (isSuccess == 0) {
             throw new CannotUpdateMemberException();
         }
+        // 비밀번호가 일치하면 변경에 성공
+        checkCurrentPassword(member, updateRequest);
 
         Optional<MemberResponse> findMember = memberProfileMapper.findMemberById(member.getMid());
 
@@ -47,7 +51,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
 
 
     @Override
-    public void deleteMember(Member member, String requestPassword) {
+    public void deleteMember(Member member, MemberDeleteRequest request) {
         Optional<Member> optionalMember = memberMapper.findById(member.getMid());
 
         if (optionalMember.isEmpty()) {
@@ -55,14 +59,10 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         }
 
         Member findMember = optionalMember.get();
-        checkPassword(findMember.getPassword(), requestPassword, findMember.getSalt());
+        checkPassword(findMember.getPassword(), request.password(), findMember.getSalt());
 
-        memberProfileMapper.deleteMemberProfile(member.getMid(), requestPassword);
-    }
-
-    @Override
-    public void resetPassword(PasswordResetRequest passwordResetRequest) {
-        // todo: 이메일 인증을 통해 이메일로 비밀번호 재생성 및 DB 반영
+        memberProfileMapper.deleteMemberProfile(member.getMid(), request.password());
+        httpSession.invalidate();
     }
 
     @Override
@@ -82,6 +82,19 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         if (updateCount == 0) {
             throw new CannotUpdateMemberException("비밀번호 변경에 실패했습니다.");
         }
+        httpSession.invalidate();
+    }
+
+    private void checkCurrentPassword(Member member, MemberUpdateRequest request) {
+        Optional<Member> optionalMember = memberMapper.findById(member.getMid());
+        if (optionalMember.isEmpty()) {
+            throw new NotFoundMemberException();
+        }
+
+        Member findMember = optionalMember.get();
+        String originPwd = findMember.getPassword();
+
+        checkPassword(originPwd, request.password(), member.getSalt());
     }
 
     private void checkCurrentPassword(Member member, PasswordChangeRequest passwordChangeRequest) {
