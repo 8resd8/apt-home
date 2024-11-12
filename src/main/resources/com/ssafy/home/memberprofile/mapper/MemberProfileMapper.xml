@@ -24,6 +24,9 @@
 
     <!-- 비밀번호 변경 -->
     <update id="updatePassword">
-        UPDATE member SET password = #{newPassword} WHERE mid = #{memberId}
+        UPDATE member
+        SET password = #{newPassword},
+            salt     = #{salt}
+        WHERE mid = #{memberId}
     </update>
 </mapper>

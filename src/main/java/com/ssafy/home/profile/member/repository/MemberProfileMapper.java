@@ -16,5 +16,5 @@ public interface MemberProfileMapper {
 
     int deleteMemberProfile(@Param("memberId") String memberId, @Param("password") String password);
 
-    int updatePassword(@Param("memberId") String memberId, @Param("newPassword") String requestPassword);
+    int updatePassword(@Param("memberId") String memberId, @Param("newPassword") String requestPassword, @Param("salt") String salt);
 }
