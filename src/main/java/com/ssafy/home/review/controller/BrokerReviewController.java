@@ -32,10 +32,4 @@ public class BrokerReviewController {
         return ResponseEntity.status(HttpStatus.CREATED).body(replyService.createAIReply(reviewId));
     }
 
-    /**
-     * todo
-     * 브로커는 예약을 수락(reserved) 할 수 있다.
-     * 브로커는 예약을 완료(completed) 할 수 있다.
-     */
-
 }
