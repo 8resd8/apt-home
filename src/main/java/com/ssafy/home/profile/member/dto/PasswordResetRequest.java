@@ -1,4 +1,6 @@
 package com.ssafy.home.profile.member.dto;
 
-public record PasswordResetRequest(String email) {
+import jakarta.validation.constraints.Email;
+
+public record PasswordResetRequest(@Email String email) {
 }
