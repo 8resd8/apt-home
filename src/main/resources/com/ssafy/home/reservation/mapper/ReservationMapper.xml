@@ -62,4 +62,24 @@
                  JOIN broker b ON r.broker_id = b.bid
         WHERE r.member_id = #{memberId}
     </select>
+
+    <!-- 브로커: reserve 예약 확정 + memo -->
+    <update id="updateReserveStatus">
+        UPDATE reservation
+        SET
+        status = #{status},
+        broker_memo = #{brokerMemo}
+        WHERE rid = #{reservationId}
+        AND broker_id = #{brokerId}
+        AND status = #{condition} <!-- 상태가 이미 변경된 경우 방지 -->
+    </update>
+
+    <!-- 브로커: 예약 완료 -->
+    <update id="updateCompleteStatus">
+        UPDATE reservation
+        SET status = #{status}
+        WHERE rid = #{reservationId}
+        AND broker_id = #{brokerId}
+        AND status = #{condition} <!-- 상태가 이미 변경된 경우 방지 -->
+    </update>
 </mapper>

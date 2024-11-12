@@ -1,11 +1,11 @@
 package com.ssafy.home.reservation.exception;
 
-public class NotFoundReservation extends RuntimeException {
-    public NotFoundReservation(Long rId) {
+public class ReservationNotFoundException extends RuntimeException {
+    public ReservationNotFoundException(Long rId) {
         super(rId + "번 예약을 찾을 수 없습니다.");
     }
 
-    public NotFoundReservation() {
+    public ReservationNotFoundException() {
         super("예약을 찾을 수 없습니다.");
     }
 }
