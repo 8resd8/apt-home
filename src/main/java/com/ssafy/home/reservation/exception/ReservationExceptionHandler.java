@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ReservationExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<String> handleNotFoundReservation(NotFoundReservation ex) {
+    public ResponseEntity<String> handleNotFoundReservation(ReservationNotFound ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleStatusReservation(ReservationStatusException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
