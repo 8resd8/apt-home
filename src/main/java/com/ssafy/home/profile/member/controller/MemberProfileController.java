@@ -39,7 +39,7 @@ public class MemberProfileController {
         memberService.deleteMember(member, request);
     }
 
-    @PostMapping("/password-change")
+    @PatchMapping("/password-change")
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@Login Member member, @Validated @RequestBody PasswordChangeRequest request) {
         memberService.changePassword(member, request);
