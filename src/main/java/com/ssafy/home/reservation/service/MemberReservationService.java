@@ -5,7 +5,7 @@ import com.ssafy.home.reservation.dto.ReservationResponse;
 
 import java.util.List;
 
-public interface ReservationService {
+public interface MemberReservationService {
     void addReservation(ReservationCreateRequest request, String memberId);
 
     void updateReservation(Long rid, String memberId, ReservationCreateRequest request);

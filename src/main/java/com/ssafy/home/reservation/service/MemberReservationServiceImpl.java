@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ReservationServiceImpl implements ReservationService {
+public class MemberReservationServiceImpl implements MemberReservationService {
 
     private final ReservationMapper reservationMapper;
 
