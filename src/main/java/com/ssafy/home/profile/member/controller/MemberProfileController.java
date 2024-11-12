@@ -1,11 +1,14 @@
 package com.ssafy.home.profile.member.controller;
 
-import com.ssafy.home.profile.member.dto.MemberProfileResponse;
+import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.global.annotation.Login;
+import com.ssafy.home.profile.member.dto.MemberResponse;
 import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
 import com.ssafy.home.profile.member.dto.PasswordChangeRequest;
 import com.ssafy.home.profile.member.dto.PasswordResetRequest;
 import com.ssafy.home.profile.member.service.MemberProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,34 +20,34 @@ public class MemberProfileController {
     private final MemberProfileService memberService;
 
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MemberProfileResponse> getMemberProfile(@PathVariable String memberId) {
-        MemberProfileResponse profile = memberService.findMemberById(memberId);
+    @GetMapping
+    public ResponseEntity<MemberResponse> getMemberProfile(@Login Member member) {
+        MemberResponse profile = memberService.findMemberById(member);
         return ResponseEntity.ok(profile);
     }
 
-    @PostMapping("/{memberId}")
-    public ResponseEntity<Void> updateMemberProfile(@PathVariable String memberId, @RequestBody MemberUpdateRequest request) {
-        memberService.updateMember(memberId, request);
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public ResponseEntity<MemberResponse> updateMemberProfile(@Login Member member, @RequestBody MemberUpdateRequest request) {
+        MemberResponse profile = memberService.updateMember(member, request);
+        return ResponseEntity.ok(profile);
     }
 
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable String memberId, @RequestParam String password) {
-        memberService.deleteMember(memberId, password);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMember(@Login Member member, @RequestParam String password) {
+        memberService.deleteMember(member, password);
     }
 
     @PostMapping("/password-reset")
-    public ResponseEntity<Void> resetPassword(@RequestBody PasswordResetRequest request) {
+    @ResponseStatus(HttpStatus.OK)
+    public void resetPassword(@RequestBody PasswordResetRequest request) {
         memberService.resetPassword(request);
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/password-change")
-    public ResponseEntity<Void> changePassword(@RequestBody PasswordChangeRequest request) {
+    @ResponseStatus(HttpStatus.OK)
+    public void changePassword(@RequestBody PasswordChangeRequest request) {
         memberService.changePassword(request);
-        return ResponseEntity.ok().build();
     }
 
 }
