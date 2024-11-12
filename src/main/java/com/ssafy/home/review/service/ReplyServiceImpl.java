@@ -61,8 +61,6 @@ public class ReplyServiceImpl implements ReplyService {
         }
 
         String message = PromptGenerator.brokerReviewGenerator(findReview.get().getReviewContent());
-        reviewMapper.updateReply(reviewId, message, LocalDateTime.now());
-
         return chatModel.call(message);
     }
 }
