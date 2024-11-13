@@ -1,4 +1,4 @@
-package com.ssafy.home.email.exception;
+package com.ssafy.home.auth.exception;
 
 public class CannotVerifyException extends RuntimeException {
     public CannotVerifyException(String message) {

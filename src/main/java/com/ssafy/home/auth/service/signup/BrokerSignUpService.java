@@ -1,8 +1,8 @@
 package com.ssafy.home.auth.service.signup;
 
 import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.dto.BrokerSignUpRequest;
-import com.ssafy.home.auth.dto.SignUpResponse;
+import com.ssafy.home.auth.dto.request.BrokerSignUpRequest;
+import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

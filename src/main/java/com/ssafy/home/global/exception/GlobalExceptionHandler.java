@@ -1,6 +1,6 @@
 package com.ssafy.home.global.exception;
 
-import com.ssafy.home.email.exception.CannotVerifyException;
+import com.ssafy.home.auth.exception.CannotVerifyException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;

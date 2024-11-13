@@ -1,6 +1,10 @@
 package com.ssafy.home.auth.controller;
 
-import com.ssafy.home.auth.dto.*;
+import com.ssafy.home.auth.dto.request.BrokerSignUpRequest;
+import com.ssafy.home.auth.dto.request.LoginRequest;
+import com.ssafy.home.auth.dto.request.MemberSignUpRequest;
+import com.ssafy.home.auth.dto.response.LoginResponse;
+import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.service.AuthFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthFacade authFacade;

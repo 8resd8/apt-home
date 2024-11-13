@@ -1,8 +1,8 @@
 package com.ssafy.home.auth.service.signup;
 
 import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.auth.dto.MemberSignUpRequest;
-import com.ssafy.home.auth.dto.SignUpResponse;
+import com.ssafy.home.auth.dto.request.MemberSignUpRequest;
+import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

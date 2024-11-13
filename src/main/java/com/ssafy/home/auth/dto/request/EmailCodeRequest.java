@@ -1,10 +1,13 @@
-package com.ssafy.home.email.dto;
+package com.ssafy.home.auth.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record EmailRequest(
+public record EmailCodeRequest(
         @NotBlank(message = "{required.field}")
         @Email(message = "{email.valid}")
-        String email) {
+        String email,
+        @NotBlank(message = "{required.field}")
+        String authCode
+) {
 }

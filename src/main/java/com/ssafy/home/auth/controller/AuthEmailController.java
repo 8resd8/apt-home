@@ -1,18 +1,18 @@
-package com.ssafy.home.email.controller;
+package com.ssafy.home.auth.controller;
 
-import com.ssafy.home.email.dto.EmailCodeRequest;
-import com.ssafy.home.email.dto.EmailRequest;
-import com.ssafy.home.email.service.EmailSendService;
-import com.ssafy.home.email.service.EmailVerificationService;
+import com.ssafy.home.auth.dto.request.EmailCodeRequest;
+import com.ssafy.home.auth.dto.request.EmailRequest;
+import com.ssafy.home.auth.service.email.EmailSendService;
+import com.ssafy.home.auth.service.email.EmailVerificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/email")
+@RequestMapping("/auth/email")
 @RequiredArgsConstructor
-public class EmailController {
+public class AuthEmailController {
     private final EmailSendService emailSendService;
     private final EmailVerificationService emailVerificationService;
 

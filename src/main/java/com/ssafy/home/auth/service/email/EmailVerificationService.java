@@ -1,7 +1,7 @@
-package com.ssafy.home.email.service;
+package com.ssafy.home.auth.service.email;
 
-import com.ssafy.home.email.dto.EmailCodeRequest;
-import com.ssafy.home.email.exception.CannotVerifyException;
+import com.ssafy.home.auth.dto.request.EmailCodeRequest;
+import com.ssafy.home.auth.exception.CannotVerifyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;

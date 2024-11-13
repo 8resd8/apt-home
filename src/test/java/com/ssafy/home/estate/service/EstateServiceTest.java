@@ -1,7 +1,7 @@
 package com.ssafy.home.estate.service;
 
 import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.dto.BrokerSignUpRequest;
+import com.ssafy.home.auth.dto.request.BrokerSignUpRequest;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.service.AuthFacade;
 import com.ssafy.home.estate.dto.EstateDetailResponse;

@@ -1,4 +1,4 @@
-package com.ssafy.home.auth.dto;
+package com.ssafy.home.auth.dto.response;
 
 public record LoginResponse(
         String id,

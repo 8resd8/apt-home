@@ -1,6 +1,6 @@
-package com.ssafy.home.email.service;
+package com.ssafy.home.auth.service.email;
 
-import com.ssafy.home.email.dto.EmailRequest;
+import com.ssafy.home.auth.dto.request.EmailRequest;
 import com.ssafy.home.global.enums.Email;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
