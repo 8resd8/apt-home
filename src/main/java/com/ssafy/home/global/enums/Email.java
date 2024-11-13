@@ -1,8 +1,10 @@
 package com.ssafy.home.global.enums;
 
-public enum Email {
-    TITLE("SSAFY FINAL-PROJECT 이메일 인증 코드");
+import lombok.Getter;
 
+@Getter
+public enum Email {
+    TITLE("[SSAFY] 집이지 비밀번호 재설정 인증코드");
 
 
     private final String value;
