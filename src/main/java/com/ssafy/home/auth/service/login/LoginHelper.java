@@ -31,7 +31,7 @@ public class LoginHelper {
         if (userType == BROKER) {
             session.setAttribute(BROKER_ID.name(), id);
         } else if (userType == MEMBER) {
-            session.setAttribute(BROKER_ID.name(), id);
+            session.setAttribute(MEMBER_ID.name(), id);
         }
 
         session.setAttribute(TYPE.name(), userType.name());
