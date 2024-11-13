@@ -11,18 +11,9 @@ import java.util.Optional;
 @Mapper
 public interface BrokerMapper {
 
-    void insertBroker(@Param("id") String id,
-                      @Param("officeName") String officeName,
-                      @Param("name") String name,
-                      @Param("phoneNum") String phoneNum,
-                      @Param("address") String address,
-                      @Param("licenseNum") String licenseNum,
-                      @Param("password") String password,
-                      @Param("salt") String salt,
-                      @Param("email") String email,
-                      @Param("lastLogin") LocalDateTime lastLogin,
-                      @Param("createdAt") Timestamp createdAt,
-                      @Param("updatedAt") Timestamp updatedAt);
+    void insertBroker(Broker broker);
 
     Optional<Broker> findById(@Param("id") String id);
+
+    void updateLastLogin(@Param("id") String id, @Param("lastLogin") LocalDateTime lastLogin);
 }
