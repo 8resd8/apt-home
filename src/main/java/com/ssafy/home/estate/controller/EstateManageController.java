@@ -7,6 +7,7 @@ import com.ssafy.home.estate.service.EstateService;
 import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +16,25 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/broker/estate")
 @RestController
-public class estateManageController {
+public class EstateManageController {
     private final EstateService estateService;
 
     @PostMapping
-    public ResponseEntity<?> postEstate(@Validated @RequestBody RegistEstateRequest requestDto, @Login Broker broker) {
+    public ResponseEntity<Long> postEstate(@Validated @RequestBody RegistEstateRequest requestDto, @Login Broker broker) {
         Long createdId = estateService.createEstate(requestDto, broker);
 
         return ResponseEntity.ok().body(createdId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public ResponseEntity<?> updateEstate(@Validated @RequestBody UpdateEstateRequest requestDto, @Login Broker broker) {
+    public void updateEstate(@Validated @RequestBody UpdateEstateRequest requestDto, @Login Broker broker) {
         estateService.updateEstate(requestDto, broker);
-
-        return ResponseEntity.ok().build();
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{eid}")
-    public ResponseEntity<?> deleteEstate(@PathVariable Long eid, @Login Broker broker) {
+    public void deleteEstate(@PathVariable Long eid, @Login Broker broker) {
         estateService.deleteEstate(eid, broker);
-
-        return ResponseEntity.ok().build();
     }
 }

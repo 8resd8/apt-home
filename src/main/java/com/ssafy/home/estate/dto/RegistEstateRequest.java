@@ -1,6 +1,6 @@
 package com.ssafy.home.estate.dto;
 
-import com.ssafy.home.global.enums.estateType;
+import com.ssafy.home.global.enums.EstateType;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,7 +10,7 @@ public record RegistEstateRequest(
         String aptSeq,
 
         @NotNull(message = "{required.field}")
-        estateType type,
+        EstateType type,
 
         @NotNull(message = "{required.field}")
         @Length(max = 45, message = "{size.max}")
