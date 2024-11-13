@@ -3,7 +3,7 @@ package com.ssafy.home.estate.service;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.dto.BrokerSignUpRequest;
 import com.ssafy.home.auth.repository.BrokerMapper;
-import com.ssafy.home.auth.service.AuthService;
+import com.ssafy.home.auth.service.AuthFacade;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.global.enums.EstateType;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -25,7 +24,7 @@ public class EstateServiceTest {
     private EstateService estateService;
 
     @Autowired
-    private AuthService authService;
+    private AuthFacade authService;
 
     @Autowired
     private BrokerMapper brokerMapper;
