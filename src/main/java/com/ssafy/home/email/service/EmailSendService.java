@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmailSendService {
 
+    public static final int AUTH_CODE_LENGTH = 6;
     private final JavaMailSender mailSender;
     private final EmailVerificationService emailVerificationService;
 
@@ -27,7 +28,7 @@ public class EmailSendService {
         try {
             helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(toEmail); // 누구에게 보낼건지
-            helper.setSubject(Email.TITLE.toString()); // 이메일 제목
+            helper.setSubject(Email.TITLE.getValue()); // 이메일 제목
             helper.setText(htmlContent(authCode), true); // 이메일 본문, true 설정시 html 처리된다
 
             mailSender.send(message);
@@ -40,7 +41,7 @@ public class EmailSendService {
 
     public void handleEmailSend(EmailRequest requestEmail) {
         // 1. 인증코드 생성
-        String authCode = emailVerificationService.generateVerificationCode();
+        String authCode = emailVerificationService.generateRandomString(AUTH_CODE_LENGTH);
 
         // 2. 인증코드 저장
         emailVerificationService.storeCode(requestEmail.email(), authCode);
@@ -64,7 +65,7 @@ public class EmailSendService {
                         <p style="color: #34495e; line-height: 1.6;">SSAFY 12기 15반입니다</p>
                         <p style="color: #34495e; line-height: 1.6;">요청하신 이메일 인증 코드는 아래와 같습니다</p>
                         <br>
-                        <p style="font-size: 24px; font-weight: bold; color: #e74c3c;">인증 코드: <strong>%s</strong></p>
+                        <p style="font-size: 24px; font-weight: bold; color: #2E64FE;">인증 코드: <strong>%s</strong></p>
                         <br>
                         <p style="color: #34495e; line-height: 1.6;">이 코드를 <strong>5분</strong> 이내에 입력해주세요.</p>
                         <p style="color: #34495e; line-height: 1.6;">만약 본인이 요청하지 않은 이메일이라면, 이 이메일을 무시하셔도 됩니다.</p>
