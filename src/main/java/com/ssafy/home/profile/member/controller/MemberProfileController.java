@@ -2,10 +2,7 @@ package com.ssafy.home.profile.member.controller;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
-import com.ssafy.home.profile.member.dto.MemberDeleteRequest;
-import com.ssafy.home.profile.member.dto.MemberResponse;
-import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
-import com.ssafy.home.profile.member.dto.PasswordChangeRequest;
+import com.ssafy.home.profile.member.dto.*;
 import com.ssafy.home.profile.member.service.MemberProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,4 +42,9 @@ public class MemberProfileController {
         memberService.changePassword(member, request);
     }
 
+    @PatchMapping("/password-set")
+    @ResponseStatus(HttpStatus.OK)
+    public void setPassword(@Login Member member, @Validated @RequestBody PasswordResetRequest request) {
+        memberService.resetPassword(member, request);
+    }
 }
