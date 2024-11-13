@@ -1,9 +1,9 @@
 package com.ssafy.home.auth.dto;
 
-public record LoginDtoResponse(
+public record LoginResponse(
         String id,
         String name,
         String email,
-        String userType, // member 또는 broker
+        String userType,
         String sessionId
 ) { }
