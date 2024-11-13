@@ -2,14 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.home.auth.repository.MemberMapper">
-    <insert id="insertMember">
+    <insert id="insertMember" parameterType="com.ssafy.home.auth.domain.Member">
         INSERT INTO member (mid, password, salt, email, phone_num, name, created_at, updated_at)
-        VALUES (#{id}, #{password}, #{salt}, #{email}, #{phoneNum}, #{name}, #{createdAt}, #{updatedAt})
+        VALUES (#{mid}, #{password}, #{salt}, #{email}, #{phoneNum}, #{name}, #{createdAt}, #{updatedAt})
     </insert>
 
     <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Member">
         SELECT * FROM member WHERE mid = #{id}
     </select>
+
+    <update id="updateLastLogin">
+        UPDATE member
+        SET last_login = #{lastLogin}
+        WHERE mid = #{id}
+    </update>
 
 
 </mapper>
