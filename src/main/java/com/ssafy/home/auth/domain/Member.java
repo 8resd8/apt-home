@@ -20,4 +20,22 @@ public class Member {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private LocalDateTime lastLogin;
+
+    public static Member toEntity(String id, String hashedPassword, String salt, String email, String phoneNum, String name) {
+        return Member.builder()
+                .mid(id)
+                .password(hashedPassword)
+                .salt(salt)
+                .email(email)
+                .phoneNum(phoneNum)
+                .name(name)
+                .createdAt(null)       // 자동 생성
+                .updatedAt(null)       // 자동 생성
+                .lastLogin(null)       // 로그인 시 업데이트됨
+                .build();
+    }
+
+    public void updateLastLogin() {
+        this.lastLogin = LocalDateTime.now();
+    }
 }
