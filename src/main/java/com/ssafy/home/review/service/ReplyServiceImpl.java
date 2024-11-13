@@ -1,7 +1,6 @@
 package com.ssafy.home.review.service;
 
 import com.ssafy.home.global.util.PromptGenerator;
-import com.ssafy.home.reservation.exception.NotFoundReservation;
 import com.ssafy.home.review.domain.Review;
 import com.ssafy.home.review.dto.ReplyCommentRequest;
 import com.ssafy.home.review.dto.ReplyCommentResponse;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -57,7 +57,7 @@ public class ReplyServiceImpl implements ReplyService {
     public String createAIReply(Long reviewId) {
         Optional<Review> findReview = reviewMapper.findReviewById(reviewId);
         if (findReview.isEmpty()) {
-            throw new NotFoundReservation();
+            throw new NoSuchElementException("리뷰를 찾을 수 없습니다.");
         }
 
         String memberReviewComment = findReview.get().getReviewContent();
