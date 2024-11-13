@@ -1,16 +1,13 @@
 package com.ssafy.home.auth.controller;
 
 import com.ssafy.home.auth.dto.*;
-import com.ssafy.home.auth.service.AuthService;
+import com.ssafy.home.auth.service.AuthFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -18,30 +15,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthFacade authFacade;
 
     @PostMapping("/signup/member")
-    public ResponseEntity<SignUpResponse> signUpMember(@Validated @RequestBody MemberSignUpRequest requestDto) {
-        SignUpResponse responseMember = authService.signUpMember(requestDto);
+    public ResponseEntity<SignUpResponse> signUpMember(@Validated @RequestBody MemberSignUpRequest request) {
+        SignUpResponse responseMember = authFacade.signUpMember(request);
 
         return new ResponseEntity<>(responseMember, HttpStatus.CREATED);
     }
 
     @PostMapping("/signup/broker")
-    public ResponseEntity<SignUpResponse> signUpBroker(@Validated @RequestBody BrokerSignUpRequest requestDto) {
-        SignUpResponse responseBroker = authService.signUpBroker(requestDto);
+    public ResponseEntity<SignUpResponse> signUpBroker(@Validated @RequestBody BrokerSignUpRequest request) {
+        SignUpResponse responseBroker = authFacade.signUpBroker(request);
+
         return new ResponseEntity<>(responseBroker, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDtoResponse> login(@Validated @RequestBody LoginRequest loginRequest) {
-        LoginDtoResponse responseLogin = authService.login(loginRequest);
+    public ResponseEntity<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
+        LoginResponse responseLogin = authFacade.login(request);
+
         return new ResponseEntity<>(responseLogin, HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
-        authService.logout();
-        return ResponseEntity.ok("로그아웃 되었습니다.");
+    @ResponseStatus(HttpStatus.OK)
+    public void logout() {
+        authFacade.logout();
     }
 }
