@@ -4,7 +4,6 @@ import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.global.util.PromptGenerator;
 import com.ssafy.home.reservation.domain.Reservation;
-import com.ssafy.home.reservation.exception.NotFoundReservation;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import com.ssafy.home.review.domain.Review;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
@@ -18,6 +17,7 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -54,7 +54,7 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<Reservation> findReservation = reservationMapper.findReservationById(reservationId);
 
         if (findReservation.isEmpty()) {
-            throw new NotFoundReservation();
+            throw new NoSuchElementException("리뷰를 찾을 수 없습니다.");
         }
 
         Reservation reservation = findReservation.get();
