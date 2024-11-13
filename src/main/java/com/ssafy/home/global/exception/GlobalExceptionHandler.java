@@ -1,5 +1,6 @@
 package com.ssafy.home.global.exception;
 
+import com.ssafy.home.email.exception.CannotVerifyException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {NoSuchElementException.class})
     protected ResponseEntity<ErrorResponse> handleNoSuchElementException(NoSuchElementException e, WebRequest request) {
         return ErrorResponse.toResponseEntity(HttpStatus.NOT_FOUND, e.getMessage(), request.getDescription(false).replace("uri=", ""));
+    }
+
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleCannotVerifyException(CannotVerifyException e, WebRequest request) {
+        return ErrorResponse.toResponseEntity(HttpStatus.BAD_REQUEST, e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 }
