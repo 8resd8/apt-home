@@ -28,7 +28,7 @@ public class ServiceTime {
         try {
             result = joinPoint.proceed();
         } catch (Exception e) {
-            log.error("[{}] - [메서드 실행 중 예외 발생: {}]", methodName, e.getMessage());
+            log.error("[{}] - [메서드 실행 중 예외 발생, 상세 내용: ]", methodName, e);
             throw e;
         }
 
