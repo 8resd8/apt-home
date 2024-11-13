@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test") // test 설정 사용
-class MemberMapperTest {
+public class MemberMapperTest {
 
     @Autowired
     private MemberMapper memberMapper;
@@ -42,16 +42,7 @@ class MemberMapperTest {
                     .lastLogin(LocalDateTime.now())
                     .build();
 
-            memberMapper.insertMember(
-                    member.getMid(),
-                    member.getPassword(),
-                    member.getSalt(),
-                    member.getEmail(),
-                    member.getPhoneNum(),
-                    member.getName(),
-                    member.getCreatedAt(),
-                    member.getUpdatedAt()
-            );
+            memberMapper.insertMember(member);
         }
     }
 

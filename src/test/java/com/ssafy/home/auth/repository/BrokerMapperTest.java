@@ -45,20 +45,7 @@ class BrokerMapperTest {
                     .lastLogin(LocalDateTime.now())
                     .build();
 
-            brokerMapper.insertBroker(
-                    broker.getBid(),
-                    broker.getOfficeName(),
-                    broker.getBrokerName(),
-                    broker.getPhoneNum(),
-                    broker.getAddress(),
-                    broker.getLicenseNum(),
-                    broker.getPassword(),
-                    broker.getSalt(),
-                    broker.getEmail(),
-                    broker.getLastLogin(),
-                    broker.getUpdatedAt(),
-                    broker.getCreatedAt()
-            );
+            brokerMapper.insertBroker(broker);
         }
     }
 
