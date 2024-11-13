@@ -1,4 +1,4 @@
-package com.ssafy.home.auth.service;
+package com.ssafy.home.auth.service.signup;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.dto.MemberSignUpRequest;

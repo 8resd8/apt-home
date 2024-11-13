@@ -1,4 +1,4 @@
-package com.ssafy.home.auth.service;
+package com.ssafy.home.auth.service.signup;
 
 import com.ssafy.home.auth.exception.DuplicateException;
 import com.ssafy.home.auth.repository.BrokerMapper;

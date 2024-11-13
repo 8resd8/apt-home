@@ -1,12 +1,10 @@
-package com.ssafy.home.auth.service;
+package com.ssafy.home.auth.service.login;
 
 import com.ssafy.home.auth.exception.LoginFailedException;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
-import com.ssafy.home.global.enums.Session;
 import com.ssafy.home.global.enums.UserType;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

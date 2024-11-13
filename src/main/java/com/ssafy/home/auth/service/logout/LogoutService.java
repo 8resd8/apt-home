@@ -1,4 +1,4 @@
-package com.ssafy.home.auth.service;
+package com.ssafy.home.auth.service.logout;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
