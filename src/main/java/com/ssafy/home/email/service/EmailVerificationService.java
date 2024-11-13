@@ -18,13 +18,12 @@ public class EmailVerificationService {
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final SecureRandom random = new SecureRandom();
     private static final long EXPIRATION_TIME = 5;  // 인증 코드의 만료 시간 (5분)
-    ;
     private final StringRedisTemplate redisTemplate;
 
 
-    public String generateVerificationCode() {
+    public String generateRandomString(int length) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < length; i++) {
             int index = random.nextInt(CHARACTERS.length());
             sb.append(CHARACTERS.charAt(index));
         }
@@ -37,7 +36,7 @@ public class EmailVerificationService {
 
     public boolean verifyCode(String email, String authCode) {
         String storedAuthCode = redisTemplate.opsForValue().get(email);
-        if (storedAuthCode != null && storedAuthCode.equals(authCode)) {
+        if (storedAuthCode != null && !storedAuthCode.equals(authCode)) {
             log.info("인증 실패: 이메일: {}, 저장된 코드: {}, 입력된 코드: {}", email, storedAuthCode, authCode);
             return false;
         }
