@@ -2,10 +2,7 @@ package com.ssafy.home.profile.member.service;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.repository.MemberMapper;
-import com.ssafy.home.profile.member.dto.MemberDeleteRequest;
-import com.ssafy.home.profile.member.dto.MemberResponse;
-import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
-import com.ssafy.home.profile.member.dto.PasswordChangeRequest;
+import com.ssafy.home.profile.member.dto.*;
 import com.ssafy.home.profile.member.exception.CannotUpdateMemberException;
 import com.ssafy.home.profile.member.exception.NotFoundMemberException;
 import com.ssafy.home.profile.member.exception.ValidPasswordException;
@@ -25,7 +22,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
 
     private final MemberMapper memberMapper;
     private final MemberProfileMapper memberProfileMapper;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final HttpSession httpSession;
 
     @Override
@@ -85,6 +82,17 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         httpSession.invalidate();
     }
 
+    @Override
+    public void resetPassword(Member member, PasswordResetRequest request) {
+        if (!request.password().equals(request.confirmPassword())) {
+            throw new ValidPasswordException("비밀번호가 일치하지 않습니다.");
+        }
+        String salt = generateSalt();
+        String hashedPassword = hashPassword(request.confirmPassword(), salt);
+
+        memberProfileMapper.updatePassword(member.getMid(), hashedPassword, salt);
+    }
+
     private void checkCurrentPassword(Member member, MemberUpdateRequest request) {
         String originPwd = getOriginPwd(member);
 
@@ -117,12 +125,16 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     }
 
     private void checkPassword(String hashedPassword, String requestPassword, String salt) {
-        if (!bCryptPasswordEncoder.matches(requestPassword + salt, hashedPassword)) {
+        if (!passwordEncoder.matches(requestPassword + salt, hashedPassword)) {
             throw new ValidPasswordException();
         }
     }
 
     private String generateSalt() {
         return Long.toHexString(Double.doubleToLongBits(Math.random()));
+    }
+
+    private String hashPassword(String password, String salt) {
+        return passwordEncoder.encode(password + salt);
     }
 }
