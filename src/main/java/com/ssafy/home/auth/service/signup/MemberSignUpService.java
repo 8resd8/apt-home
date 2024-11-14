@@ -20,7 +20,15 @@ public class MemberSignUpService {
         String salt = signUpHelper.generateSalt();
         String hashedPassword = signUpHelper.hashPassword(request.password(), salt);
 
-        Member member = Member.toEntity(request.id(), hashedPassword, salt, request.email(), request.phoneNum(), request.name());
+        Member member = Member.builder()
+                .password(hashedPassword)
+                .mid(request.id())
+                .email(request.email())
+                .salt(salt)
+                .name(request.name())
+                .phoneNum(request.phoneNum())
+                .build();
+
         memberMapper.insertMember(member);
 
         return new SignUpResponse(request.id(), request.email());

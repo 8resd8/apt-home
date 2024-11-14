@@ -21,17 +21,15 @@ public class BrokerSignUpService {
         String salt = signUpHelper.generateSalt();
         String hashedPassword = signUpHelper.hashPassword(request.password(), salt);
 
-        Broker broker = Broker.toEntity(
-                request.id(),
-                request.officeName(),
-                request.name(),
-                request.phoneNum(),
-                request.address(),
-                request.licenseNum(),
-                hashedPassword,
-                salt,
-                request.email()
-        );
+        Broker broker = Broker.builder()
+                .bid(request.id())
+                .password(hashedPassword)
+                .salt(salt)
+                .email(request.email())
+                .phoneNum(request.phoneNum())
+                .address(request.address())
+                .licenseNum(request.licenseNum())
+                .brokerName(request.name()).build();
 
         brokerMapper.insertBroker(broker);
 
