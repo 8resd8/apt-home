@@ -15,7 +15,7 @@
 
     <update id="updateLastLogin">
         UPDATE member
-        SET last_login = #{lastLogin}
+        SET last_login = NOW()
         WHERE mid = #{id}
     </update>
 </mapper>
