@@ -22,8 +22,7 @@ public class BrokerLoginService {
     public LoginResponse login(LoginRequest request) {
         Broker broker = brokerMapper.findById(request.id()).orElseThrow(LoginFailedException::new);
 
-        broker.updateLastLogin();
-        brokerMapper.updateLastLogin(broker.getBid(), broker.getLastLogin());
+        brokerMapper.updateLastLogin(broker.getBid());
 
         loginHelper.checkPassword(broker.getPassword(), request.password(), broker.getSalt());
         loginHelper.setSessionAttribute(broker.getBid(), BROKER);

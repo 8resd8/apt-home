@@ -24,8 +24,7 @@ public class MemberLoginService {
         loginHelper.checkPassword(member.getPassword(), request.password(), member.getSalt());
         loginHelper.setSessionAttribute(request.id(), MEMBER);
 
-        member.updateLastLogin();
-        memberMapper.updateLastLogin(member.getMid(), member.getLastLogin());
+        memberMapper.updateLastLogin(member.getMid());
 
         return new LoginResponse(member.getMid(), member.getName(), member.getEmail(), MEMBER.name(), session.getId());
     }
