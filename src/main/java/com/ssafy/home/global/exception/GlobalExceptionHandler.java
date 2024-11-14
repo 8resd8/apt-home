@@ -1,6 +1,6 @@
 package com.ssafy.home.global.exception;
 
-import com.ssafy.home.auth.exception.CannotVerifyException;
+import com.ssafy.home.auth.exception.EmailVerifyFailException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
-    protected ResponseEntity<ErrorResponse> handleCannotVerifyException(CannotVerifyException e, WebRequest request) {
-        return ErrorResponse.toResponseEntity(HttpStatus.BAD_REQUEST, e.getMessage(), request.getDescription(false).replace("uri=", ""));
+    protected ResponseEntity<ErrorResponse> handleEmailVerifyFailException(EmailVerifyFailException e, WebRequest request) {
+        return ErrorResponse.toResponseEntity(HttpStatus.UNAUTHORIZED, e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 }
