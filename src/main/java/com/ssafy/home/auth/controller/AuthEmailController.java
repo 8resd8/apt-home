@@ -24,7 +24,7 @@ public class AuthEmailController {
 
     @PostMapping("/code")
     @ResponseStatus(HttpStatus.OK)
-    public void authCodeVerification(@Validated @RequestBody EmailCodeRequest emailCode) {
+    public void authCodeEmail(@Validated @RequestBody EmailCodeRequest emailCode) {
         emailVerificationService.handleVerify(emailCode);
     }
 }
