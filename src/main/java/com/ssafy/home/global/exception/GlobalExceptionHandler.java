@@ -23,8 +23,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ErrorResponse.toResponseEntity(HttpStatus.NOT_FOUND, e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 
-    @ExceptionHandler
-    protected ResponseEntity<ErrorResponse> handleEmailVerifyFailException(EmailVerifyFailException e, WebRequest request) {
-        return ErrorResponse.toResponseEntity(HttpStatus.UNAUTHORIZED, e.getMessage(), request.getDescription(false).replace("uri=", ""));
-    }
 }
