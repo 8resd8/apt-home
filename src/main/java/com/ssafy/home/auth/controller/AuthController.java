@@ -39,7 +39,7 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@Validated @RequestBody LoginRequest request) {
         LoginResponse responseLogin = authFacade.login(request);
 
-        return new ResponseEntity<>(responseLogin, HttpStatus.CREATED);
+        return new ResponseEntity<>(responseLogin, HttpStatus.OK);
     }
 
     @PostMapping("/logout")
