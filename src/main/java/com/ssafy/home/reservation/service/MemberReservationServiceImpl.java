@@ -55,7 +55,7 @@ public class MemberReservationServiceImpl implements MemberReservationService {
 
         int updateSuccess = reservationMapper.updateReservationByMember(reservation);
         if (updateSuccess == 0) {
-            throw new IllegalArgumentException("예약 수정에 실패했습니다.");
+            throw new ReservationNotFoundException("예약 수정에 실패했습니다.");
         }
     }
 
