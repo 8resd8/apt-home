@@ -1,7 +1,6 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.reservation.exception.ReservationStatusException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,24 +14,25 @@ import static com.ssafy.home.global.enums.ReservationStatus.*;
 public class BrokerReservationServiceImpl implements BrokerReservationService {
 
     private final ReservationMapper reservationMapper;
+    private final ReservationHelper reservationHelper;
+
 
     @Override
     public void reserveReservation(Long reservationId, Broker broker, String brokerMemo) {
-        int isSuccess = reservationMapper.updateReserveStatus(
-                reservationId, broker.getBid(), RESERVE.getValue(), brokerMemo, CREATE.getValue());
-
-        if (isSuccess == 0) {
-            throw new ReservationStatusException(RESERVE.getValue());
-        }
+        // 생성 -> 확정
+        reservationHelper.updateStatus(reservationId, broker, RESERVE, brokerMemo);
     }
 
     @Override
     public void completeReservation(Long reservationId, Broker broker) {
-        int isSuccess = reservationMapper.updateCompleteStatus(
-                reservationId, broker.getBid(), COMPLETE.getValue(), RESERVE.getValue());
+        // 확정 -> 완료 상태로 변경
+        reservationMapper.updateStatus(reservationId, broker.getBid(), COMPLETE.getValue(), null);
 
-        if (isSuccess == 0) {
-            throw new ReservationStatusException(COMPLETE.getValue());
-        }
+    }
+
+    @Override
+    public void cancelReservation(Long reservationId, Broker broker) {
+        // 생성 -> 취소 상태로 변경
+        reservationMapper.updateStatus(reservationId, broker.getBid(), CANCEL.getValue(), null);
     }
 }
