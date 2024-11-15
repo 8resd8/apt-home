@@ -14,7 +14,7 @@ public class ReservationHelper {
     private final ReservationMapper reservationMapper;
 
     public void updateStatus(Long reservationId, Broker broker, ReservationStatus targetStatus, String brokerMemo) {
-        int updateSuccess = reservationMapper.updateStatus(
+        int updateSuccess = reservationMapper.updateReservationStatusByBroker(
                 reservationId, broker.getBid(), targetStatus.getValue(), brokerMemo);
 
         if (updateSuccess == 0) {
