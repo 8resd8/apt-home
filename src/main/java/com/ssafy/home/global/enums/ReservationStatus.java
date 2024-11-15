@@ -4,9 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum ReservationStatus {
-    CREATED("Created"),
-    RESERVED("Reserved"),
-    COMPLETED("Completed");
+    CREATE("Created"),
+    RESERVE("Reserved"),
+    COMPLETE("Completed"),
+    CANCEL("Canceled");
 
     private final String value;
 
