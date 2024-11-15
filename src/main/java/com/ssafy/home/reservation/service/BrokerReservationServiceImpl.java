@@ -13,7 +13,6 @@ import static com.ssafy.home.global.enums.ReservationStatus.*;
 @Transactional
 public class BrokerReservationServiceImpl implements BrokerReservationService {
 
-    private final ReservationMapper reservationMapper;
     private final ReservationHelper reservationHelper;
 
 
@@ -26,13 +25,13 @@ public class BrokerReservationServiceImpl implements BrokerReservationService {
     @Override
     public void completeReservation(Long reservationId, Broker broker) {
         // 확정 -> 완료 상태로 변경
-        reservationMapper.updateStatus(reservationId, broker.getBid(), COMPLETE.getValue(), null);
+        reservationHelper.updateStatus(reservationId, broker, COMPLETE, null);
 
     }
 
     @Override
     public void cancelReservation(Long reservationId, Broker broker) {
         // 생성 -> 취소 상태로 변경
-        reservationMapper.updateStatus(reservationId, broker.getBid(), CANCEL.getValue(), null);
+        reservationHelper.updateStatus(reservationId, broker, CANCEL, null);
     }
 }
