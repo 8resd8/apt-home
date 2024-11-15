@@ -25,6 +25,7 @@ class BrokerMapperTest {
     @Autowired
     private BrokerMapper brokerMapper;
 
+
     @BeforeEach
     void setUp() {
         for (int i = 1; i <= 30; i++) {
