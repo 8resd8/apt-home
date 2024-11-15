@@ -23,15 +23,10 @@ public interface ReservationMapper {
 
     List<Reservation> findAllReservationsByMemberId(@Param("memberId") String memberId);
 
-    int updateReserveStatus(@Param("reservationId") Long reservationId, @Param("brokerId") String brokerId,
-                            @Param("status") String status,
-                            @Param("brokerMemo") String brokerMemo,
-                            @Param("condition") String condition
-    );
-
-    int updateCompleteStatus(@Param("reservationId") Long reservationId,
-                             @Param("brokerId") String brokerId,
-                             @Param("status") String status,
-                             @Param("condition") String condition
+    int updateStatus(
+            @Param("reservationId") Long reservationId,
+            @Param("brokerId") String brokerId,
+            @Param("target") String targetStatus,
+            @Param("brokerMemo") String brokerMemo
     );
 }
