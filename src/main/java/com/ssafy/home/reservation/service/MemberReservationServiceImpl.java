@@ -32,12 +32,12 @@ public class MemberReservationServiceImpl implements MemberReservationService {
                 .status(ReservationStatus.CREATE.getValue())
                 .build();
 
-        reservationMapper.insertReservation(reservation);
+        reservationMapper.insertReservationByMember(reservation);
 
         // 2. 매물 예약 연결
         Long reservationId = reservation.getRid();
         request.estateIds().forEach(estateId ->
-                reservationMapper.insertReservationEstate(reservationId, estateId, request.clientMemo())
+                reservationMapper.insertReservationEstateByBroker(reservationId, estateId, request.clientMemo())
         );
     }
 
@@ -53,7 +53,10 @@ public class MemberReservationServiceImpl implements MemberReservationService {
                 .status(ReservationStatus.CREATE.getValue())
                 .build();
 
-        reservationMapper.updateReservation(reservation);
+        int updateSuccess = reservationMapper.updateReservationByMember(reservation);
+        if (updateSuccess == 0) {
+            throw new IllegalArgumentException("예약 수정에 실패했습니다.");
+        }
     }
 
     @Override
