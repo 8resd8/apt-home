@@ -240,3 +240,5 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/intellij,macos,windows,java,database,gradle
 /src/main/resources/secret.properties
 /src/test/resources/secret-test.properties
+# 업로드된 이미지 파일을 Git에서 제외
+src/main/resources/static/upload/profile_images/
