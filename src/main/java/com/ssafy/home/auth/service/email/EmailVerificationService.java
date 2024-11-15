@@ -1,7 +1,7 @@
-package com.ssafy.home.email.service;
+package com.ssafy.home.auth.service.email;
 
-import com.ssafy.home.email.dto.EmailCodeRequest;
-import com.ssafy.home.email.exception.CannotVerifyException;
+import com.ssafy.home.auth.dto.request.EmailCodeRequest;
+import com.ssafy.home.auth.exception.EmailVerifyFailException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -36,7 +36,8 @@ public class EmailVerificationService {
 
     public boolean verifyCode(String email, String authCode) {
         String storedAuthCode = redisTemplate.opsForValue().get(email);
-        if (storedAuthCode != null && !storedAuthCode.equals(authCode)) {
+
+        if (!authCode.equals(storedAuthCode)) {
             log.info("인증 실패: 이메일: {}, 저장된 코드: {}, 입력된 코드: {}", email, storedAuthCode, authCode);
             return false;
         }
@@ -49,7 +50,7 @@ public class EmailVerificationService {
         boolean isSuccess = verifyCode(request.email(), request.authCode());
 
         if (!isSuccess) {
-            throw new CannotVerifyException();
+            throw new EmailVerifyFailException();
         }
     }
 }

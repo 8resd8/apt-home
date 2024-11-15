@@ -11,13 +11,15 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 public class Member {
-    private String mid;
-    private String password;
-    private String salt;
-    private String email;
-    private String phoneNum;
-    private String name;
+    private final String mid;
+    private final String password;
+    private final String salt;
+    private final String email;
+    private final String phoneNum;
+    private final String name;
+
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private LocalDateTime lastLogin;
+
 }
