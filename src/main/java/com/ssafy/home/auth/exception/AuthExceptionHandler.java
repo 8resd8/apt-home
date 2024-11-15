@@ -25,4 +25,9 @@ public class AuthExceptionHandler {
         return ErrorResponse.toResponseEntity(HttpStatus.UNAUTHORIZED, e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleEmailVerifyFailException(FileUploadException e, WebRequest request) {
+        return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request.getDescription(false).replace("uri=", ""));
+    }
+
 }
