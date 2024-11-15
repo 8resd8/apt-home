@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -22,15 +23,18 @@ public class AuthController {
     private final AuthFacade authFacade;
 
     @PostMapping("/signup/member")
-    public ResponseEntity<SignUpResponse> signUpMember(@Validated @RequestBody MemberSignUpRequest request) {
-        SignUpResponse responseMember = authFacade.signUpMember(request);
+    public ResponseEntity<SignUpResponse> signUpMember(@Validated @RequestPart("member") MemberSignUpRequest request,
+                                                       @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
+
+        SignUpResponse responseMember = authFacade.signUpMember(request, profileImage);
 
         return new ResponseEntity<>(responseMember, HttpStatus.CREATED);
     }
 
     @PostMapping("/signup/broker")
-    public ResponseEntity<SignUpResponse> signUpBroker(@Validated @RequestBody BrokerSignUpRequest request) {
-        SignUpResponse responseBroker = authFacade.signUpBroker(request);
+    public ResponseEntity<SignUpResponse> signUpBroker(@Validated @RequestPart("broker") BrokerSignUpRequest request,
+                                                       @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
+        SignUpResponse responseBroker = authFacade.signUpBroker(request, profileImage);
 
         return new ResponseEntity<>(responseBroker, HttpStatus.CREATED);
     }
