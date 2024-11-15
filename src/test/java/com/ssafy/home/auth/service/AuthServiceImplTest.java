@@ -65,7 +65,8 @@ class AuthServiceImplTest {
                 "010-8765-4321",
                 "Seoul",
                 "123-45-6789",
-                "broker@test.com"
+                "broker@test.com",
+                multipartFile
         );
     }
 
@@ -93,7 +94,7 @@ class AuthServiceImplTest {
     @DisplayName("Broker 회원가입")
     void signUpBroker() {
         // when
-        SignUpResponse response = authFacade.signUpBroker(brokerSignUp);
+        SignUpResponse response = authFacade.signUpBroker(brokerSignUp, multipartFile);
 
         // then
         assertThat(response).isNotNull();
@@ -125,7 +126,7 @@ class AuthServiceImplTest {
     @DisplayName("Broker 로그인 요청")
     void loginBroker_success() {
         // Given: 회원가입된 브로커로 로그인 요청
-        authFacade.signUpBroker(brokerSignUp);
+        authFacade.signUpBroker(brokerSignUp, multipartFile);
         LoginRequest loginDto = new LoginRequest(brokerSignUp.id(), brokerSignUp.password());
 
         // When: 로그인 요청
