@@ -21,5 +21,6 @@ public class Member {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private LocalDateTime lastLogin;
+    private String profileImageUrl;
 
 }
