@@ -12,12 +12,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ReservationExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    protected ResponseEntity<ErrorResponse> handleNotFoundReservation(ReservationNotFoundException ex, WebRequest request) {
+    protected ResponseEntity<ErrorResponse> handleNotFoundReservation(NotFoundReservationException ex, WebRequest request) {
         return ErrorResponse.toResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 
     @ExceptionHandler
-    protected ResponseEntity<ErrorResponse> handleStatusReservation(ReservationStatusException ex, WebRequest request) {
+    protected ResponseEntity<ErrorResponse> handleStatusReservation(UpdateStatusReservationException ex, WebRequest request) {
         return ErrorResponse.toResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
+
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleCannotUpdateReservationException(CannotUpdateReservationException ex, WebRequest request) {
+        return ErrorResponse.toResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage(), request.getDescription(false).replace("uri=", ""));
+    }
+
+
+
 }

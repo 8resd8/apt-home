@@ -2,7 +2,7 @@ package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.reservation.domain.Reservation;
-import com.ssafy.home.reservation.exception.ReservationStatusException;
+import com.ssafy.home.reservation.exception.UpdateStatusReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -77,6 +77,6 @@ public class ReservationHelperTest {
     @Test
     @DisplayName("생성 -> 완료 실패")
     void UpdateStatus_Failure() {
-        assertThrows(ReservationStatusException.class, () -> reservationHelper.updateStatus(reservation.getRid(), broker, COMPLETE, null));
+        assertThrows(UpdateStatusReservationException.class, () -> reservationHelper.updateStatus(reservation.getRid(), broker, COMPLETE, null));
     }
 }

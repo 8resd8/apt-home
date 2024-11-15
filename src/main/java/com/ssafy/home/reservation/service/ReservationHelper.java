@@ -2,7 +2,7 @@ package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.global.enums.ReservationStatus;
-import com.ssafy.home.reservation.exception.ReservationStatusException;
+import com.ssafy.home.reservation.exception.UpdateStatusReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class ReservationHelper {
                 reservationId, broker.getBid(), targetStatus.getValue(), brokerMemo);
 
         if (updateSuccess == 0) {
-            throw new ReservationStatusException(targetStatus.getValue());
+            throw new UpdateStatusReservationException(targetStatus.getValue());
         }
     }
 }
