@@ -38,7 +38,7 @@ public class FileStorageService {
     }
 
     public String getImageUrl(MultipartFile profileImage) {
-        if (profileImage == null || !profileImage.isEmpty()) {
+        if (profileImage == null || profileImage.isEmpty()) {
             return null;
         }
         return uploadProfileImage(profileImage);
