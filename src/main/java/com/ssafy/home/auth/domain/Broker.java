@@ -20,6 +20,7 @@ public class Broker {
     private final String licenseNum;
     private final String brokerName;
 
+    private String profileImageUrl;
     private String officeName;
     private Timestamp createdAt;
     private Timestamp updatedAt;
