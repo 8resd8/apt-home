@@ -63,23 +63,25 @@
         WHERE r.member_id = #{memberId}
     </select>
 
-    <!-- 브로커: reserve 예약 확정 + memo -->
-    <update id="updateReserveStatus">
+
+    <update id="updateStatus">
         UPDATE reservation
-        SET
-        status = #{status},
-        broker_memo = #{brokerMemo}
+        <set>
+            status = #{target},
+            <if test="brokerMemo != null and brokerMemo != ''">
+                broker_memo = #{brokerMemo},
+            </if>
+            updated_at = CURRENT_TIMESTAMP
+        </set>
         WHERE rid = #{reservationId}
         AND broker_id = #{brokerId}
-        AND status = #{condition} <!-- 상태가 이미 변경된 경우 방지 -->
+        AND (
+        (#{target} = '확정' AND status = '생성')
+        OR
+        (#{target} = '취소' AND status = '생성')
+        OR
+        (#{target} = '완료' AND status = '확정')
+        )
     </update>
 
-    <!-- 브로커: 예약 완료 -->
-    <update id="updateCompleteStatus">
-        UPDATE reservation
-        SET status = #{status}
-        WHERE rid = #{reservationId}
-        AND broker_id = #{brokerId}
-        AND status = #{condition} <!-- 상태가 이미 변경된 경우 방지 -->
-    </update>
 </mapper>
