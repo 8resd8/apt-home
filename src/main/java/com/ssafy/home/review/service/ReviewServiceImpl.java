@@ -60,7 +60,7 @@ public class ReviewServiceImpl implements ReviewService {
         Reservation reservation = findReservation.get();
 
         // 2. 예약 Status 확인 (Completed)
-        if (!reservation.getStatus().equals(ReservationStatus.COMPLETED.getValue())) {
+        if (!reservation.getStatus().equals(ReservationStatus.COMPLETE.getValue())) {
             throw new NotCompleteReviewException();
         }
 

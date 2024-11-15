@@ -29,7 +29,7 @@ public class MemberReservationServiceImpl implements MemberReservationService {
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .clientMemo(request.clientMemo())
-                .status(ReservationStatus.CREATED.getValue())
+                .status(ReservationStatus.CREATE.getValue())
                 .build();
 
         reservationMapper.insertReservation(reservation);
@@ -50,7 +50,7 @@ public class MemberReservationServiceImpl implements MemberReservationService {
                 .startTime(request.startTime())
                 .endTime(request.endTime())
                 .clientMemo(request.clientMemo())
-                .status(ReservationStatus.CREATED.getValue())
+                .status(ReservationStatus.CREATE.getValue())
                 .build();
 
         reservationMapper.updateReservation(reservation);

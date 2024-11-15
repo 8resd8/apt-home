@@ -1,7 +1,6 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.reservation.exception.ReservationStatusException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +19,20 @@ public class BrokerReservationServiceImpl implements BrokerReservationService {
     @Override
     public void reserveReservation(Long reservationId, Broker broker, String brokerMemo) {
         int isSuccess = reservationMapper.updateReserveStatus(
-                reservationId, broker.getBid(), RESERVED.getValue(), brokerMemo, CREATED.getValue());
+                reservationId, broker.getBid(), RESERVE.getValue(), brokerMemo, CREATE.getValue());
 
         if (isSuccess == 0) {
-            throw new ReservationStatusException(RESERVED.getValue());
+            throw new ReservationStatusException(RESERVE.getValue());
         }
     }
 
     @Override
     public void completeReservation(Long reservationId, Broker broker) {
         int isSuccess = reservationMapper.updateCompleteStatus(
-                reservationId, broker.getBid(), COMPLETED.getValue(), RESERVED.getValue());
+                reservationId, broker.getBid(), COMPLETE.getValue(), RESERVE.getValue());
 
         if (isSuccess == 0) {
-            throw new ReservationStatusException(COMPLETED.getValue());
+            throw new ReservationStatusException(COMPLETE.getValue());
         }
     }
 }
