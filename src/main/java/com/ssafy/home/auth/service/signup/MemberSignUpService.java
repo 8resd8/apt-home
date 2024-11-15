@@ -6,6 +6,7 @@ import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -13,10 +14,12 @@ public class MemberSignUpService {
 
     private final MemberMapper memberMapper;
     private final SignUpHelper signUpHelper;
+    private final FileStorageService fileStorageService;
 
-    public SignUpResponse signUp(MemberSignUpRequest request) {
+    public SignUpResponse signUp(MemberSignUpRequest request, MultipartFile profileImage) {
+        String profileImageUrl = fileStorageService.getImageUrl(profileImage);
+
         signUpHelper.checkDuplicatedId(request.id());
-
         String salt = signUpHelper.generateSalt();
         String hashedPassword = signUpHelper.hashPassword(request.password(), salt);
 
@@ -27,12 +30,12 @@ public class MemberSignUpService {
                 .salt(salt)
                 .name(request.name())
                 .phoneNum(request.phoneNum())
+                .profileImageUrl(profileImageUrl)
                 .build();
 
         memberMapper.insertMember(member);
 
         return new SignUpResponse(request.id(), request.email());
     }
-
 
 }
