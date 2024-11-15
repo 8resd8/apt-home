@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
@@ -41,7 +42,7 @@ class AuthServiceImplTest {
     private MemberSignUpRequest memberSignUp;
     private BrokerSignUpRequest brokerSignUp;
     private MockHttpSession session;
-    private MockMultipartFile multipartFile = new MockMultipartFile("123", new byte[]{});
+    private MockMultipartFile multipartFile = new MockMultipartFile("test.jpg", new byte[]{});
 
     @BeforeEach
     void setUp() {
@@ -71,9 +72,10 @@ class AuthServiceImplTest {
     }
 
     @AfterEach
-    void clearSession() {
+    void afterEach() {
         session.clearAttributes();
     }
+
 
     @Test
     @DisplayName("Member 회원가입")
@@ -96,12 +98,13 @@ class AuthServiceImplTest {
         // when
         SignUpResponse response = authFacade.signUpBroker(brokerSignUp, multipartFile);
 
+
         // then
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo("broker1");
         assertThat(response.email()).isEqualTo("broker@test.com");
 
-        // 실제 DB에서 확인
+
         assertThat(brokerMapper.findById("broker1")).isPresent();
     }
 
