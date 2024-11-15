@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 public record MemberSignUpRequest(
         @NotBlank(message = "{required.field}")
@@ -23,5 +24,7 @@ public record MemberSignUpRequest(
 
         @NotBlank(message = "{required.field}")
         @Size(max = 45, message = "{size.max}")
-        String name
+        String name,
+
+        MultipartFile profileImage
 ) {}
