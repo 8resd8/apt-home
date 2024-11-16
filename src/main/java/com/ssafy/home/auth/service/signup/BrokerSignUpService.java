@@ -34,6 +34,7 @@ public class BrokerSignUpService {
                 .licenseNum(request.licenseNum())
                 .brokerName(request.name())
                 .profileImageUrl(profileImageUrl)
+                .officeName(request.officeName())
                 .build();
 
         brokerMapper.insertBroker(broker);
