@@ -27,7 +27,7 @@ public class AuthExceptionHandler {
 
     @ExceptionHandler
     protected ResponseEntity<ErrorResponse> handleFileUploadException(FileUploadException e, WebRequest request) {
-        return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request.getDescription(false).replace("uri=", ""));
+        return ErrorResponse.toResponseEntity(HttpStatus.BAD_REQUEST, e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 
 }
