@@ -53,8 +53,7 @@ class AuthServiceImplTest {
                 "password123",
                 "member@test.com",
                 "010-1234-5678",
-                "John Doe",
-                multipartFile
+                "John Doe"
         );
 
         // 테스트용 RequestBrokerSignUp 객체 생성
@@ -66,8 +65,7 @@ class AuthServiceImplTest {
                 "010-8765-4321",
                 "Seoul",
                 "123-45-6789",
-                "broker@test.com",
-                multipartFile
+                "broker@test.com"
         );
     }
 

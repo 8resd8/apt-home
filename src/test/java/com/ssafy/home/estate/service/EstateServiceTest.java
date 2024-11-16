@@ -48,8 +48,7 @@ public class EstateServiceTest {
                 "010-8765-4321",
                 "Seoul",
                 "123-45-6789",
-                "broker@test.com",
-                multipartFile
+                "broker@test.com"
         );
 
         authService.signUpBroker(brokerSignUpRequest, multipartFile);

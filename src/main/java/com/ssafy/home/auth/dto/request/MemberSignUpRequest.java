@@ -24,7 +24,5 @@ public record MemberSignUpRequest(
 
         @NotBlank(message = "{required.field}")
         @Size(max = 45, message = "{size.max}")
-        String name,
-
-        MultipartFile profileImage
+        String name
 ) {}

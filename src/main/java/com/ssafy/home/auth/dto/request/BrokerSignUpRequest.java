@@ -37,7 +37,5 @@ public record BrokerSignUpRequest(
 
         @NotBlank(message = "{required.field}")
         @Email(message = "{email.valid}")
-        String email,
-
-        MultipartFile profileImage
+        String email
 ) {}
