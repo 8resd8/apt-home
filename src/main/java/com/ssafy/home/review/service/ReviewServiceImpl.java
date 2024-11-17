@@ -3,7 +3,7 @@ package com.ssafy.home.review.service;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.global.util.PromptGenerator;
-import com.ssafy.home.reservation.domain.Reservation;
+import com.ssafy.home.reservation.dto.ReservationResponse;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import com.ssafy.home.review.domain.Review;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
@@ -51,13 +51,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     private void isValidReview(Long reservationId) {
         // 1. 예약 존재 확인
-        Optional<Reservation> findReservation = reservationMapper.findReservationById(reservationId);
+        Optional<ReservationResponse> findReservation = reservationMapper.findReservationById(reservationId);
 
         if (findReservation.isEmpty()) {
             throw new NoSuchElementException("리뷰를 찾을 수 없습니다.");
         }
 
-        Reservation reservation = findReservation.get();
+        ReservationResponse reservation = findReservation.get();
 
         // 2. 예약 Status 확인 (Completed)
         if (!reservation.getStatus().equals(ReservationStatus.COMPLETE.getValue())) {
