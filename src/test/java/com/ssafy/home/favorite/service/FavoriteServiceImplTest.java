@@ -7,8 +7,8 @@ import com.ssafy.home.favorite.dto.FavoriteResponse;
 import com.ssafy.home.favorite.exception.DeleteFailException;
 import com.ssafy.home.favorite.exception.DuplicateFavoriteException;
 import com.ssafy.home.favorite.repository.FavoriteMapper;
-import com.ssafy.home.util.TestDataRequest;
-import com.ssafy.home.util.TestDataResponse;
+import com.ssafy.home.favorite.service.data.TestDataFavoriteRequest;
+import com.ssafy.home.favorite.service.data.TestDataResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,20 +36,22 @@ class FavoriteServiceImplTest {
     @InjectMocks
     private FavoriteServiceImpl favoriteService; // FavoriteService 객체를 만든다, 하나의 클래스
 
+
     private Member member;
-    private FavoriteAddRequest request;
     private Favorite favorite;
+    private FavoriteAddRequest request;
+    private FavoriteResponse response;
+
     private String memberId = "member1";
     private String brokerId = "broker1";
     private Long estateId = 1L;
-    private FavoriteResponse response;
 
 
     @BeforeEach
     void setUp() {
         member = member(memberId);
         favorite = favorite(memberId, estateId);
-        request = TestDataRequest.favoriteAddRequest(estateId);
+        request = TestDataFavoriteRequest.favoriteAddRequest(estateId);
         response = TestDataResponse.favoriteResponse(memberId, brokerId, estateId);
     }
 

@@ -1,4 +1,4 @@
-package com.ssafy.home.util;
+package com.ssafy.home.favorite.service.data;
 
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.PriorityConstructorArbitraryIntrospector;

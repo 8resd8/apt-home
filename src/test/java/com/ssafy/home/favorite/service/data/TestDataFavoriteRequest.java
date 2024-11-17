@@ -1,11 +1,11 @@
-package com.ssafy.home.util;
+package com.ssafy.home.favorite.service.data;
 
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.PriorityConstructorArbitraryIntrospector;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
 import com.ssafy.home.favorite.dto.FavoriteResponse;
 
-public class TestDataRequest {
+public class TestDataFavoriteRequest {
 
     private static final FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
             .objectIntrospector(PriorityConstructorArbitraryIntrospector.INSTANCE)
