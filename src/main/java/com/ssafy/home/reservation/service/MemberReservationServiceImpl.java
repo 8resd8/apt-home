@@ -61,35 +61,17 @@ public class MemberReservationServiceImpl implements MemberReservationService {
 
     @Override
     public ReservationResponse getReservation(Long rid) {
-        Reservation reservation = reservationMapper.findReservationById(rid)
+        ReservationResponse findReservation = reservationMapper.findReservationById(rid)
                 .orElseThrow(() -> new NoSuchElementException("예약이 없습니다."));
 
-        return toReservationResponse(reservation);
+        return findReservation;
     }
 
     @Override
     public List<ReservationResponse> getReservationsByMember(String memberId) {
-        List<Reservation> allReservations = reservationMapper.findAllReservationsByMemberId(memberId);
+        List<ReservationResponse> findAllReservation = reservationMapper.findAllReservationsByMemberId(memberId);
 
-        List<ReservationResponse> reservationResponses = new ArrayList<>();
-        for (Reservation reservation : allReservations) {
-            reservationResponses.add(toReservationResponse(reservation));
-        }
-
-        return reservationResponses;
+        return findAllReservation;
     }
 
-    private ReservationResponse toReservationResponse(Reservation reservation) {
-        return new ReservationResponse(
-                reservation.getRid(),
-                reservation.getMemberId(),
-                reservation.getBrokerId(),
-                reservation.getStartTime(),
-                reservation.getEndTime(),
-                reservation.getStatus(),
-                reservation.getClientMemo(),
-                reservation.getBrokerMemo(),
-                reservation.getBrokerName()
-        );
-    }
 }
