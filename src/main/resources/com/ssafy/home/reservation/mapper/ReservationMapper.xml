@@ -45,23 +45,102 @@
         VALUES (#{reservationId}, #{estateId}, #{memo})
     </insert>
 
-    <!-- id로 매물 찾기 추가 -->
-    <select id="findReservationById" parameterType="long" resultType="com.ssafy.home.reservation.domain.Reservation">
-        SELECT r.*,
-               b.broker_name AS brokerName
+    <!-- ResultMap 정의 -->
+    <resultMap id="ReservationResponseMap" type="com.ssafy.home.reservation.dto.ReservationResponse">
+        <!-- 예약 기본 정보 -->
+        <id property="rid" column="rid"/>
+        <result property="memberId" column="member_id"/>
+        <result property="brokerId" column="broker_id"/>
+        <result property="brokerName" column="brokerName"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="clientMemo" column="client_memo"/>
+        <result property="brokerMemo" column="broker_memo"/>
+        <result property="brokerName" column="brokerName"/>
+
+        <!-- 매물 목록 (Estates) -->
+        <collection property="estates" ofType="com.ssafy.home.reservation.dto.EstateInfo">
+            <id property="eid" column="eid"/>
+            <result property="aptSeq" column="apt_seq"/>
+            <result property="aptName" column="apt_nm"/>
+            <result property="address" column="road_nm"/>
+            <result property="amount" column="amount"/>
+            <result property="area" column="area"/>
+            <result property="floor" column="floor"/>
+            <result property="totalFloor" column="total_floor"/>
+            <result property="description" column="desc"/>
+            <result property="latitude" column="latitude"/>
+            <result property="longitude" column="longitude"/>
+        </collection>
+    </resultMap>
+
+    <!-- ID로 예약 찾기 -->
+    <select id="findReservationById" parameterType="long" resultMap="ReservationResponseMap">
+        SELECT r.rid,
+               r.member_id,
+               r.broker_id,
+               r.start_time,
+               r.end_time,
+               r.status,
+               r.client_memo,
+               r.broker_memo,
+               b.broker_name AS brokerName,
+               e.eid,
+               e.apt_seq,
+               e.amount,
+               e.area,
+               e.floor,
+               e.total_floor,
+               e.desc,
+               h.apt_nm,
+               h.road_nm,
+               h.latitude,
+               h.longitude
         FROM reservation r
-                 JOIN broker b ON r.broker_id = b.bid
+                 JOIN
+             broker b ON r.broker_id = b.bid
+                 JOIN
+             reservation_estate re ON r.rid = re.reservation_id
+                 JOIN
+             estate e ON re.estate_id = e.eid
+                 JOIN
+             houseinfos h ON e.apt_seq = h.apt_seq
         WHERE r.rid = #{rid}
     </select>
 
 
-    <!-- 멤버의 예약 모두 찾기 -->
-    <select id="findAllReservationsByMemberId" parameterType="string"
-            resultType="com.ssafy.home.reservation.domain.Reservation">
-        SELECT r.*,
-               b.broker_name AS brokerName
+    <!-- 멤버의 모든 예약 찾기 -->
+    <select id="findAllReservationsByMemberId" parameterType="string" resultMap="ReservationResponseMap">
+        SELECT r.rid,
+               r.member_id,
+               r.broker_id,
+               r.start_time,
+               r.end_time,
+               r.status,
+               r.client_memo,
+               r.broker_memo,
+               b.broker_name AS brokerName,
+               e.eid,
+               e.apt_seq,
+               e.amount,
+               e.area,
+               e.floor,
+               e.total_floor,
+               e.desc,
+               h.apt_nm,
+               h.road_nm,
+               h.latitude,
+               h.longitude
         FROM reservation r
-                 JOIN broker b ON r.broker_id = b.bid
+                 JOIN
+             broker b ON r.broker_id = b.bid
+                 JOIN
+             reservation_estate re ON r.rid = re.reservation_id
+                 JOIN
+             estate e ON re.estate_id = e.eid
+                 JOIN
+             houseinfos h ON e.apt_seq = h.apt_seq
         WHERE r.member_id = #{memberId}
     </select>
 
