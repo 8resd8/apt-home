@@ -4,7 +4,6 @@ import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
 import com.ssafy.home.reservation.dto.ReservationResponse;
-import com.ssafy.home.reservation.exception.NotFoundReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -55,14 +55,14 @@ public class MemberReservationServiceImpl implements MemberReservationService {
 
         int updateSuccess = reservationMapper.updateReservationByMember(reservation);
         if (updateSuccess == 0) {
-            throw new NotFoundReservationException("예약 수정에 실패했습니다.");
+            throw new NoSuchElementException("예약 수정에 실패했습니다.");
         }
     }
 
     @Override
     public ReservationResponse getReservation(Long rid) {
         Reservation reservation = reservationMapper.findReservationById(rid)
-                .orElseThrow(() -> new NotFoundReservationException(rid));
+                .orElseThrow(() -> new NoSuchElementException("예약이 없습니다."));
 
         return toReservationResponse(reservation);
     }
@@ -70,10 +70,6 @@ public class MemberReservationServiceImpl implements MemberReservationService {
     @Override
     public List<ReservationResponse> getReservationsByMember(String memberId) {
         List<Reservation> allReservations = reservationMapper.findAllReservationsByMemberId(memberId);
-
-        if (allReservations.isEmpty()) {
-            throw new NotFoundReservationException();
-        }
 
         List<ReservationResponse> reservationResponses = new ArrayList<>();
         for (Reservation reservation : allReservations) {
