@@ -83,14 +83,14 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     }
 
     @Override
-    public void resetPassword(Member member, PasswordResetRequest request) {
+    public void resetPassword(PasswordResetRequest request) {
         if (!request.password().equals(request.confirmPassword())) {
             throw new ValidPasswordException("비밀번호가 일치하지 않습니다.");
         }
         String salt = generateSalt();
         String hashedPassword = hashPassword(request.confirmPassword(), salt);
 
-        memberProfileMapper.updatePassword(member.getMid(), hashedPassword, salt);
+        memberProfileMapper.updatePassword(request.memberId(), hashedPassword, salt);
     }
 
     private void checkCurrentPassword(Member member, MemberUpdateRequest request) {

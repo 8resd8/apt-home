@@ -44,7 +44,7 @@ public class MemberProfileController {
 
     @PatchMapping("/password-set")
     @ResponseStatus(HttpStatus.OK)
-    public void setPassword(@Login Member member, @Validated @RequestBody PasswordResetRequest request) {
-        memberService.resetPassword(member, request);
+    public void setPassword(@Validated @RequestBody PasswordResetRequest request) {
+        memberService.resetPassword(request);
     }
 }
