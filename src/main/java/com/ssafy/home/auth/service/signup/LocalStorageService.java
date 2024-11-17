@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class FileStorageService {
+public class LocalStorageService implements StorageService {
 
     // 허용할 파일 확장자
     private static final Set<String> ALLOWED_EXTENSIONS = Stream.of("jpg", "jpeg", "png")
@@ -29,7 +29,13 @@ public class FileStorageService {
     private String uploadAccessUrl;
 
 
-    public String uploadProfileImage(MultipartFile profileImage) {
+    @Override
+    public String uploadFile(MultipartFile profileImage) {
+        if (profileImage == null || profileImage.isEmpty()) { // 파일이 빈 것은 예외상황이 아님
+            return null;
+        }
+        validateFile(profileImage);
+
         String uploadDirPath = new File(uploadPath).getAbsolutePath();
         String fileName = UUID.randomUUID() + "_" + profileImage.getOriginalFilename(); // 고유한 파일 이름 생성
 
@@ -47,16 +53,6 @@ public class FileStorageService {
 
         return uploadAccessUrl + fileName; // 클라이언트가 접속할 수 있는 URL
     }
-
-    public String getImageUrl(MultipartFile profileImage) {
-        if (profileImage == null || profileImage.isEmpty()) { // 파일이 빈 것은 예외상황이 아님
-            return null;
-        }
-        validateFile(profileImage);
-
-        return uploadProfileImage(profileImage);
-    }
-
 
     void validateFile(MultipartFile file) {
         int extension = file.getOriginalFilename().lastIndexOf('.');
