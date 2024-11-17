@@ -29,7 +29,7 @@ public class ReservationHelperTest {
     private ReservationHelper reservationHelper;
     private Broker broker;
 
-    Reservation reservation;
+    private Reservation reservation;
 
     @BeforeEach
     void setUp() {
