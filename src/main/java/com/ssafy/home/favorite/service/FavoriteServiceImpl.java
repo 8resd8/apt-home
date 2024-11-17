@@ -2,19 +2,15 @@ package com.ssafy.home.favorite.service;
 
 
 import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.estate.repository.EstateMapper;
-import com.ssafy.home.favorite.domain.Favorite;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
 import com.ssafy.home.favorite.dto.FavoriteResponse;
 import com.ssafy.home.favorite.exception.DeleteFailException;
 import com.ssafy.home.favorite.exception.DuplicateFavoriteException;
-import com.ssafy.home.favorite.exception.EmptyFavoriteException;
 import com.ssafy.home.favorite.repository.FavoriteMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +19,6 @@ import java.util.List;
 public class FavoriteServiceImpl implements FavoriteService {
 
     private final FavoriteMapper favoriteMapper;
-    private final EstateMapper estateMapper;
 
     @Override
     public void addFavorite(Member member, FavoriteAddRequest request) {
