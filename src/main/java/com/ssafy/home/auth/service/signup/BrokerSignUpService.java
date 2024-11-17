@@ -14,11 +14,11 @@ public class BrokerSignUpService {
 
     private final BrokerMapper brokerMapper;
     private final SignUpHelper signUpHelper;
-    private final FileStorageService fileStorageService;
+    private final StorageService storageService;
 
 
     public SignUpResponse signUp(BrokerSignUpRequest request, MultipartFile profileImage) {
-        String profileImageUrl = fileStorageService.getImageUrl(profileImage);
+        String profileImageUrl = storageService.uploadFile(profileImage);
         signUpHelper.checkDuplicatedId(request.id());
 
         String salt = signUpHelper.generateSalt();

@@ -14,10 +14,10 @@ public class MemberSignUpService {
 
     private final MemberMapper memberMapper;
     private final SignUpHelper signUpHelper;
-    private final FileStorageService fileStorageService;
+    private final StorageService storageService;
 
     public SignUpResponse signUp(MemberSignUpRequest request, MultipartFile profileImage) {
-        String profileImageUrl = fileStorageService.getImageUrl(profileImage);
+        String profileImageUrl = storageService.uploadFile(profileImage);
 
         signUpHelper.checkDuplicatedId(request.id());
         String salt = signUpHelper.generateSalt();
