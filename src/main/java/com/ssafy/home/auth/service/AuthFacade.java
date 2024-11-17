@@ -29,13 +29,11 @@ public class AuthFacade {
     private final LoginHelper loginHelper;
 
     public SignUpResponse signUpMember(MemberSignUpRequest memberRequest, MultipartFile profileImage) {
-
         SignUpResponse response = memberSignUpService.signUp(memberRequest, profileImage);
         return response;
     }
 
     public SignUpResponse signUpBroker(BrokerSignUpRequest brokerRequest, MultipartFile profileImage) {
-
         SignUpResponse response = brokerSignUpService.signUp(brokerRequest, profileImage);
         return response;
     }
