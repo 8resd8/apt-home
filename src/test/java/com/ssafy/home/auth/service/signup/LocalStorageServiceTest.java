@@ -12,19 +12,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-public class FileStorageServiceTest {
+public class LocalStorageServiceTest {
 
     @Mock
     private MultipartFile multipartFile;
 
     @InjectMocks
-    private FileStorageService fileStorageService;
+    private LocalStorageService storageService;
 
     private final String uploadAccessUrl = "http://localhost:8080/upload/profile_images/";
 
@@ -35,29 +36,27 @@ public class FileStorageServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         try {
-            java.lang.reflect.Field uploadPathField = FileStorageService.class.getDeclaredField("uploadPath");
+            Field uploadPathField = LocalStorageService.class.getDeclaredField("uploadPath");
             uploadPathField.setAccessible(true);
-            uploadPathField.set(fileStorageService, tempDir.toString());
+            uploadPathField.set(storageService, tempDir.toString());
 
-            java.lang.reflect.Field uploadAccessUrlField = FileStorageService.class.getDeclaredField("uploadAccessUrl");
+            Field uploadAccessUrlField = LocalStorageService.class.getDeclaredField("uploadAccessUrl");
             uploadAccessUrlField.setAccessible(true);
-            uploadAccessUrlField.set(fileStorageService, uploadAccessUrl);
+            uploadAccessUrlField.set(storageService, uploadAccessUrl);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException("Failed to set up FileStorageService", e);
         }
     }
 
     @Test
-    @DisplayName("프로필 이미지 업로드 성공 (메모 포함)")
-    void uploadProfileImage_Success_WithMemo() throws IOException {
-        // Arrange
+    @DisplayName("프로필 이미지 업로드 성공")
+    void uploadFile_Success() throws IOException {
         when(multipartFile.getOriginalFilename()).thenReturn("profile.png");
+        when(multipartFile.getContentType()).thenReturn("image/png");
         doNothing().when(multipartFile).transferTo(any(File.class));
 
-        // Act
-        String imageUrl = fileStorageService.uploadProfileImage(multipartFile);
+        String imageUrl = storageService.uploadFile(multipartFile);
 
-        // Assert
         assertNotNull(imageUrl);
         assertTrue(imageUrl.startsWith(uploadAccessUrl));
         verify(multipartFile, times(1)).transferTo(any(File.class));
@@ -65,14 +64,13 @@ public class FileStorageServiceTest {
 
     @Test
     @DisplayName("프로필 이미지 업로드 실패 (IOException)")
-    void uploadProfileImage_Failure_IOException() throws IOException {
-        // Arrange
+    void uploadFile_Failure_IOException() throws IOException {
         when(multipartFile.getOriginalFilename()).thenReturn("profile.png");
+        when(multipartFile.getContentType()).thenReturn("image/png");
         doThrow(new IOException("IO Error")).when(multipartFile).transferTo(any(File.class));
 
-        // Act & Assert
         FileUploadException exception = assertThrows(FileUploadException.class, () ->
-                fileStorageService.uploadProfileImage(multipartFile)
+                storageService.uploadFile(multipartFile)
         );
 
         assertTrue(exception.getMessage().contains("파일 업로드 실패"));
@@ -80,63 +78,63 @@ public class FileStorageServiceTest {
     }
 
     @Test
-    @DisplayName("getImageUrl 메서드 성공 (메모 포함)")
-    void getImageUrl_Success_WithMemo() throws IOException {
-        // Arrange
-        when(multipartFile.isEmpty()).thenReturn(false);
+    @DisplayName("프로필 이미지 업로드 성공 (파일 존재 확인)")
+    void uploadFile_Success_FileExists() throws IOException {
         when(multipartFile.getOriginalFilename()).thenReturn("profile.png");
-        doNothing().when(multipartFile).transferTo(any(File.class));
+        when(multipartFile.getContentType()).thenReturn("image/png");
+        doAnswer(invocation -> {
+            File file = invocation.getArgument(0);
+            file.createNewFile();
+            return null;
+        }).when(multipartFile).transferTo(any(File.class));
 
-        // Act
-        String imageUrl = fileStorageService.getImageUrl(multipartFile);
+        String imageUrl = storageService.uploadFile(multipartFile);
+        Path uploadedFilePath = tempDir.resolve(imageUrl.substring(uploadAccessUrl.length()));
 
-        // Assert
         assertNotNull(imageUrl);
-        assertTrue(imageUrl.startsWith(uploadAccessUrl));
+        assertTrue(uploadedFilePath.toFile().exists());
         verify(multipartFile, times(1)).transferTo(any(File.class));
     }
 
     @Test
-    @DisplayName("getImageUrl 메서드 실패 (파일 비어있음)")
-    void getImageUrl_Failure_FileEmpty() throws IOException {
-        // Arrange
+    @DisplayName("프로필 이미지 업로드 실패 (파일 비어있음)")
+    void uploadFile_Failure_FileEmpty() throws IOException {
         when(multipartFile.isEmpty()).thenReturn(true);
 
-        // Act
-        String imageUrl = fileStorageService.getImageUrl(multipartFile);
+        String imageUrl = storageService.uploadFile(multipartFile);
 
-        // Assert
         assertNull(imageUrl);
         verify(multipartFile, never()).transferTo(any(File.class));
     }
 
     @Test
-    @DisplayName("getImageUrl 메서드 실패 (파일이 null)")
-    void getImageUrl_Failure_FileNull() {
-        // Act
-        String imageUrl = fileStorageService.getImageUrl(null);
+    @DisplayName("프로필 이미지 업로드 실패 (파일이 null)")
+    void uploadFile_Failure_FileNull() {
+        String imageUrl = storageService.uploadFile(null);
 
-        // Assert
         assertNull(imageUrl);
     }
 
     @Test
-    @DisplayName("업로드된 파일 삭제 확인")
-    void uploadProfileImage_FileDeletionAfterTest() throws IOException {
-        // Arrange
+    @DisplayName("프로필 이미지 업로드 후 파일 삭제 확인")
+    void uploadFile_FileExistsAfterUpload() throws IOException {
         when(multipartFile.getOriginalFilename()).thenReturn("profile.png");
+        when(multipartFile.getContentType()).thenReturn("image/png");
         doAnswer(invocation -> {
             File file = invocation.getArgument(0);
             file.createNewFile(); // Simulate file creation
             return null;
         }).when(multipartFile).transferTo(any(File.class));
 
-        // Act
-        String imageUrl = fileStorageService.uploadProfileImage(multipartFile);
+
+        String imageUrl = storageService.uploadFile(multipartFile);
         Path uploadedFilePath = tempDir.resolve(imageUrl.substring(uploadAccessUrl.length()));
 
-        // Assert
+
+        assertNotNull(imageUrl);
         assertTrue(uploadedFilePath.toFile().exists());
 
+        uploadedFilePath.toFile().delete();
+        assertFalse(uploadedFilePath.toFile().exists());
     }
 }
