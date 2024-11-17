@@ -6,4 +6,6 @@ public interface BrokerReservationService {
     void reserveReservation(Long reservationId, Broker broker, String brokerMemo);
 
     void completeReservation(Long reservationId, Broker broker);
+
+    void cancelReservation(Long reservationId, Broker broker);
 }

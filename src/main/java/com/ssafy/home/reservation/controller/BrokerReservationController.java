@@ -26,4 +26,10 @@ public class BrokerReservationController {
     public void completeReservation(@PathVariable Long reservationId, @Login Broker broker) {
         brokerReservationService.completeReservation(reservationId, broker);
     }
+
+    @PatchMapping("/{reservationId}/cancel")
+    @ResponseStatus(HttpStatus.OK)
+    public void cancelReservation(@PathVariable Long reservationId, @Login Broker broker) {
+        brokerReservationService.cancelReservation(reservationId, broker);
+    }
 }
