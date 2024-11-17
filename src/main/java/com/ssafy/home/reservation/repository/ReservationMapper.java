@@ -1,6 +1,7 @@
 package com.ssafy.home.reservation.repository;
 
 import com.ssafy.home.reservation.domain.Reservation;
+import com.ssafy.home.reservation.dto.ReservationResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,9 +20,9 @@ public interface ReservationMapper {
     int updateReservationByMember(Reservation reservation);
 
 
-    Optional<Reservation> findReservationById(@Param("rid") Long rid);
+    Optional<ReservationResponse> findReservationById(@Param("rid") Long rid);
 
-    List<Reservation> findAllReservationsByMemberId(@Param("memberId") String memberId);
+    List<ReservationResponse> findAllReservationsByMemberId(@Param("memberId") String memberId);
 
     int updateReservationStatusByBroker(
             @Param("reservationId") Long reservationId,
