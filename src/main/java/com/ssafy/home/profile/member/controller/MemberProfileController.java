@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/profile")
 public class MemberProfileController {
 
     private final MemberProfileService memberService;
 
 
-    @GetMapping
+    @GetMapping("/member/profile")
     public ResponseEntity<MemberResponse> getMemberProfile(@Login Member member) {
         MemberResponse profile = memberService.findMemberById(member);
         return ResponseEntity.ok(profile);
     }
 
-    @PostMapping
+    @PostMapping("/member/profile")
     public ResponseEntity<MemberResponse> updateMemberProfile(@Login Member member, @Validated @RequestBody MemberUpdateRequest request) {
         MemberResponse profile = memberService.updateMember(member, request);
         return ResponseEntity.ok(profile);
@@ -36,13 +35,13 @@ public class MemberProfileController {
         memberService.deleteMember(member, request);
     }
 
-    @PatchMapping("/password-change")
+    @PatchMapping("/profile/password-change")
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@Login Member member, @Validated @RequestBody PasswordChangeRequest request) {
         memberService.changePassword(member, request);
     }
 
-    @PatchMapping("/password-set")
+    @PatchMapping("/profile/password-set")
     @ResponseStatus(HttpStatus.OK)
     public void setPassword(@Validated @RequestBody PasswordResetRequest request) {
         memberService.resetPassword(request);
