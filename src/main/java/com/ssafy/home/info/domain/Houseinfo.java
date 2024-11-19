@@ -1,9 +1,11 @@
 package com.ssafy.home.info.domain;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Houseinfo {
     private String aptSeq;

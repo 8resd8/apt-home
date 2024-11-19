@@ -2,11 +2,13 @@ package com.ssafy.home.info.domain;
 
 import com.ssafy.home.auth.domain.Broker;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Estate {
     private Long eid;
     private String brokerId;
@@ -20,6 +22,7 @@ public class Estate {
     private String desc;
     private String createdAt;
     private String updatedAt;
+    private String aptNm;
 
     // 관계 매핑
     private Broker broker;
