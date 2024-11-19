@@ -1,6 +1,9 @@
 package com.ssafy.home.info.dto;
 
-public record AveragePricesResponse(
+import java.util.List;
+
+
+public record AveragePriceResponse(
         String region,
         List<AveragePrice> averagePrices
 ) {

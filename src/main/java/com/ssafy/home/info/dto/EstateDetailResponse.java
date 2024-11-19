@@ -1,21 +1,25 @@
 package com.ssafy.home.info.dto;
 
 import com.ssafy.home.info.domain.Houseinfo;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record EstateDetailResponse(
-        Long eid,
-        String brokerId,
-        String aptSeq,
-        String type,
-        String status,
-        Integer floor,
-        Integer totalFloor,
-        Double area,
-        String amount,
-        String desc,
-        String createdAt,
-        String updatedAt,
-        String aptNm,
-        Houseinfo houseinfo
-) {
+import java.sql.Timestamp;
+
+@Getter
+public class EstateDetailResponse {
+
+    private Long eid;
+    private String brokerId;
+    private String aptSeq;
+    private Integer floor;
+    private Integer totalFloor;
+    private Double area;
+    private String amount;
+    private String desc;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private Houseinfo houseinfo;
 }
