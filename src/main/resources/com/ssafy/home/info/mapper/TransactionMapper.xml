@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.home.info.repository.TransactionChartMapper">
+
+    <!-- 지역별 월별 평균 거래 가격 조회 -->
+    <select id="getAveragePrices" parameterType="String" resultType="com.ssafy.home.info.dto.AveragePrice">
+        SELECT d.deal_year AS year,
+               LPAD(d.deal_month, 2, '0') AS month,
+               AVG(CAST(d.deal_amount AS UNSIGNED)) AS averageAmount
+        FROM housedeals d
+                 JOIN houseinfos h ON d.apt_seq = h.apt_seq
+        WHERE h.sgg_cd = #{sggCd}
+        GROUP BY d.deal_year, d.deal_month
+        ORDER BY d.deal_year, d.deal_month
+    </select>
+
+    <!-- 선택한 매물의 월별 거래 내역 조회 -->
+    <select id="getListingTransactions" parameterType="String" resultType="com.ssafy.home.info.dto.ListingTransaction">
+        SELECT d.deal_year AS year,
+               LPAD(d.deal_month, 2, '0') AS month,
+               SUM(CAST(d.deal_amount AS UNSIGNED)) AS amount
+        FROM housedeals d
+        WHERE d.apt_seq = #{aptSeq}
+        GROUP BY d.deal_year, d.deal_month
+        ORDER BY d.deal_year, d.deal_month
+    </select>
+
+
+</mapper>
