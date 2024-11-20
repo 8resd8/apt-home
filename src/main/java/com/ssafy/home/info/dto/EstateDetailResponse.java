@@ -1,10 +1,7 @@
 package com.ssafy.home.info.dto;
 
-import com.ssafy.home.info.domain.Houseinfo;
-import lombok.AllArgsConstructor;
+import com.ssafy.home.info.domain.HouseinfoChart;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.sql.Timestamp;
 
@@ -21,5 +18,5 @@ public class EstateDetailResponse {
     private String desc;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-    private Houseinfo houseinfo;
+    private HouseinfoChart houseinfoChart;
 }

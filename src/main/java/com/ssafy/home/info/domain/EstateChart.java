@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Estate {
+public class EstateChart {
     private Long eid;
     private String brokerId;
     private String aptSeq;
@@ -26,5 +26,5 @@ public class Estate {
 
     // 관계 매핑
     private Broker broker;
-    private Houseinfo houseinfo;
+    private HouseinfoChart houseinfoChart;
 }

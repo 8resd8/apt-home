@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Houseinfo {
+public class HouseinfoChart {
     private String aptSeq;
     private String sggCd;
     private String umdCd;

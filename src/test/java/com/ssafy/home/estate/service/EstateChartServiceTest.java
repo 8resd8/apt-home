@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @SpringBootTest
-public class EstateServiceTest {
+public class EstateChartServiceTest {
 
     @Autowired
     private EstateService estateService;
