@@ -56,4 +56,8 @@ public class AuthFacade {
     public void logout() {
         logoutService.logout();
     }
+
+    public void findById(String id) {
+        loginHelper.userTypeCheck(id);
+    }
 }

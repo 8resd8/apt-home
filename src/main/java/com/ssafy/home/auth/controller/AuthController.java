@@ -6,6 +6,7 @@ import com.ssafy.home.auth.dto.request.MemberSignUpRequest;
 import com.ssafy.home.auth.dto.response.LoginResponse;
 import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.service.AuthFacade;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,11 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public void logout() {
         authFacade.logout();
+    }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void findById(@NotBlank(message = "${required.field}") @PathVariable String id) {
+        authFacade.findById(id);
     }
 }

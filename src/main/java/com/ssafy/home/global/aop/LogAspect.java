@@ -2,6 +2,7 @@ package com.ssafy.home.global.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -39,6 +40,20 @@ public class LogAspect {
 
         // RestController의 응답 값 (실제 값)
         log.info("[{}] - [END] - 응답 값: {}", name, result);
+    }
+
+
+    @Before("execution(* com.ssafy.home.global.interceptor..*.preHandle(..))")
+    public void logInterceptorPreHandle(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        log.info("[{}] - [Interceptor START] - [요청 파라미터]: {}", methodName, args);
+    }
+
+    @After("execution(* com.ssafy.home.global.interceptor..*.postHandle(..))")
+    public void logInterceptorPostHandle(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        log.info("[{}] - [Interceptor END]", methodName);
     }
 
 }
