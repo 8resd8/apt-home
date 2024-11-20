@@ -6,9 +6,6 @@ import lombok.*;
 
 @Getter
 @ToString
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class EstateChart {
     private Long eid;
     private String brokerId;

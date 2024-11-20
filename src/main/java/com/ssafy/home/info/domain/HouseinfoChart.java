@@ -4,8 +4,6 @@ import lombok.*;
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class HouseinfoChart {
     private String aptSeq;

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class Dongcode {
     private String dongCode;

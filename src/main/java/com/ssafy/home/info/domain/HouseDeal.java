@@ -3,9 +3,6 @@ package com.ssafy.home.info.domain;
 import lombok.*;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class HouseDeal {
     private Integer no;
