@@ -11,7 +11,8 @@ import java.util.Optional;
 
 @Mapper
 public interface EstateMapper {
-    void insertBrokerEstate(@Param("brokerEstate") RegistEstateRequest requestDto, @Param("brokerId") String brokerId);
+    void insertBrokerEstate(@Param("brokerEstate") RegistEstateRequest request, @Param("brokerId") String brokerId,
+                            @Param("estateImage") String estateImage);
 
     EstateDetailResponse selectEstateDetail(@Param("eid") Long id);
 
