@@ -4,10 +4,10 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.service.signup.StorageService;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
+import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import com.ssafy.home.estate.exception.ForbiddenException;
 import com.ssafy.home.estate.repository.EstateMapper;
-import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.global.exception.CustomException;
 import com.ssafy.home.global.repository.UtilMapper;
 import lombok.RequiredArgsConstructor;
@@ -49,13 +49,15 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public void updateEstate(UpdateEstateRequest requestDto, Broker broker) {
-        Estate estate = findEstateById(requestDto.eid());
+    public void updateEstate(Broker broker, UpdateEstateRequest request, MultipartFile estateImage) {
+        Estate estate = findEstateById(request.eid());
 
         if(!estate.getBrokerId().equals(broker.getBid()))
             throw new ForbiddenException();
 
-        if(estateMapper.updateEstate(requestDto) == 0) {
+        String imageUrl = storageService.uploadFile(estateImage);
+
+        if (estateMapper.updateEstate(request, imageUrl) == 0) {
             throw new CustomException(HttpStatus.NOT_FOUND, "업데이트에 실패했습니다.");
         }
     }
@@ -79,5 +81,10 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax) {
         return estateMapper.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
+    }
+
+    @Override
+    public List<Estate> findAll(Broker broker) {
+        return estateMapper.findAll(broker.getBid());
     }
 }
