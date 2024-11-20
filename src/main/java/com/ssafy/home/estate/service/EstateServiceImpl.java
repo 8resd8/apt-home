@@ -1,6 +1,7 @@
 package com.ssafy.home.estate.service;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.auth.service.signup.StorageService;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -24,11 +26,12 @@ public class EstateServiceImpl implements EstateService {
 
     private final EstateMapper estateMapper;
     private final UtilMapper utilMapper;
+    private final StorageService storageService;
 
     @Override
-    public Long createEstate(RegistEstateRequest requestDto, Broker broker) {
-
-        estateMapper.insertBrokerEstate(requestDto, broker.getBid());
+    public Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile estateImage) {
+        String imageUrl = storageService.uploadFile(estateImage);
+        estateMapper.insertBrokerEstate(request, broker.getBid(), imageUrl);
 
         return utilMapper.selectLastInsertId();
     }
