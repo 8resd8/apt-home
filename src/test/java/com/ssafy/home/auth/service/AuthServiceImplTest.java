@@ -14,8 +14,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class AuthServiceImplTest {
 
     @Autowired
-    private AuthFacade authService;
+    private AuthFacade authFacade;
 
     @Autowired
     private MemberMapper memberMapper;
@@ -40,6 +42,7 @@ class AuthServiceImplTest {
     private MemberSignUpRequest memberSignUp;
     private BrokerSignUpRequest brokerSignUp;
     private MockHttpSession session;
+    private MockMultipartFile multipartFile = new MockMultipartFile("test.jpg", new byte[]{});
 
     @BeforeEach
     void setUp() {
@@ -67,15 +70,16 @@ class AuthServiceImplTest {
     }
 
     @AfterEach
-    void clearSession() {
+    void afterEach() {
         session.clearAttributes();
     }
+
 
     @Test
     @DisplayName("Member 회원가입")
     void signUpMember() {
         // when
-        SignUpResponse response = authService.signUpMember(memberSignUp);
+        SignUpResponse response = authFacade.signUpMember(memberSignUp, multipartFile);
 
         // then
         assertThat(response).isNotNull();
@@ -90,14 +94,15 @@ class AuthServiceImplTest {
     @DisplayName("Broker 회원가입")
     void signUpBroker() {
         // when
-        SignUpResponse response = authService.signUpBroker(brokerSignUp);
+        SignUpResponse response = authFacade.signUpBroker(brokerSignUp, multipartFile);
+
 
         // then
         assertThat(response).isNotNull();
         assertThat(response.id()).isEqualTo("broker1");
         assertThat(response.email()).isEqualTo("broker@test.com");
 
-        // 실제 DB에서 확인
+
         assertThat(brokerMapper.findById("broker1")).isPresent();
     }
 
@@ -105,11 +110,11 @@ class AuthServiceImplTest {
     @DisplayName("Member 로그인 요청")
     void loginMember_success() {
         // Given: 회원가입된 회원으로 로그인 요청
-        authService.signUpMember(memberSignUp);
+        authFacade.signUpMember(memberSignUp, multipartFile);
         LoginRequest loginDto = new LoginRequest(memberSignUp.id(), memberSignUp.password());
 
         // When: 로그인 요청
-        LoginResponse response = authService.login(loginDto);
+        LoginResponse response = authFacade.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
@@ -122,11 +127,11 @@ class AuthServiceImplTest {
     @DisplayName("Broker 로그인 요청")
     void loginBroker_success() {
         // Given: 회원가입된 브로커로 로그인 요청
-        authService.signUpBroker(brokerSignUp);
+        authFacade.signUpBroker(brokerSignUp, multipartFile);
         LoginRequest loginDto = new LoginRequest(brokerSignUp.id(), brokerSignUp.password());
 
         // When: 로그인 요청
-        LoginResponse response = authService.login(loginDto);
+        LoginResponse response = authFacade.login(loginDto);
 
         // Then: 로그인 성공
         assertThat(response).isNotNull();
@@ -139,11 +144,11 @@ class AuthServiceImplTest {
     @DisplayName("잘못된 비밀번호 로그인")
     void login_fail_wrongPassword() {
         // Given: 회원가입된 회원으로 잘못된 비밀번호로 로그인 요청
-        authService.signUpMember(memberSignUp);
+        authFacade.signUpMember(memberSignUp, multipartFile);
         LoginRequest loginDto = new LoginRequest(memberSignUp.id(), "wrong_password");
 
         // When & Then: 로그인 실패 예외 발생
-        assertThatThrownBy(() -> authService.login(loginDto))
+        assertThatThrownBy(() -> authFacade.login(loginDto))
                 .isInstanceOf(LoginFailedException.class);
     }
 
@@ -154,7 +159,7 @@ class AuthServiceImplTest {
         LoginRequest loginDto = new LoginRequest("nonexistent", "password123");
 
         // When & Then: 로그인 실패 예외 발생
-        assertThatThrownBy(() -> authService.login(loginDto))
+        assertThatThrownBy(() -> authFacade.login(loginDto))
                 .isInstanceOf(LoginFailedException.class);
     }
 
@@ -162,12 +167,12 @@ class AuthServiceImplTest {
     @DisplayName("회원가입_로그인_로그아웃_세션 비어있음 확인")
     void logout_success() {
         // Given: 회원가입 후 로그인하여 세션에 저장
-        authService.signUpMember(memberSignUp);
+        authFacade.signUpMember(memberSignUp, multipartFile);
         LoginRequest loginDto = new LoginRequest(memberSignUp.id(), memberSignUp.password());
-        authService.login(loginDto);
+        authFacade.login(loginDto);
 
         // When: 로그아웃 호출
-        authService.logout();
+        authFacade.logout();
 
         // Then: 세션이 비어있는지 확인
         assertThat(session.getAttribute(Session.MEMBER_ID.name())).isNull();

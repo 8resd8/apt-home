@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -34,6 +35,7 @@ public class EstateServiceTest {
 
     private Broker broker;
     private String brokerId = "broker1";
+    private MockMultipartFile multipartFile = new MockMultipartFile("123", new byte[]{});
 
 
     @BeforeEach
@@ -49,7 +51,7 @@ public class EstateServiceTest {
                 "broker@test.com"
         );
 
-        authService.signUpBroker(brokerSignUpRequest);
+        authService.signUpBroker(brokerSignUpRequest, multipartFile);
 
         broker = brokerMapper.findById(brokerId).get();
     }

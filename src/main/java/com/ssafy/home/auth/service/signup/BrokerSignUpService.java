@@ -6,6 +6,7 @@ import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -13,9 +14,11 @@ public class BrokerSignUpService {
 
     private final BrokerMapper brokerMapper;
     private final SignUpHelper signUpHelper;
+    private final StorageService storageService;
 
 
-    public SignUpResponse signUp(BrokerSignUpRequest request) {
+    public SignUpResponse signUp(BrokerSignUpRequest request, MultipartFile profileImage) {
+        String profileImageUrl = storageService.uploadFile(profileImage);
         signUpHelper.checkDuplicatedId(request.id());
 
         String salt = signUpHelper.generateSalt();
@@ -29,7 +32,10 @@ public class BrokerSignUpService {
                 .phoneNum(request.phoneNum())
                 .address(request.address())
                 .licenseNum(request.licenseNum())
-                .brokerName(request.name()).build();
+                .brokerName(request.name())
+                .profileImageUrl(profileImageUrl)
+                .officeName(request.officeName())
+                .build();
 
         brokerMapper.insertBroker(broker);
 

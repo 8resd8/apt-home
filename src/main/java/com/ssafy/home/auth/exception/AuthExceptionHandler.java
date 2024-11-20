@@ -25,4 +25,9 @@ public class AuthExceptionHandler {
         return ErrorResponse.toResponseEntity(HttpStatus.UNAUTHORIZED, e.getMessage(), request.getDescription(false).replace("uri=", ""));
     }
 
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleFileUploadException(FileUploadException e, WebRequest request) {
+        return ErrorResponse.toResponseEntity(HttpStatus.BAD_REQUEST, e.getMessage(), request.getDescription(false).replace("uri=", ""));
+    }
+
 }

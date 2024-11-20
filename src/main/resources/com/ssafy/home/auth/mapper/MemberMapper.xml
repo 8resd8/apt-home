@@ -3,8 +3,14 @@
 
 <mapper namespace="com.ssafy.home.auth.repository.MemberMapper">
     <insert id="insertMember" parameterType="com.ssafy.home.auth.domain.Member">
-        INSERT INTO member (mid, password, salt, email, phone_num, name)
-        VALUES (#{mid}, #{password}, #{salt}, #{email}, #{phoneNum}, #{name})
+        INSERT INTO member (mid, password, salt, email, phone_num, name
+        <if test="profileImageUrl != null">
+            , profile_image_url
+        </if>)
+        VALUES (#{mid}, #{password}, #{salt}, #{email}, #{phoneNum}, #{name}
+        <if test="profileImageUrl != null">
+            , #{profileImageUrl}
+        </if>)
     </insert>
 
     <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Member">

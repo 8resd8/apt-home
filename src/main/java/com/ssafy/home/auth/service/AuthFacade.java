@@ -15,6 +15,7 @@ import com.ssafy.home.auth.service.signup.MemberSignUpService;
 import com.ssafy.home.global.enums.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -27,15 +28,13 @@ public class AuthFacade {
     private final LogoutService logoutService;
     private final LoginHelper loginHelper;
 
-    public SignUpResponse signUpMember(MemberSignUpRequest memberRequest) {
-        SignUpResponse response = memberSignUpService.signUp(memberRequest);
-
+    public SignUpResponse signUpMember(MemberSignUpRequest memberRequest, MultipartFile profileImage) {
+        SignUpResponse response = memberSignUpService.signUp(memberRequest, profileImage);
         return response;
     }
 
-    public SignUpResponse signUpBroker(BrokerSignUpRequest brokerRequest) {
-        SignUpResponse response = brokerSignUpService.signUp(brokerRequest);
-
+    public SignUpResponse signUpBroker(BrokerSignUpRequest brokerRequest, MultipartFile profileImage) {
+        SignUpResponse response = brokerSignUpService.signUp(brokerRequest, profileImage);
         return response;
     }
 
