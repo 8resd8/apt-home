@@ -10,6 +10,7 @@ public record EstateDetailResponse(
         Double area,
         String amount,
         String desc,
+        String estateImage,
 
         //부동산 정보
         String brokerId,
