@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Service
+//@Service
 public class LocalStorageService implements StorageService {
 
     // 허용할 파일 확장자
