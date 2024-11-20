@@ -18,7 +18,7 @@ public interface EstateMapper {
 
     Optional<Estate> selectEstate(@Param("id") Long id);
 
-    int updateEstate(UpdateEstateRequest requestDto);
+    int updateEstate(@Param("request") UpdateEstateRequest request, @Param("estateImage") String estateImage);
 
     int deleteEstate(Long eid);
 
@@ -26,4 +26,6 @@ public interface EstateMapper {
     List<Estate> getEstateListByRegionCode(@Param("sgg") String sgg, @Param("umd") String umd);
 
     List<Estate> getEstateListByPosition(@Param("latMin") double latMin, @Param("latMax") double latMax, @Param("lngMin") double lngMin, @Param("lngMax") double lngMax);
+
+    List<Estate> findAll(String bid);
 }
