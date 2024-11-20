@@ -8,11 +8,10 @@
     <!-- Insert Broker Estate -->
     <insert id="insertBrokerEstate">
         INSERT INTO estate
-            (broker_id, apt_seq, type, floor, total_floor, area, amount, `desc`)
-        VALUES
-            (#{brokerId}, #{brokerEstate.aptSeq}, #{brokerEstate.type},
-             #{brokerEstate.floor}, #{brokerEstate.totalFloor}, #{brokerEstate.area},
-             #{brokerEstate.amount}, #{brokerEstate.desc})
+        (broker_id, apt_seq, type, floor, total_floor, area, amount, `desc`, estate_image)
+        VALUES (#{brokerId}, #{brokerEstate.aptSeq}, #{brokerEstate.type},
+                #{brokerEstate.floor}, #{brokerEstate.totalFloor}, #{brokerEstate.area},
+                #{brokerEstate.amount}, #{brokerEstate.desc}
     </insert>
 
     <!-- Select Estate Detail -->
@@ -40,6 +39,9 @@
             total_floor=#{totalFloor},
             area=#{area},
             `desc`=#{desc}
+        <if test="estateImage != null">
+            , estate_image = #{estateImage}
+        </if>)
         WHERE eid = #{eid}
     </update>
 
