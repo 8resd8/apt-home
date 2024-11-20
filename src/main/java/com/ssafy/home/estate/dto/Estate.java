@@ -14,4 +14,5 @@ public class Estate {
     Double area;
     String amount;
     String desc;
+    String estateImage;
 }

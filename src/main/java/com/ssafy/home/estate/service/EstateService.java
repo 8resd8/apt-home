@@ -5,11 +5,12 @@ import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface EstateService {
-    Long createEstate(RegistEstateRequest requestDto, Broker broker);
+    Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile estateImage);
 
     Estate findEstateById(Long id);
 

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,8 +21,9 @@ public class EstateManageController {
     private final EstateService estateService;
 
     @PostMapping
-    public ResponseEntity<Long> postEstate(@Validated @RequestBody RegistEstateRequest requestDto, @Login Broker broker) {
-        Long createdId = estateService.createEstate(requestDto, broker);
+    public ResponseEntity<Long> postEstate(@Login Broker broker, @Validated @RequestPart("estate") RegistEstateRequest request,
+                                           @RequestPart("estateImage") MultipartFile estateImage) {
+        Long createdId = estateService.createEstate(broker, request, estateImage);
 
         return ResponseEntity.ok().body(createdId);
     }
