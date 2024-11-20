@@ -1,6 +1,7 @@
 package com.ssafy.home.estate.controller;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import com.ssafy.home.estate.service.EstateService;
@@ -13,12 +14,19 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/broker/estate")
 @RestController
 public class EstateManageController {
     private final EstateService estateService;
+
+    @GetMapping
+    public List<Estate> getAllEstates(@Login Broker broker) {
+        return estateService.findAll(broker);
+    }
 
     @PostMapping
     public ResponseEntity<Long> postEstate(@Login Broker broker, @Validated @RequestPart("estate") RegistEstateRequest request,
@@ -30,13 +38,14 @@ public class EstateManageController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public void updateEstate(@Validated @RequestBody UpdateEstateRequest requestDto, @Login Broker broker) {
-        estateService.updateEstate(requestDto, broker);
+    public void updateEstate(@Login Broker broker, @Validated @RequestPart("estate") UpdateEstateRequest request,
+                             @RequestPart(value = "estateImage", required = false) MultipartFile estateImage) {
+        estateService.updateEstate(broker, request, estateImage);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{eid}")
-    public void deleteEstate(@PathVariable Long eid, @Login Broker broker) {
-        estateService.deleteEstate(eid, broker);
+    @DeleteMapping("/{estateId}")
+    public void deleteEstate(@PathVariable Long estateId, @Login Broker broker) {
+        estateService.deleteEstate(estateId, broker);
     }
 }
