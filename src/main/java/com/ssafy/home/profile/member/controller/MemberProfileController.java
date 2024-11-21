@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +25,10 @@ public class MemberProfileController {
     }
 
     @PostMapping("/member/profile")
-    public ResponseEntity<MemberResponse> updateMemberProfile(@Login Member member, @Validated @RequestBody MemberUpdateRequest request) {
-        MemberResponse profile = memberService.updateMember(member, request);
+    public ResponseEntity<MemberResponse> updateMemberProfile(@Login Member member,
+                                                              @Validated @RequestPart("member") MemberUpdateRequest request,
+                                                              @RequestPart(value = "image", required = false) MultipartFile image) {
+        MemberResponse profile = memberService.updateMember(member, request, image);
         return ResponseEntity.ok(profile);
     }
 
