@@ -10,13 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface EstateService {
-    Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile estateImage);
+    Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile[] estateImages);
 
     Estate findEstateById(Long id);
 
     EstateDetailResponse findEstateDetailById(Long id);
 
-    void updateEstate(Broker broker, UpdateEstateRequest request, MultipartFile estateImage);
+    void updateEstate(Broker broker, UpdateEstateRequest request, MultipartFile[] estateImages);
 
     void deleteEstate(Long eid, Broker broker);
 

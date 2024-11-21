@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,12 +30,40 @@ public class EstateServiceImpl implements EstateService {
     private final StorageService storageService;
 
     @Override
-    public Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile estateImage) {
-        String imageUrl = storageService.uploadFile(estateImage);
-        estateMapper.insertBrokerEstate(request, broker.getBid(), imageUrl);
+    public Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile[] estateImages) {
+        estateMapper.insertEstate(request, broker.getBid());
 
-        return utilMapper.selectLastInsertId();
+        Long estateId = utilMapper.selectLastInsertId();
+        List<String> imageUrls = getImageUrls(estateImages);
+        estateMapper.insertEstateImages(estateId, imageUrls);
+
+        return estateId;
     }
+
+    @Override
+    public void updateEstate(Broker broker, UpdateEstateRequest request, MultipartFile[] estateImages) {
+        Estate estate = findEstateById(request.eid());
+
+        if (!estate.getBrokerId().equals(broker.getBid())) {
+            throw new ForbiddenException("해당 매물은 다른 브로커에 의해 관리되고 있습니다.");
+        }
+
+        estateMapper.updateEstate(request);
+        estateMapper.deleteEstateImage(request.eid());
+        List<String> imageUrls = getImageUrls(estateImages);
+
+        estateMapper.insertEstateImages(request.eid(), imageUrls);
+    }
+
+    private List<String> getImageUrls(MultipartFile[] estateImages) {
+        List<String> imageUrls = new ArrayList<>();
+        for (MultipartFile estateImage : estateImages) {
+            String imageUrl = storageService.uploadFile(estateImage);
+            imageUrls.add(imageUrl);
+        }
+        return imageUrls;
+    }
+
 
     @Transactional(readOnly = true)
     @Override
@@ -49,28 +78,16 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public void updateEstate(Broker broker, UpdateEstateRequest request, MultipartFile estateImage) {
-        Estate estate = findEstateById(request.eid());
-
-        if(!estate.getBrokerId().equals(broker.getBid()))
-            throw new ForbiddenException();
-
-        String imageUrl = storageService.uploadFile(estateImage);
-
-        if (estateMapper.updateEstate(request, imageUrl) == 0) {
-            throw new CustomException(HttpStatus.NOT_FOUND, "업데이트에 실패했습니다.");
-        }
-    }
-
-    @Override
     public void deleteEstate(Long eid, Broker broker) {
         Estate estate = findEstateById(eid);
 
-        if(!estate.getBrokerId().equals(broker.getBid()))
-            throw new ForbiddenException();
+        if (!estate.getBrokerId().equals(broker.getBid())) {
+            throw new ForbiddenException("해당 매물은 다른 브로커에 의해 관리되고 있습니다.");
+        }
 
-        if(estateMapper.deleteEstate(eid) == 0)
-            throw new CustomException(HttpStatus.NOT_FOUND, "삭제에 실패했습니다.");
+        if (estateMapper.deleteEstate(eid) == 0) {
+            throw new CustomException(HttpStatus.NOT_FOUND, "매물 삭제에 실패했습니다.");
+        }
     }
 
     @Override
@@ -86,5 +103,18 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public List<Estate> findAll(Broker broker) {
         return estateMapper.findAll(broker.getBid());
+    }
+
+    // estateId를 저장하기 위한 내부 클래스
+    public static class EstateIdHolder {
+        private Long estateId;
+
+        public Long getEstateId() {
+            return estateId;
+        }
+
+        public void setEstateId(Long estateId) {
+            this.estateId = estateId;
+        }
     }
 }
