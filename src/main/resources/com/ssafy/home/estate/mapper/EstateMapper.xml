@@ -4,17 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.home.estate.repository.EstateMapper">
-
-    <!-- Insert Broker Estate -->
-    <insert id="insertBrokerEstate">
+    <insert id="insertEstate" useGeneratedKeys="true">
         INSERT INTO estate
-        (broker_id, apt_seq, type, floor, total_floor, area, amount, `desc`, estate_image)
-        VALUES (#{brokerId}, #{brokerEstate.aptSeq}, #{brokerEstate.type},
-                #{brokerEstate.floor}, #{brokerEstate.totalFloor}, #{brokerEstate.area},
-                #{brokerEstate.amount}, #{brokerEstate.desc}, #{estateImage})
+            (broker_id, apt_seq, type, floor, total_floor, area, amount, `desc`)
+        VALUES
+            (#{brokerId}, #{brokerEstate.aptSeq}, #{brokerEstate.type},
+             #{brokerEstate.floor}, #{brokerEstate.totalFloor}, #{brokerEstate.area},
+             #{brokerEstate.amount}, #{brokerEstate.desc})
     </insert>
 
-    <!-- Select Estate Detail -->
+    <insert id="insertEstateImages">
+        INSERT INTO estate_images (estate_id, image_url)
+        VALUES
+        <foreach collection="imageUrls" item="imageUrl" separator=",">
+            (#{estateId}, #{imageUrl})
+        </foreach>
+    </insert>
+
+
     <select id="selectEstateDetail" resultType="com.ssafy.home.estate.dto.EstateDetailResponse">
         SELECT e.eid, e.type, e.status, e.floor, e.total_floor, e.area, e.amount, e.desc,
                e.estate_image,
@@ -44,9 +51,9 @@
         total_floor=#{request.totalFloor},
         area=#{request.area},
         `desc`=#{request.desc}
-        <if test="estateImage != null">
-            , estate_image = #{estateImage}
-        </if>
+<!--        <if test="estateImage != null">-->
+<!--            , estate_image = #{estateImage}-->
+<!--        </if>-->
         WHERE eid = #{request.eid}
     </update>
 
@@ -54,6 +61,12 @@
         DELETE
         FROM estate
         WHERE eid = #{eid}
+    </delete>
+
+    <delete id="deleteEstateImage">
+        DELETE
+        FROM estate_images
+        WHERE estate_id = #{estateId}
     </delete>
 
     <!-- broker id 조회 -->

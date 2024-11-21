@@ -4,6 +4,7 @@ import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
+import jakarta.validation.constraints.NotNull;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -11,14 +12,20 @@ import java.util.Optional;
 
 @Mapper
 public interface EstateMapper {
-    void insertBrokerEstate(@Param("brokerEstate") RegistEstateRequest request, @Param("brokerId") String brokerId,
-                            @Param("estateImage") String estateImage);
+    void insertEstate(@Param("brokerEstate") RegistEstateRequest request,
+                      @Param("brokerId") String brokerId);
+
+    void insertEstateImages(@Param("estateId") Long estateId,
+                            @Param("imageUrls") List<String> imageUrls);
+
+//    int updateEstate(@Param("request") UpdateEstateRequest request, @Param("imageUrl") List<String> imageUrl);
+//    int updateEstate(@Param("request") UpdateEstateRequest request);
+    void updateEstate(@Param("request") UpdateEstateRequest request);
 
     EstateDetailResponse selectEstateDetail(@Param("eid") Long id);
 
     Optional<Estate> selectEstate(@Param("id") Long id);
 
-    int updateEstate(@Param("request") UpdateEstateRequest request, @Param("estateImage") String estateImage);
 
     int deleteEstate(Long eid);
 
@@ -28,4 +35,6 @@ public interface EstateMapper {
     List<Estate> getEstateListByPosition(@Param("latMin") double latMin, @Param("latMax") double latMax, @Param("lngMin") double lngMin, @Param("lngMax") double lngMax);
 
     List<Estate> findAll(String bid);
+
+    void deleteEstateImage(@Param("estateId") Long eid);
 }
