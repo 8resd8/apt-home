@@ -14,24 +14,38 @@
     </insert>
 
     <insert id="insertEstateImages">
-        INSERT INTO estate_images (estate_id, image_url)
-        VALUES
-        <foreach collection="imageUrls" item="imageUrl" separator=",">
-            (#{estateId}, #{imageUrl})
-        </foreach>
+        <if test="imageUrls != null and imageUrls.size > 0">
+            INSERT INTO estate_images (estate_id, image_url)
+            VALUES
+            <foreach collection="imageUrls" item="imageUrl" separator=",">
+                (#{estateId}, #{imageUrl})
+            </foreach>
+        </if>
     </insert>
 
 
     <select id="selectEstateDetail" resultType="com.ssafy.home.estate.dto.EstateDetailResponse">
-        SELECT e.eid, e.type, e.status, e.floor, e.total_floor, e.area, e.amount, e.desc,
+        SELECT e.eid,
+               e.type,
+               e.status,
+               e.floor,
+               e.total_floor,
+               e.area,
+               e.amount,
+               e.desc,
                e.estate_image,
                e.broker_id,
                b.office_name,
                b.phone_num,
                b.address,
                b.license_num,
-               h.apt_nm, h.build_year, h.road_nm, h.road_nm_bonbun
-        FROM broker b, estate e, houseinfos h
+               h.apt_nm,
+               h.build_year,
+               h.road_nm,
+               h.road_nm_bonbun
+        FROM broker b,
+             estate e,
+             houseinfos h
         WHERE e.eid = #{eid}
           AND e.apt_seq = h.apt_seq
           AND b.bid = e.broker_id
@@ -39,21 +53,19 @@
 
     <!-- Select Estate -->
     <select id="selectEstate" resultType="com.ssafy.home.estate.dto.Estate">
-        SELECT * FROM estate
+        SELECT *
+        FROM estate
         WHERE eid = #{id}
     </select>
 
     <update id="updateEstate">
         UPDATE estate
         SET type=#{request.type},
-        amount=#{request.amount},
-        floor=#{request.floor},
-        total_floor=#{request.totalFloor},
-        area=#{request.area},
-        `desc`=#{request.desc}
-<!--        <if test="estateImage != null">-->
-<!--            , estate_image = #{estateImage}-->
-<!--        </if>-->
+            amount=#{request.amount},
+            floor=#{request.floor},
+            total_floor=#{request.totalFloor},
+            area=#{request.area},
+            `desc`=#{request.desc}
         WHERE eid = #{request.eid}
     </update>
 
