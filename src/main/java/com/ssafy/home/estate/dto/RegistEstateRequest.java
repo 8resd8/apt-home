@@ -2,30 +2,32 @@ package com.ssafy.home.estate.dto;
 
 import com.ssafy.home.global.enums.EstateType;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
-public record RegistEstateRequest(
-        @NotNull(message = "{required.field}")
-        @Length(max = 20, message = "{size.max}")
-        String aptSeq,
+@Getter
+public class RegistEstateRequest {
 
         @NotNull(message = "{required.field}")
-        EstateType type,
+        @Length(max = 20, message = "{size.max}")
+        private String aptSeq;
+
+        @NotNull(message = "{required.field}")
+        private EstateType type;
 
         @NotNull(message = "{required.field}")
         @Length(max = 45, message = "{size.max}")
-        String amount,
+        private String amount;
 
         @NotNull(message = "{required.field}")
-        Integer floor,
+        private Integer floor;
 
         @NotNull(message = "{required.field}")
-        Integer totalFloor,
+        private Integer totalFloor;
 
         @NotNull(message = "{required.field}")
-        Double area,
+        private Double area;
 
         @NotNull(message = "{required.field}")
-        String desc
-) {
+        private String desc;
 }

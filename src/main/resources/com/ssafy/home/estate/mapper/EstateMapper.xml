@@ -4,9 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.home.estate.repository.EstateMapper">
-
-    <!-- Insert Broker Estate -->
-    <insert id="insertBrokerEstate">
+    <insert id="insertEstate" useGeneratedKeys="true">
         INSERT INTO estate
             (broker_id, apt_seq, type, floor, total_floor, area, amount, `desc`)
         VALUES
@@ -15,10 +13,23 @@
              #{brokerEstate.amount}, #{brokerEstate.desc})
     </insert>
 
-    <!-- Select Estate Detail -->
+    <insert id="insertEstateImages">
+        INSERT INTO estate_images (estate_id, image_url)
+        VALUES
+        <foreach collection="imageUrls" item="imageUrl" separator=",">
+            (#{estateId}, #{imageUrl})
+        </foreach>
+    </insert>
+
+
     <select id="selectEstateDetail" resultType="com.ssafy.home.estate.dto.EstateDetailResponse">
         SELECT e.eid, e.type, e.status, e.floor, e.total_floor, e.area, e.amount, e.desc,
-               e.broker_id, b.office_name, b.phone_num, b.address, b.license_num,
+               e.estate_image,
+               e.broker_id,
+               b.office_name,
+               b.phone_num,
+               b.address,
+               b.license_num,
                h.apt_nm, h.build_year, h.road_nm, h.road_nm_bonbun
         FROM broker b, estate e, houseinfos h
         WHERE e.eid = #{eid}
@@ -34,19 +45,28 @@
 
     <update id="updateEstate">
         UPDATE estate
-        SET type=#{type},
-            amount=#{amount},
-            floor=#{floor},
-            total_floor=#{totalFloor},
-            area=#{area},
-            `desc`=#{desc}
-        WHERE eid = #{eid}
+        SET type=#{request.type},
+        amount=#{request.amount},
+        floor=#{request.floor},
+        total_floor=#{request.totalFloor},
+        area=#{request.area},
+        `desc`=#{request.desc}
+<!--        <if test="estateImage != null">-->
+<!--            , estate_image = #{estateImage}-->
+<!--        </if>-->
+        WHERE eid = #{request.eid}
     </update>
 
     <delete id="deleteEstate">
         DELETE
         FROM estate
         WHERE eid = #{eid}
+    </delete>
+
+    <delete id="deleteEstateImage">
+        DELETE
+        FROM estate_images
+        WHERE estate_id = #{estateId}
     </delete>
 
     <!-- broker id 조회 -->
@@ -71,6 +91,12 @@
                  JOIN houseinfos h ON e.apt_seq = h.apt_seq
         WHERE h.latitude BETWEEN #{latMin} AND #{latMax}
           AND h.longitude BETWEEN #{lngMin} AND #{lngMax}
+    </select>
+
+    <select id="findAll" resultType="com.ssafy.home.estate.dto.Estate">
+        SELECT *
+        FROM estate
+        WHERE broker_id = #{bid}
     </select>
 
 </mapper>
