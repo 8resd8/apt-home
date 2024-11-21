@@ -7,6 +7,7 @@ import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.favorite.domain.Favorite;
 import com.ssafy.home.review.domain.HouseInfo;
+import net.jqwik.api.Arbitraries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class TestDataEntity {
     }
 
     private static final FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
+            .defaultNotNull(true)
             .objectIntrospector(PriorityConstructorArbitraryIntrospector.INSTANCE)
             .build();
 
@@ -41,6 +43,8 @@ public class TestDataEntity {
     public static Broker broker(String brokerId) {
         return fixtureMonkey.giveMeBuilder(Broker.class)
                 .set("bid", brokerId)
+                .set("address", "notToLong")
+                .set("brokerName", "그래이름이다")
                 .sample();
     }
 
@@ -71,4 +75,10 @@ public class TestDataEntity {
     }
 
 
+    public static Estate estate(String brokerId, String aptSeq) {
+        return fixtureMonkey.giveMeBuilder(Estate.class)
+                .set("brokerId", brokerId)
+                .set("aptSeq", aptSeq)
+                .sample();
+    }
 }

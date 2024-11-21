@@ -18,11 +18,11 @@ public class EstateController {
 
     private final EstateService estateService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EstateDetailResponse> getEstate(@PathVariable Long id) {
-        EstateDetailResponse responseDto = estateService.findEstateDetailById(id);
+    @GetMapping("/{estateId}")
+    public ResponseEntity<EstateDetailResponse> getEstate(@PathVariable Long estateId) {
+        EstateDetailResponse response = estateService.findEstateDetailById(estateId);
 
-        return ResponseEntity.ok().body(responseDto);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/regions/{sgg}/{umd}")

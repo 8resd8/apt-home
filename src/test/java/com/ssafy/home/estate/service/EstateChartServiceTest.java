@@ -4,19 +4,27 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.dto.request.BrokerSignUpRequest;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.service.AuthFacade;
+import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
-import com.ssafy.home.global.enums.EstateType;
+import com.ssafy.home.estate.service.dto.TestDataRequest;
 import com.ssafy.home.global.repository.UtilMapper;
+import com.ssafy.home.review.domain.HouseInfo;
+import com.ssafy.home.util.TestDataEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+@ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 public class EstateChartServiceTest {
@@ -34,72 +42,46 @@ public class EstateChartServiceTest {
     private UtilMapper utilMapper;
 
     private Broker broker;
+    private Estate estate;
     private String brokerId = "broker1";
-    private MockMultipartFile multipartFile = new MockMultipartFile("123", new byte[]{});
+    private MockMultipartFile[] multipartFiles = TestDataRequest.multipartFiles(10);
+    private MockMultipartFile multipartFile = TestDataRequest.multipartFile();
+    private BrokerSignUpRequest BrokerSignUpRequest;
+    private RegistEstateRequest registEstateRequest;
+    private String aptSeq = "11110-110";
+    private Long estateId = 1L;
+    private HouseInfo houseInfo;
 
 
     @BeforeEach
     void setUp() {
-        BrokerSignUpRequest brokerSignUpRequest = new BrokerSignUpRequest(
-                brokerId,
-                "password456",
-                "Test Office",
-                "Jane Doe",
-                "010-8765-4321",
-                "Seoul",
-                "123-45-6789",
-                "broker@test.com"
-        );
+        broker = TestDataEntity.broker(brokerId);
+        houseInfo = TestDataEntity.houseInfo(aptSeq);
+        estate = TestDataEntity.estate(brokerId, aptSeq);
 
-        authService.signUpBroker(brokerSignUpRequest, multipartFile);
+        BrokerSignUpRequest = TestDataRequest.brokerSignUpRequest(brokerId);
+        registEstateRequest = TestDataRequest.registEstateRequest(aptSeq);
+        authService.signUpBroker(BrokerSignUpRequest, multipartFile);
 
-        broker = brokerMapper.findById(brokerId).get();
+
     }
 
     @DisplayName("매물 정상 등록")
     @Test
     public void postEstate() {
-        //given
-        RegistEstateRequest requestDto = new RegistEstateRequest(
-                "11110-100",
-                EstateType.매매,
-                "200000",
-                3,
-                7,
-                5.4,
-                "테스트 매물입니다."
-        );
-
-        //when
-        estateService.createEstate(requestDto, broker);
-        Long createdId = utilMapper.selectLastInsertId();
-        //then
-
-        Assertions.assertNotNull(createdId);
-        Assertions.assertNotNull(estateService.findEstateById(createdId));
+        estateService.createEstate(broker, registEstateRequest, multipartFiles);
+        Long l = utilMapper.selectLastInsertId();
+        Assertions.assertNotNull(estateService.findEstateById(estateId));
     }
 
     @DisplayName("매물 상세 조회")
     @Test
     public void getEstate() {
-        //given
-        RegistEstateRequest requestDto = new RegistEstateRequest(
-                "11110-100",
-                EstateType.매매,
-                "200000",
-                3,
-                7,
-                5.4,
-                "테스트 매물입니다."
-        );
-        estateService.createEstate(requestDto, broker);
-        Long createdId = utilMapper.selectLastInsertId();
+        estateService.createEstate(broker, registEstateRequest, multipartFiles);
 
-        //when
-        EstateDetailResponse responseDto = estateService.findEstateDetailById(createdId);
+        EstateDetailResponse actualResponse = estateService.findEstateDetailById(estateId);
 
-        //then
-        Assertions.assertNotNull(responseDto);
+        Assertions.assertNotNull(actualResponse);
     }
 }
 
