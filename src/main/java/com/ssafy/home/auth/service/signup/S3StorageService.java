@@ -10,6 +10,8 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,12 +21,11 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class S3StorageService implements StorageService {
 
-    // 허용할 파일 확장자
     private static final Set<String> ALLOWED_EXTENSIONS = Stream.of("jpg", "jpeg", "png")
             .collect(Collectors.toSet());
 
-    // 허용할 MIME 타입
     private static final Set<String> ALLOWED_MIME_TYPES = Set.of("image/jpeg", "image/png", "image/webp");
+
     private final S3Client s3Client;
 
     @Value("${aws.s3.bucket}")
@@ -32,7 +33,6 @@ public class S3StorageService implements StorageService {
 
     @Value("${upload.access.url}") // AWS S3 접근 URL (예: https://[서버주소]/)
     private String uploadAccessUrl;
-
 
     @Override
     public String uploadFile(MultipartFile file) {
@@ -59,7 +59,23 @@ public class S3StorageService implements StorageService {
         return uploadAccessUrl + fileName; // 클라이언트가 접속할 수 있는 URL
     }
 
-    void validateFile(MultipartFile file) {
+    @Override
+    public List<String> uploadFiles(MultipartFile[] files) {
+        if (files == null || files.length == 0) {
+            return List.of();
+        }
+
+        List<String> fileUrls = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String fileUrl = uploadFile(file);  // 업로드
+            fileUrls.add(fileUrl);
+        }
+
+        return fileUrls;
+    }
+
+    // 공통된 파일 유효성 검사 로직 (하나의 메서드로 통합)
+    private void validateFile(MultipartFile file) {
         int extension = file.getOriginalFilename().lastIndexOf('.');
         if (extension == -1) {
             throw new FileUploadException("파일 확장자가 없습니다.");
