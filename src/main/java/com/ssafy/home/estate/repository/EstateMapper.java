@@ -4,8 +4,8 @@ import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
-import jakarta.validation.constraints.NotNull;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,17 +18,13 @@ public interface EstateMapper {
     void insertEstateImages(@Param("estateId") Long estateId,
                             @Param("imageUrls") List<String> imageUrls);
 
-//    int updateEstate(@Param("request") UpdateEstateRequest request, @Param("imageUrl") List<String> imageUrl);
-//    int updateEstate(@Param("request") UpdateEstateRequest request);
     void updateEstate(@Param("request") UpdateEstateRequest request);
 
     EstateDetailResponse selectEstateDetail(@Param("eid") Long id);
 
     Optional<Estate> selectEstate(@Param("id") Long id);
 
-
     int deleteEstate(Long eid);
-
 
     List<Estate> getEstateListByRegionCode(@Param("sgg") String sgg, @Param("umd") String umd);
 
