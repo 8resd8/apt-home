@@ -44,6 +44,7 @@ public class EstateChartServiceTest {
     private Broker broker;
     private Estate estate;
     private String brokerId = "broker1";
+    private MockMultipartFile[] multipartFiles = TestDataRequest.multipartFiles(10);
     private MockMultipartFile multipartFile = TestDataRequest.multipartFile();
     private BrokerSignUpRequest BrokerSignUpRequest;
     private RegistEstateRequest registEstateRequest;
@@ -68,7 +69,7 @@ public class EstateChartServiceTest {
     @DisplayName("매물 정상 등록")
     @Test
     public void postEstate() {
-        estateService.createEstate(broker, registEstateRequest, multipartFile);
+        estateService.createEstate(broker, registEstateRequest, multipartFiles);
         Long l = utilMapper.selectLastInsertId();
         Assertions.assertNotNull(estateService.findEstateById(estateId));
     }
@@ -76,7 +77,7 @@ public class EstateChartServiceTest {
     @DisplayName("매물 상세 조회")
     @Test
     public void getEstate() {
-        estateService.createEstate(broker, registEstateRequest, multipartFile);
+        estateService.createEstate(broker, registEstateRequest, multipartFiles);
 
         EstateDetailResponse actualResponse = estateService.findEstateDetailById(estateId);
 
