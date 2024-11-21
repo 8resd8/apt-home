@@ -35,10 +35,7 @@ public class EstateServiceImpl implements EstateService {
 
         Long estateId = utilMapper.selectLastInsertId();
         List<String> imageUrls = getImageUrls(estateImages);
-        // 이미지 있을 때만 삽입
-        if (imageUrls != null && imageUrls.size() != 0) {
-            estateMapper.insertEstateImages(estateId, imageUrls);
-        }
+        estateMapper.insertEstateImages(estateId, imageUrls);
         return estateId;
     }
 
