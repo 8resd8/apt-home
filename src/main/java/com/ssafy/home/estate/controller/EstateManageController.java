@@ -30,8 +30,8 @@ public class EstateManageController {
 
     @PostMapping
     public ResponseEntity<Long> postEstate(@Login Broker broker, @Validated @RequestPart("estate") RegistEstateRequest request,
-                                           @RequestPart("estateImage") MultipartFile estateImage) {
-        Long createdId = estateService.createEstate(broker, request, estateImage);
+                                           @RequestPart("estateImages") MultipartFile[] estateImages) {
+        Long createdId = estateService.createEstate(broker, request, estateImages);
 
         return ResponseEntity.ok().body(createdId);
     }
@@ -39,8 +39,8 @@ public class EstateManageController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
     public void updateEstate(@Login Broker broker, @Validated @RequestPart("estate") UpdateEstateRequest request,
-                             @RequestPart(value = "estateImage", required = false) MultipartFile estateImage) {
-        estateService.updateEstate(broker, request, estateImage);
+                             @RequestPart(value = "estateImages", required = false) MultipartFile[] estateImages) {
+        estateService.updateEstate(broker, request, estateImages);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
