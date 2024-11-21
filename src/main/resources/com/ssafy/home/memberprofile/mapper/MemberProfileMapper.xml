@@ -5,7 +5,7 @@
 
     <!-- 회원 정보 조회 -->
     <select id="findMemberById" resultType="com.ssafy.home.profile.member.dto.MemberResponse">
-        SELECT mid, phone_num, email, last_login, created_at, updated_at
+        SELECT mid, phone_num, email, profile_image_url, last_login, created_at, updated_at
         FROM member
         WHERE mid = #{memberId}
     </select>

@@ -6,6 +6,7 @@ public record MemberResponse(
         String memberId,
         String phoneNum,
         String email,
+        String profileImageUrl,
         LocalDateTime lastLogin,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
