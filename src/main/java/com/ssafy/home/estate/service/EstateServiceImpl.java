@@ -53,10 +53,7 @@ public class EstateServiceImpl implements EstateService {
         estateMapper.updateEstate(request);
         estateMapper.deleteEstateImage(request.eid());
         List<String> imageUrls = getImageUrls(estateImages);
-        // 이미지 있을 때만 삽입
-        if (imageUrls != null && imageUrls.size() != 0) {
-            estateMapper.insertEstateImages(request.eid(), imageUrls);
-        }
+        estateMapper.insertEstateImages(request.eid(), imageUrls);
     }
 
     private List<String> getImageUrls(MultipartFile[] estateImages) {
