@@ -36,7 +36,6 @@ public class EstateServiceImpl implements EstateService {
         Long estateId = utilMapper.selectLastInsertId();
         List<String> imageUrls = getImageUrls(estateImages);
         estateMapper.insertEstateImages(estateId, imageUrls);
-
         return estateId;
     }
 
@@ -51,14 +50,16 @@ public class EstateServiceImpl implements EstateService {
         estateMapper.updateEstate(request);
         estateMapper.deleteEstateImage(request.eid());
         List<String> imageUrls = getImageUrls(estateImages);
-
         estateMapper.insertEstateImages(request.eid(), imageUrls);
     }
 
     private List<String> getImageUrls(MultipartFile[] estateImages) {
+        if (estateImages == null || estateImages.length == 0) return null;
+
         List<String> imageUrls = new ArrayList<>();
         for (MultipartFile estateImage : estateImages) {
             String imageUrl = storageService.uploadFile(estateImage);
+            if (imageUrl == null) continue;
             imageUrls.add(imageUrl);
         }
         return imageUrls;
