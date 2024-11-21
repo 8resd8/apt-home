@@ -6,6 +6,8 @@ import com.ssafy.home.auth.dto.request.BrokerSignUpRequest;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.util.stream.IntStream;
+
 public class TestDataRequest {
 
     private static final FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
@@ -33,5 +35,15 @@ public class TestDataRequest {
                 "image/jpeg",                 // contentType
                 "dummy image data".getBytes() // file data
         );
+    }
+
+    public static MockMultipartFile[] multipartFiles(int length) {
+        MockMultipartFile[] multipartFiles = new MockMultipartFile[]{};
+        IntStream.range(0, length).forEach(i -> multipartFiles[i] = new MockMultipartFile(
+                "estateImage",                // name
+                "test.jpg",                   // originalFilename
+                "image/jpeg",                 // contentType
+                "dummy image data".getBytes()));
+        return multipartFiles;
     }
 }
