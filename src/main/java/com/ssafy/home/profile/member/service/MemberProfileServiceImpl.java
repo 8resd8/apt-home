@@ -2,6 +2,7 @@ package com.ssafy.home.profile.member.service;
 
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.repository.MemberMapper;
+import com.ssafy.home.auth.service.signup.StorageService;
 import com.ssafy.home.profile.member.dto.*;
 import com.ssafy.home.profile.member.exception.CannotUpdateMemberException;
 import com.ssafy.home.profile.member.exception.NotFoundMemberException;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -23,6 +25,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     private final MemberMapper memberMapper;
     private final MemberProfileMapper memberProfileMapper;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final StorageService storageService;
     private final HttpSession httpSession;
 
     @Override
@@ -33,13 +36,13 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     }
 
     @Override
-    public MemberResponse updateMember(Member member, MemberUpdateRequest updateRequest) {
-        int isSuccess = memberProfileMapper.updateMemberProfile(member.getMid(), updateRequest);
+    public MemberResponse updateMember(Member member, MemberUpdateRequest updateRequest, MultipartFile image) {
+        checkCurrentPassword(member, updateRequest);
+        int isSuccess = memberProfileMapper.updateMemberProfile(member.getMid(), updateRequest, storageService.uploadFile(image));
         if (isSuccess == 0) {
             throw new CannotUpdateMemberException();
         }
-        // 비밀번호가 일치하면 변경에 성공
-        checkCurrentPassword(member, updateRequest);
+
 
         Optional<MemberResponse> findMember = memberProfileMapper.findMemberById(member.getMid());
 

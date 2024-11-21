@@ -14,6 +14,9 @@
     <update id="updateMemberProfile">
         UPDATE member
         SET phone_num = #{request.phoneNum}, name = #{request.name}
+        <if test="image != null">
+            , profile_image_url = #{image}
+        </if>
         WHERE mid = #{memberId}
     </update>
 

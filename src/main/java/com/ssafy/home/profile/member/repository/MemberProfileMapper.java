@@ -12,7 +12,9 @@ import java.util.Optional;
 public interface MemberProfileMapper {
     Optional<MemberResponse> findMemberById(@Param("memberId") String memberId);
 
-    int updateMemberProfile(@Param("memberId") String memberId, @Param("request") MemberUpdateRequest updateRequest);
+    int updateMemberProfile(@Param("memberId") String memberId,
+                            @Param("request") MemberUpdateRequest updateRequest,
+                            @Param("image") String image);
 
     int deleteMemberProfile(@Param("memberId") String memberId, @Param("password") String password);
 
