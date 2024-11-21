@@ -2,7 +2,8 @@ package com.ssafy.home.reservation.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 public record ReservationCreateRequest(
@@ -13,10 +14,10 @@ public record ReservationCreateRequest(
         List<Long> estateIds,
 
         @NotNull(message = "{required.field}")
-        LocalDateTime startTime,
+        Date startTime,
 
         @NotNull(message = "{required.field}")
-        LocalDateTime endTime,
+        Time endTime,
 
         String clientMemo
 ) {

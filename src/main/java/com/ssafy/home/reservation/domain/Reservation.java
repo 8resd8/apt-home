@@ -4,8 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -14,8 +15,8 @@ public class Reservation {
     private Long rid;
     private String memberId;
     private String brokerId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Date startTime;
+    private Time endTime;
     private String status;
     private String clientMemo;
     private String brokerMemo;
