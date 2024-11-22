@@ -27,7 +27,7 @@ public class MemberProfileController {
     @PostMapping("/member/profile")
     public ResponseEntity<MemberResponse> updateMemberProfile(@Login Member member,
                                                               @Validated @RequestPart("member") MemberUpdateRequest request,
-                                                              @RequestPart(value = "image", required = false) MultipartFile image) {
+                                                              @RequestPart(value = "profileImage", required = false) MultipartFile image) {
         MemberResponse profile = memberService.updateMember(member, request, image);
         return ResponseEntity.ok(profile);
     }
