@@ -16,7 +16,7 @@ public class AptInfoService {
     private final AptInfoMapper aptInfoMapper;
 
 
-    // sgg_cd, umd_cd, apt_seq 기반 조회
+    // sgg_cd, umd_cd 기반 조회
     public List<EstateResponse> getEstateByCodes(String sggCd, String umdCd) {
         List<EstateResponse> findEstate = aptInfoMapper.findEstateByCodes(sggCd, umdCd);
         if (findEstate == null) throw new NoSuchElementException("Estate 찾기 실패");
@@ -25,8 +25,8 @@ public class AptInfoService {
     }
 
     // 위도, 경도 및 반경 기반 아파트 리스트 조회
-    public EstateListResponse getEstatesByLocation(double latitude, double longitude, double radius) {
-        List<EstateResponse> estates = aptInfoMapper.findEstatesByLocation(latitude, longitude, radius);
+    public EstateListResponse getEstatesByLocation(double x1, double y1, double x2, double y2) {
+        List<EstateResponse> estates = aptInfoMapper.findEstatesByLocation(x1, y1, x2, y2);
         if (estates == null) throw new NoSuchElementException("EstateList 찾기 실패");
 
         return new EstateListResponse(estates);

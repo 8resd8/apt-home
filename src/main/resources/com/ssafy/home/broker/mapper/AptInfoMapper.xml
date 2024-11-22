@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ssafy.home.broker.repository.AptInfoMapper">
 
-    <!-- 요청1: sgg_cd, umd_cd, apt_seq 기반 조회 -->
+    <!-- sgg_cd, umd_cd 조회 -->
     <select id="findEstateByCodes" resultType="com.ssafy.home.broker.dto.EstateResponse">
         SELECT
             h.apt_seq AS sptSeq,
@@ -29,6 +29,7 @@
           AND h.umd_cd = #{umdCd}
     </select>
 
+    <!-- 최소 최대 조회 -->
     <select id="findEstatesByLocation" resultType="com.ssafy.home.broker.dto.EstateResponse">
         SELECT
             h.apt_seq AS sptSeq,
@@ -44,14 +45,13 @@
             h.build_year,
             h.latitude AS latitude,
             h.longitude AS longitude,
-            CONCAT(d.sido_name, ' ', d.gugun_name, ' ', d.dong_name, ' ', h.jibun) AS pullName
+            CONCAT(d.sido_name, ' ', d.gugun_name, ' ', d.dong_name, ' ', h.jibun) AS fullName
         FROM
             houseinfos h
                 JOIN
             dongcodes d ON CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
-        WHERE
-            h.latitude BETWEEN #{latMin} AND #{latMax}
-          AND h.longitude BETWEEN #{lngMin} AND #{lngMax}
+        WHERE h.latitude BETWEEN #{x1} AND #{y1}
+          AND h.longitude BETWEEN #{x2} AND #{y2}
         ORDER BY
             sptSeq
     </select>
