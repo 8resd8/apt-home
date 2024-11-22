@@ -37,7 +37,6 @@ public class MemberProfileServiceImpl implements MemberProfileService {
 
     @Override
     public MemberResponse updateMember(Member member, MemberUpdateRequest updateRequest, MultipartFile image) {
-        checkCurrentPassword(member, updateRequest);
         int isSuccess = memberProfileMapper.updateMemberProfile(member.getMid(), updateRequest, storageService.uploadFile(image));
         if (isSuccess == 0) {
             throw new CannotUpdateMemberException();
@@ -94,12 +93,6 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         String hashedPassword = hashPassword(request.confirmPassword(), salt);
 
         memberProfileMapper.updatePassword(request.memberId(), hashedPassword, salt);
-    }
-
-    private void checkCurrentPassword(Member member, MemberUpdateRequest request) {
-        String originPwd = getOriginPwd(member);
-
-        checkPassword(originPwd, request.password(), member.getSalt());
     }
 
     private void checkCurrentPassword(Member member, PasswordChangeRequest passwordChangeRequest) {
