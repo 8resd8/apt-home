@@ -32,11 +32,12 @@ public class AptInfoController {
      */
     @GetMapping("/location")
     public ResponseEntity<EstateListResponse> getEstatesByLocation(
-            @RequestParam double latitude,
-            @RequestParam double longitude,
-            @RequestParam(defaultValue = "5") double radius // 기본 반경 5km
+            @RequestParam("lat_min") double x1,
+            @RequestParam("lat_max") double y1,
+            @RequestParam("lng_min") double x2,
+            @RequestParam("lng_max") double y2
     ) {
-        return ResponseEntity.ok(aptInfoService.getEstatesByLocation(latitude, longitude, radius));
+        return ResponseEntity.ok(aptInfoService.getEstatesByLocation(x1, y1, x2, y2));
     }
     // EC2
 }
