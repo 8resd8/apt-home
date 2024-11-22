@@ -50,8 +50,8 @@
             houseinfos h
                 JOIN
             dongcodes d ON CONCAT(h.sgg_cd, h.umd_cd) = d.dong_code
-        WHERE h.latitude BETWEEN #{x1} AND #{y1}
-          AND h.longitude BETWEEN #{x2} AND #{y2}
+        WHERE h.latitude BETWEEN #{x1} AND #{x2}
+          AND h.longitude BETWEEN #{y1} AND #{y2}
         ORDER BY
             sptSeq
     </select>

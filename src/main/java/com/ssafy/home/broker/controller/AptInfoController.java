@@ -33,11 +33,11 @@ public class AptInfoController {
     @GetMapping("/location")
     public ResponseEntity<EstateListResponse> getEstatesByLocation(
             @RequestParam("lat_min") double x1,
-            @RequestParam("lat_max") double y1,
-            @RequestParam("lng_min") double x2,
+            @RequestParam("lat_max") double x2,
+            @RequestParam("lng_min") double y1,
             @RequestParam("lng_max") double y2
     ) {
-        return ResponseEntity.ok(aptInfoService.getEstatesByLocation(x1, y1, x2, y2));
+        return ResponseEntity.ok(aptInfoService.getEstatesByLocation(x1, x2, y1, y2));
     }
     // EC2
 }

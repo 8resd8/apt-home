@@ -18,8 +18,8 @@ public interface AptInfoMapper {
     // 위도, 경도를 기준으로 포함되는 아파트 리스트 조회
     List<EstateResponse> findEstatesByLocation(
             @Param("x1") double x1,
-            @Param("y1") double y1,
             @Param("x2") double x2,
+            @Param("y1") double y1,
             @Param("y2") double y2
     );
 }
