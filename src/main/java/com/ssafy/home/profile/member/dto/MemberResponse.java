@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public record MemberResponse(
         String memberId,
         String phoneNum,
+        String name,
         String email,
         String profileImageUrl,
         LocalDateTime lastLogin,
