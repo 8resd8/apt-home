@@ -29,19 +29,17 @@ public class ReservationHelperTest {
     private ReservationMapper reservationMapper;
     @Autowired
     private ReservationHelper reservationHelper;
-    private Broker broker;
 
     private Reservation reservation;
+    private Broker broker;
     private String brokerId = "broker1";
     private String memberId = "member1";
-    @Autowired
-    private MemberMapper memberMapper;
 
     @BeforeEach
     void setUp() {
         reservationMapper = Mockito.mock(ReservationMapper.class);
         reservationHelper = new ReservationHelper(reservationMapper);
-        broker = Broker.builder().bid("broker123").build();
+        broker = TestDataEntity.broker(brokerId);
 
         reservation = TestDataEntity.reservation(brokerId, memberId);
         reservationMapper.insertReservationByMember(reservation);
