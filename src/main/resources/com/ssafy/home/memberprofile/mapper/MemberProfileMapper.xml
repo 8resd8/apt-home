@@ -5,7 +5,7 @@
 
     <!-- 회원 정보 조회 -->
     <select id="findMemberById" resultType="com.ssafy.home.profile.member.dto.MemberResponse">
-        SELECT mid, phone_num, email, profile_image_url, last_login, created_at, updated_at
+        SELECT mid, phone_num, name, email, profile_image_url, last_login, created_at, updated_at
         FROM member
         WHERE mid = #{memberId}
     </select>
@@ -13,12 +13,23 @@
     <!-- 회원 정보 수정 -->
     <update id="updateMemberProfile">
         UPDATE member
-        SET phone_num = #{request.phoneNum}, name = #{request.name}
-        <if test="image != null">
-            , profile_image_url = #{image}
-        </if>
+        <set>
+            <if test="request.phoneNum != null and request.phoneNum.trim().length() > 0">
+                phone_num = #{request.phoneNum},
+            </if>
+
+            <if test="request.name != null and request.name.trim().length() > 0">
+                name = #{request.name},
+            </if>
+
+            <if test="image != null">
+                profile_image_url = #{image},
+            </if>
+        </set>
         WHERE mid = #{memberId}
     </update>
+
+
 
     <!-- 회원 탈퇴 -->
     <delete id="deleteMemberProfile">
