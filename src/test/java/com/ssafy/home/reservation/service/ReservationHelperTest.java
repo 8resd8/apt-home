@@ -1,9 +1,11 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.exception.UpdateStatusReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
+import com.ssafy.home.util.TestDataEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,10 @@ public class ReservationHelperTest {
     private Broker broker;
 
     private Reservation reservation;
+    private String brokerId = "broker1";
+    private String memberId = "member1";
+    @Autowired
+    private MemberMapper memberMapper;
 
     @BeforeEach
     void setUp() {
@@ -37,14 +43,7 @@ public class ReservationHelperTest {
         reservationHelper = new ReservationHelper(reservationMapper);
         broker = Broker.builder().bid("broker123").build();
 
-        reservation = Reservation.builder()
-                .memberId("member123")
-                .brokerId(broker.getBid())
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now())
-                .clientMemo(null)
-                .status(CREATE.getValue())
-                .build();
+        reservation = TestDataEntity.reservation(brokerId, memberId);
         reservationMapper.insertReservationByMember(reservation);
     }
 
