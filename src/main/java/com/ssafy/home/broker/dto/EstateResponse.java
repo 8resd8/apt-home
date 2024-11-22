@@ -14,5 +14,5 @@ public record EstateResponse(
         int buildYear,
         Double latitude,
         Double longitude,
-        String pullName
+        String fullName
 ) {}
