@@ -1,9 +1,11 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.exception.UpdateStatusReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
+import com.ssafy.home.util.TestDataEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,24 +29,19 @@ public class ReservationHelperTest {
     private ReservationMapper reservationMapper;
     @Autowired
     private ReservationHelper reservationHelper;
-    private Broker broker;
 
     private Reservation reservation;
+    private Broker broker;
+    private String brokerId = "broker1";
+    private String memberId = "member1";
 
     @BeforeEach
     void setUp() {
         reservationMapper = Mockito.mock(ReservationMapper.class);
         reservationHelper = new ReservationHelper(reservationMapper);
-        broker = Broker.builder().bid("broker123").build();
+        broker = TestDataEntity.broker(brokerId);
 
-        reservation = Reservation.builder()
-                .memberId("member123")
-                .brokerId(broker.getBid())
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now())
-                .clientMemo(null)
-                .status(CREATE.getValue())
-                .build();
+        reservation = TestDataEntity.reservation(brokerId, memberId);
         reservationMapper.insertReservationByMember(reservation);
     }
 

@@ -6,6 +6,7 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.favorite.domain.Favorite;
+import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.review.domain.HouseInfo;
 import net.jqwik.api.Arbitraries;
 
@@ -79,6 +80,13 @@ public class TestDataEntity {
         return fixtureMonkey.giveMeBuilder(Estate.class)
                 .set("brokerId", brokerId)
                 .set("aptSeq", aptSeq)
+                .sample();
+    }
+
+    public static Reservation reservation(String brokerId, String memberId) {
+        return fixtureMonkey.giveMeBuilder(Reservation.class)
+                .set("brokerId", brokerId)
+                .set("memberId", memberId)
                 .sample();
     }
 }
