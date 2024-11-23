@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/estate/**",
-                        "/profile/password-set");
+                        "/profile/password-set", "/region-code/**");
 
         registry.addInterceptor(memberInterceptor)
                 .order(2)
