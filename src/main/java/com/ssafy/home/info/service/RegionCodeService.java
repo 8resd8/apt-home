@@ -19,7 +19,7 @@ public class RegionCodeService {
     }
 
     public List<RegionCodeResponse> getUmdList(String regionCode) {
-        String pattern = regionCode.substring(2, 5).concat("%");
+        String pattern = regionCode.substring(0, 5).concat("%");
         return regionCodeMapper.getUmdList(pattern);
     }
 }
