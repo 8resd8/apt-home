@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,9 @@ public class EstateServiceImpl implements EstateService {
     @Transactional(readOnly = true)
     @Override
     public EstateDetailResponse findEstateDetailById(Long id) {
-        return estateMapper.selectEstateDetail(id);
+        EstateDetailResponse response = estateMapper.selectEstateDetail(id);
+        if (response == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Estate");
+        return response;
     }
 
     @Override
@@ -104,18 +107,5 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public List<Estate> findAll(Broker broker) {
         return estateMapper.findAll(broker.getBid());
-    }
-
-    // estateId를 저장하기 위한 내부 클래스
-    public static class EstateIdHolder {
-        private Long estateId;
-
-        public Long getEstateId() {
-            return estateId;
-        }
-
-        public void setEstateId(Long estateId) {
-            this.estateId = estateId;
-        }
     }
 }
