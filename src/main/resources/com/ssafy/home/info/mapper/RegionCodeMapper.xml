@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.home.info.repository.RegionCodeMapper">
+
+    <select id="getSggList" resultType="com.ssafy.home.info.dto.RegionCodeResponse">
+        SELECT
+            gugun_name AS name,
+            dong_code AS code
+        FROM
+            dongcodes
+        WHERE
+            dong_code LIKE #{pattern}
+          AND gugun_name IS NOT NULL;
+    </select>
+
+    <select id="getUmdList" resultType="com.ssafy.home.info.dto.RegionCodeResponse">
+        SELECT dong_name AS name,
+               dong_code AS code
+        FROM dongcodes
+        WHERE dong_code LIKE #{pattern}
+          AND dong_name IS NOT NULL;
+    </select>
+
+</mapper>
