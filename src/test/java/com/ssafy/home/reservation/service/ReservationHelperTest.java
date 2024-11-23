@@ -55,7 +55,7 @@ public class ReservationHelperTest {
                 reservationHelper.updateStatus(1L, broker, RESERVE, "확정 메모")
         );
 
-        verify(reservationMapper, times(1)).updateReservationStatusByBroker(1L, "broker123", RESERVE.getValue(), "확정 메모");
+        verify(reservationMapper, times(1)).updateReservationStatusByBroker(1L, brokerId, RESERVE.getValue(), "확정 메모");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ReservationHelperTest {
                 reservationHelper.updateStatus(2L, broker, COMPLETE, null)
         );
 
-        verify(reservationMapper, times(1)).updateReservationStatusByBroker(2L, "broker123", "완료", null);
+        verify(reservationMapper, times(1)).updateReservationStatusByBroker(2L, brokerId, "완료", null);
     }
 
     @Test
