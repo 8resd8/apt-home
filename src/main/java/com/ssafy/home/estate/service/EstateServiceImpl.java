@@ -32,10 +32,11 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public Long createEstate(Broker broker, RegistEstateRequest request, MultipartFile[] estateImages) {
-        estateMapper.insertEstate(request, broker.getBid());
+        List<String> imageUrls = getImageUrls(estateImages);
+
+        estateMapper.insertEstate(request, broker.getBid(), imageUrls.get(0));
 
         Long estateId = utilMapper.selectLastInsertId();
-        List<String> imageUrls = getImageUrls(estateImages);
         estateMapper.insertEstateImages(estateId, imageUrls);
         return estateId;
     }

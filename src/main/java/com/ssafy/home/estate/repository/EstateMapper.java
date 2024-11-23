@@ -13,7 +13,7 @@ import java.util.Optional;
 @Mapper
 public interface EstateMapper {
     void insertEstate(@Param("brokerEstate") RegistEstateRequest request,
-                      @Param("brokerId") String brokerId);
+                      @Param("brokerId") String brokerId, @Param("image") String image);
 
     void insertEstateImages(@Param("estateId") Long estateId,
                             @Param("imageUrls") List<String> imageUrls);
