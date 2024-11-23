@@ -3,8 +3,6 @@ package com.ssafy.home.info.domain;
 import lombok.*;
 
 @Getter
-@Builder
-@ToString
 public class HouseinfoChart {
     private String aptSeq;
     private String sggCd;
