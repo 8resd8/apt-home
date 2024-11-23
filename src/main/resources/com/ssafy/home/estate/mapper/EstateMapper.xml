@@ -89,7 +89,7 @@
     </select>
 
     <select id="getEstateListByRegionCode">
-        SELECT e.*
+        SELECT e.*, h.latitude, h.longitude
         FROM estate e
                  JOIN houseinfos h ON e.apt_seq = h.apt_seq
         WHERE h.sgg_cd = #{sgg}
@@ -98,7 +98,7 @@
     </select>
 
     <select id="getEstateListByPosition">
-        SELECT e.*
+        SELECT e.*,  h.latitude, h.longitude
         FROM estate e
                  JOIN houseinfos h ON e.apt_seq = h.apt_seq
         WHERE h.latitude BETWEEN #{latMin} AND #{latMax}

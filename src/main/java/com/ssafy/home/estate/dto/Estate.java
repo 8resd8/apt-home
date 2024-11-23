@@ -20,4 +20,7 @@ public class Estate {
     Timestamp createdAt;
     Timestamp updatedAt;
     String estateImage;
+
+    Double latitude;
+    Double longitude;
 }
