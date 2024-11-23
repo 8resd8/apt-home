@@ -1,11 +1,9 @@
 package com.ssafy.home.info.domain;
 
 import com.ssafy.home.auth.domain.Broker;
-
-import lombok.*;
+import lombok.Getter;
 
 @Getter
-@ToString
 public class EstateChart {
     private Long eid;
     private String brokerId;

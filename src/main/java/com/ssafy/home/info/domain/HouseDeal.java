@@ -1,9 +1,8 @@
 package com.ssafy.home.info.domain;
 
-import lombok.*;
+import lombok.Getter;
 
 @Getter
-@ToString
 public class HouseDeal {
     private Integer no;
     private String aptSeq;
