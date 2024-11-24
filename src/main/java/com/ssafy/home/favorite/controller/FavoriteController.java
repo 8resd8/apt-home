@@ -1,8 +1,9 @@
 package com.ssafy.home.favorite.controller;
 
 import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.estate.dto.EstateFindResponse;
+import com.ssafy.home.estate.service.EstateService;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
-import com.ssafy.home.favorite.dto.FavoriteResponse;
 import com.ssafy.home.favorite.service.FavoriteService;
 import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 public class FavoriteController {
 
     private final FavoriteService favoriteService;
+    private final EstateService estateService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // code: 201
@@ -33,8 +35,8 @@ public class FavoriteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FavoriteResponse>> getFavoriteAll(@Login Member member) {
-        List<FavoriteResponse> favorites = favoriteService.getFavoriteAll(member.getMid());
+    public ResponseEntity<List<EstateFindResponse>> getFavoriteAll(@Login Member member) {
+        List<EstateFindResponse> favorites = estateService.findFavoritesByMemberId(member);
         return ResponseEntity.ok().body(favorites);
     }
 

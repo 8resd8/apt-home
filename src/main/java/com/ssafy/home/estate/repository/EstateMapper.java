@@ -1,9 +1,6 @@
 package com.ssafy.home.estate.repository;
 
-import com.ssafy.home.estate.dto.Estate;
-import com.ssafy.home.estate.dto.EstateDetailResponse;
-import com.ssafy.home.estate.dto.RegistEstateRequest;
-import com.ssafy.home.estate.dto.UpdateEstateRequest;
+import com.ssafy.home.estate.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,4 +34,7 @@ public interface EstateMapper {
     List<Estate> getEstateListByPosition(@Param("latMin") double latMin, @Param("latMax") double latMax, @Param("lngMin") double lngMin, @Param("lngMax") double lngMax);
 
     List<Estate> findAll(String bid);
+
+
+    List<EstateFindResponse> findFavorites(String memberId);
 }
