@@ -2,6 +2,8 @@ package com.ssafy.home.estate.controller;
 
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
+import com.ssafy.home.estate.dto.EstateFindResponse;
+import com.ssafy.home.estate.service.EstateFindService;
 import com.ssafy.home.estate.service.EstateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,20 @@ import java.util.List;
 public class EstateController {
 
     private final EstateService estateService;
+    private final EstateFindService estateFindService;
 
 
     @GetMapping("/{estateId}")
     public ResponseEntity<EstateDetailResponse> getEstate(@PathVariable Long estateId) {
         EstateDetailResponse response = estateService.findEstateDetailById(estateId);
 
+        return ResponseEntity.ok().body(response);
+    }
+
+    // 이미지 목록들 가져오기
+    @GetMapping("/images/{estateId}")
+    public ResponseEntity<EstateFindResponse> getEstateImages(@PathVariable Long estateId) {
+        EstateFindResponse response = estateFindService.findEstateDetailById(estateId);
         return ResponseEntity.ok().body(response);
     }
 
