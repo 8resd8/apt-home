@@ -1,6 +1,7 @@
 package com.ssafy.home.estate.service;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.service.signup.StorageService;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
@@ -67,6 +68,19 @@ public class EstateServiceImpl implements EstateService {
         return imageUrls;
     }
 
+    @Override
+    public void deleteEstate(Long eid, Broker broker) {
+        Estate estate = findEstateById(eid);
+
+        if (!estate.getBrokerId().equals(broker.getBid())) {
+            throw new ForbiddenException("해당 매물은 다른 브로커에 의해 관리되고 있습니다.");
+        }
+
+        if (estateMapper.deleteEstate(eid) == 0) {
+            throw new CustomException(HttpStatus.NOT_FOUND, "매물 삭제에 실패했습니다.");
+        }
+    }
+
 
     @Transactional(readOnly = true)
     @Override
@@ -82,29 +96,28 @@ public class EstateServiceImpl implements EstateService {
         return response;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public void deleteEstate(Long eid, Broker broker) {
-        Estate estate = findEstateById(eid);
-
-        if (!estate.getBrokerId().equals(broker.getBid())) {
-            throw new ForbiddenException("해당 매물은 다른 브로커에 의해 관리되고 있습니다.");
-        }
-
-        if (estateMapper.deleteEstate(eid) == 0) {
-            throw new CustomException(HttpStatus.NOT_FOUND, "매물 삭제에 실패했습니다.");
-        }
+    public EstateDetailResponse findEstateDetailWithMember(Long id, Member member) {
+        EstateDetailResponse response = estateMapper.selectEstateDetailWithMember(id, member.getMid());
+        if (response == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Estate");
+        return response;
     }
 
+
+    @Transactional(readOnly = true)
     @Override
     public List<Estate> getEstateListByRegionCode(String sgg, String umd) {
         return estateMapper.getEstateListByRegionCode(sgg, umd);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax) {
         return estateMapper.getEstateListByPosition(latMin, latMax, lngMin, lngMax);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Estate> findAll(Broker broker) {
         return estateMapper.findAll(broker.getBid());
