@@ -144,6 +144,38 @@
         WHERE r.member_id = #{memberId}
     </select>
 
+    <select id="findAllReservationsByBrokerId" parameterType="string" resultMap="ReservationResponseMap">
+        SELECT r.rid,
+               r.member_id,
+               r.broker_id,
+               r.start_time,
+               r.end_time,
+               r.status,
+               r.client_memo,
+               r.broker_memo,
+               b.broker_name AS brokerName,
+               e.eid,
+               e.apt_seq,
+               e.amount,
+               e.area,
+               e.floor,
+               e.total_floor,
+               e.desc,
+               h.apt_nm,
+               h.road_nm,
+               h.latitude,
+               h.longitude
+        FROM reservation r
+                 JOIN
+             broker b ON r.broker_id = b.bid
+                 JOIN
+             reservation_estate re ON r.rid = re.reservation_id
+                 JOIN
+             estate e ON re.estate_id = e.eid
+                 JOIN
+             houseinfos h ON e.apt_seq = h.apt_seq
+        WHERE r.broker_id = #{brokerId}
+    </select>
 
     <update id="updateReservationStatusByBroker">
         UPDATE reservation
