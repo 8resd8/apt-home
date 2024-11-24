@@ -23,6 +23,9 @@ public record EstateDetailResponse(
         String aptNm,
         String buildYear,
         String roadNm,
-        String roadNmNo
+        String roadNmNo,
+
+        // favorite 정보
+        boolean favoriteStatus
 ) {
 }
