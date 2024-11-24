@@ -1,6 +1,7 @@
 package com.ssafy.home.estate.service;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
@@ -15,6 +16,8 @@ public interface EstateService {
     Estate findEstateById(Long id);
 
     EstateDetailResponse findEstateDetailById(Long id);
+
+    EstateDetailResponse findEstateDetailWithMember(Long id, Member member);
 
     void updateEstate(Broker broker, UpdateEstateRequest request, MultipartFile[] estateImages);
 
