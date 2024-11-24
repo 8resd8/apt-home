@@ -135,28 +135,6 @@
         WHERE e.eid = #{eid}
     </select>
 
-    <select id="selectEstateWithImages" resultMap="findEstate">
-        SELECT e.eid         AS estate_id,
-               e.broker_id,
-               e.apt_seq,
-               e.type,
-               e.status,
-               e.floor,
-               e.total_floor,
-               e.area,
-               e.amount,
-               e.`desc`,
-               e.estate_image,
-               e.created_at,
-               e.updated_at,
-               ei.image_id,
-               ei.image_url,
-               ei.created_at AS image_created_at
-        FROM estate e
-                 LEFT JOIN estate_images ei ON e.eid = ei.estate_id
-        WHERE e.eid = #{id}
-    </select>
-
 
     <update id="updateEstate">
         UPDATE estate
