@@ -116,8 +116,8 @@ public class EstateServiceImpl implements EstateService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Estate> findAll(Broker broker) {
-        return estateMapper.findAll(broker.getBid());
+    public List<Estate> findAll(String brokerId) {
+        return estateMapper.findAll(brokerId);
     }
 
     // 찜 목록에서 쓰는 것

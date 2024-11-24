@@ -4,10 +4,13 @@ import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.broker.dto.BrokerInfoResponse;
 import com.ssafy.home.broker.dto.BrokerUpdateRequest;
 import com.ssafy.home.broker.service.BrokerService;
+import com.ssafy.home.estate.dto.Estate;
 import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/broker")
@@ -25,7 +28,7 @@ public class BrokerController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateBroker(@Login Broker broker, @RequestBody BrokerUpdateRequest requestDto) {
+    public ResponseEntity<List<Estate>> updateBroker(@Login Broker broker, @RequestBody BrokerUpdateRequest requestDto) {
         brokerService.updateBroker(broker, requestDto);
 
         return ResponseEntity.ok().build();
