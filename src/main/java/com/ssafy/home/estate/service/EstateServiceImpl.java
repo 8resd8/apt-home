@@ -3,10 +3,7 @@ package com.ssafy.home.estate.service;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.auth.service.signup.StorageService;
-import com.ssafy.home.estate.dto.Estate;
-import com.ssafy.home.estate.dto.EstateDetailResponse;
-import com.ssafy.home.estate.dto.RegistEstateRequest;
-import com.ssafy.home.estate.dto.UpdateEstateRequest;
+import com.ssafy.home.estate.dto.*;
 import com.ssafy.home.estate.exception.ForbiddenException;
 import com.ssafy.home.estate.repository.EstateMapper;
 import com.ssafy.home.global.exception.CustomException;
@@ -121,5 +118,13 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public List<Estate> findAll(Broker broker) {
         return estateMapper.findAll(broker.getBid());
+    }
+
+    // 찜 목록에서 쓰는 것
+    @Override
+    public List<EstateFindResponse> findFavoritesByMemberId(Member member) {
+        List<EstateFindResponse> favorites = estateMapper.findFavorites(member.getMid());
+
+        return favorites;
     }
 }
