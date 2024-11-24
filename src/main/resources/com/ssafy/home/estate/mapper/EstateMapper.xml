@@ -4,28 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.home.estate.repository.EstateMapper">
-    <resultMap id="findEstate" type="com.ssafy.home.estate.dto.EstateFindResponse">
-        <id property="eid" column="estate_id"/>
-        <result property="brokerId" column="broker_id"/>
-        <result property="aptSeq" column="apt_seq"/>
-        <result property="type" column="type"/>
-        <result property="status" column="status"/>
-        <result property="floor" column="floor"/>
-        <result property="totalFloor" column="total_floor"/>
-        <result property="area" column="area"/>
-        <result property="amount" column="amount"/>
-        <result property="description" column="desc"/>
-        <result property="image" column="estate_image"/>
-        <result property="createdAt" column="created_at"/>
-        <result property="updatedAt" column="updated_at"/>
-
-        <collection property="estateImage" ofType="com.ssafy.home.estate.dto.EstateImageResponse">
-            <id property="imageId" column="image_id"/>
-            <result property="imageUrl" column="image_url"/>
-            <result property="createdAt" column="image_created_at"/>
-        </collection>
-    </resultMap>
-
 
     <insert id="insertEstate">
         INSERT INTO estate
@@ -113,28 +91,6 @@
         WHERE e.eid = #{eid}
     </select>
 
-    <select id="selectEstateWithImages" resultMap="findEstate">
-        SELECT e.eid         AS estate_id,
-               e.broker_id,
-               e.apt_seq,
-               e.type,
-               e.status,
-               e.floor,
-               e.total_floor,
-               e.area,
-               e.amount,
-               e.`desc`,
-               e.estate_image,
-               e.created_at,
-               e.updated_at,
-               ei.image_id,
-               ei.image_url,
-               ei.created_at AS image_created_at
-        FROM estate e
-                 LEFT JOIN estate_images ei ON e.eid = ei.estate_id
-        WHERE e.eid = #{id}
-    </select>
-
 
     <update id="updateEstate">
         UPDATE estate
@@ -188,5 +144,7 @@
         FROM estate
         WHERE broker_id = #{bid}
     </select>
+
+    <!-- 모든 이미지만 가져오기 -->
 
 </mapper>
