@@ -48,4 +48,19 @@
             r.created_at DESC
     </select>
 
+    <!-- 리뷰 점수 통계 조회
+        1. 리뷰 평균
+        2. 리뷰 총 합
+        3. 안남긴 리뷰 횟수 -->
+    <select id="findReviewScore" parameterType="string" resultType="com.ssafy.home.review.dto.ReviewScoreResponse">
+        SELECT
+            AVG(review_rating) AS reviewAvg,
+            SUM(review_rating) AS reviewTotal,
+            COUNT(CASE WHEN broker_comment IS NULL THEN 1 END) AS reviewUnComment
+        FROM
+            review
+        WHERE
+            broker_id = #{brokerId}
+    </select>
+
 </mapper>
