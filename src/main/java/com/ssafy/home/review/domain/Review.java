@@ -13,6 +13,7 @@ public class Review {
     private Long reviewId;
     private Long reservationId;
     private String memberId;
+    private String brokerId;
     private String reviewContent;
     private String brokerComment;
     private int reviewRating;
