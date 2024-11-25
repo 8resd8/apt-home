@@ -3,6 +3,7 @@ package com.ssafy.home.review.service;
 import com.ssafy.home.auth.domain.Broker;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.review.dto.ReviewResponse;
+import com.ssafy.home.review.dto.ReviewScoreResponse;
 import com.ssafy.home.review.repository.ReviewFindMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,4 +28,8 @@ public class ReviewFindService {
         return reviews;
     }
 
+    public ReviewScoreResponse findReviewScore(Broker broker) {
+        ReviewScoreResponse response = reviewFindMapper.findReviewScore(broker.getBid());
+        return response;
+    }
 }
