@@ -65,7 +65,7 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         // 3. 이미 남겨진 리뷰인지 확인
-        Optional<Review> findReview = reviewMapper.findReviewById(reservationId);
+        Optional<Review> findReview = reviewMapper.findReviewByReservationId(reservationId);
 
         if (findReview.isPresent()) {
             throw new DuplicateReviewException();
