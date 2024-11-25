@@ -4,11 +4,16 @@ import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
+import com.ssafy.home.review.dto.ReviewResponse;
+import com.ssafy.home.review.service.ReviewFindService;
 import com.ssafy.home.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberReviewController {
 
     private final ReviewService reviewService;
+    private final ReviewFindService reviewFindService;
 
 
     @PostMapping("/{reservationId}")
@@ -35,5 +41,10 @@ public class MemberReviewController {
     @ResponseStatus(HttpStatus.CREATED)
     public String aiContent(@Login Member member, @Validated @RequestBody ReviewAISummaryRequest aiRequest) {
         return reviewService.createAIReviewSummary(member, aiRequest);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ReviewResponse>> getReviewsMember(@Login Member member) {
+        return ResponseEntity.ok(reviewFindService.findAllMemberReview(member));
     }
 }
