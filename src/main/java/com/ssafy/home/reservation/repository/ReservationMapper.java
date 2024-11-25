@@ -30,4 +30,6 @@ public interface ReservationMapper {
             @Param("target") String targetStatus,
             @Param("brokerMemo") String brokerMemo
     );
+
+    List<ReservationResponse> findAllReservationsByBrokerId(String brokerId);
 }

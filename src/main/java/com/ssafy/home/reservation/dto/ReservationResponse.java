@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,8 +18,8 @@ public class ReservationResponse {
     private Long rid;
     private String memberId;
     private String brokerId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Date startTime;
+    private Time endTime;
     private String status;
     private String clientMemo;
     private String brokerMemo;

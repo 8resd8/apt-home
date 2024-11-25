@@ -1,10 +1,12 @@
 package com.ssafy.home.estate.dto;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+@ToString
 @Getter
 public class EstateFindResponse {
     private Long eid;

@@ -4,13 +4,14 @@ import com.ssafy.home.auth.domain.Broker;
 import lombok.Builder;
 
 @Builder
-public record BrokerInfoResponse (
-    String officeName,
-    String brokerName,
-    String phoneNum,
-    String address,
-    String licenseNum
-){
+public record BrokerInfoResponse(
+        String officeName,
+        String brokerName,
+        String phoneNum,
+        String address,
+        String licenseNum,
+        String profileImageUrl
+) {
 
     public static BrokerInfoResponse from(Broker broker) {
         return BrokerInfoResponse.builder()
@@ -19,6 +20,7 @@ public record BrokerInfoResponse (
                 .phoneNum(broker.getPhoneNum())
                 .address(broker.getAddress())
                 .licenseNum(broker.getLicenseNum())
+                .profileImageUrl(broker.getProfileImageUrl())
                 .build();
     }
 }

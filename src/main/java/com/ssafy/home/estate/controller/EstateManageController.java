@@ -25,7 +25,7 @@ public class EstateManageController {
 
     @GetMapping
     public List<Estate> getAllEstates(@Login Broker broker) {
-        return estateService.findAll(broker);
+        return estateService.findAll(broker.getBid());
     }
 
     @PostMapping

@@ -24,7 +24,7 @@ public interface EstateService {
 
     List<Estate> getEstateListByPosition(double latMin, double latMax, double lngMin, double lngMax);
 
-    List<Estate> findAll(Broker broker);
+    List<Estate> findAll(String brokerId);
 
     List<EstateFindResponse> findFavoritesByMemberId(Member member);
 }

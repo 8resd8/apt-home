@@ -1,10 +1,13 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.reservation.dto.ReservationResponse;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.ssafy.home.global.enums.ReservationStatus.*;
 
@@ -14,6 +17,7 @@ import static com.ssafy.home.global.enums.ReservationStatus.*;
 public class BrokerReservationServiceImpl implements BrokerReservationService {
 
     private final ReservationHelper reservationHelper;
+    private final ReservationMapper reservationMapper;
 
 
     @Override
@@ -33,5 +37,10 @@ public class BrokerReservationServiceImpl implements BrokerReservationService {
     public void cancelReservation(Long reservationId, Broker broker) {
         // 생성 -> 취소 상태로 변경
         reservationHelper.updateStatus(reservationId, broker, CANCEL, null);
+    }
+
+    @Override
+    public List<ReservationResponse> getReservationsByBroker(String bid) {
+        return reservationMapper.findAllReservationsByBrokerId(bid);
     }
 }
