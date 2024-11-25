@@ -55,7 +55,7 @@
     <select id="findReviewScore" parameterType="string" resultType="com.ssafy.home.review.dto.ReviewScoreResponse">
         SELECT
             AVG(review_rating) AS reviewAvg,
-            SUM(review_rating) AS reviewTotal,
+            COUNT(review_rating) AS reviewCnt,
             COUNT(CASE WHEN broker_comment IS NULL THEN 1 END) AS reviewUnComment
         FROM
             review
