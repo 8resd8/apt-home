@@ -5,6 +5,7 @@ import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.review.dto.ReplyCommentRequest;
 import com.ssafy.home.review.dto.ReplyCommentResponse;
 import com.ssafy.home.review.dto.ReviewResponse;
+import com.ssafy.home.review.dto.ReviewScoreResponse;
 import com.ssafy.home.review.service.ReplyService;
 import com.ssafy.home.review.service.ReviewFindService;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,11 @@ public class BrokerReviewController {
     @GetMapping
     public ResponseEntity<List<ReviewResponse>> getReviewsBroker(@Login Broker broker) {
         return ResponseEntity.ok(reviewFindService.findAllBrokerReview(broker));
+    }
+
+    @GetMapping("/score")
+    public ResponseEntity<ReviewScoreResponse> getReviewScore(@Login Broker broker) {
+        return ResponseEntity.ok(reviewFindService.findReviewScore(broker));
     }
 
 }
