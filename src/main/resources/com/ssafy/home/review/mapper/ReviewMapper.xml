@@ -20,7 +20,21 @@
                review_rating  AS reviewRating,
                created_at     AS createdAt
         FROM review
-        WHERE reservation_id = #{reviewId}
+        WHERE review_id = #{reviewId} # reservation -> review 문제 해결
+    </select>
+
+    <!-- reservationId 예약 Id로 리뷰가 이미 존재하는지 확인   -->
+    <select id="findReviewByReservationId" resultType="com.ssafy.home.review.domain.Review">
+        SELECT review_id      AS reviewId,
+               reservation_id AS reservationId,
+               member_id      AS memberId,
+               broker_id      AS brokerId,
+               review_content AS reviewContent,
+               broker_comment AS brokerComment,
+               review_rating  AS reviewRating,
+               created_at     AS createdAt
+        FROM review
+        WHERE reservation_id = #{reservationId}
     </select>
 
     <!--  리뷰 수정  -->
