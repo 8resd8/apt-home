@@ -38,6 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void createReview(Member member, Long reservationId, ReviewRequest request) {
+        // 리뷰를 남기려면 해당 reservationId로 남겨진 리뷰가 있는지 확인하고 없어야 남길 수 있다.
         isValidReview(reservationId);
 
         reviewMapper.insertReview(
