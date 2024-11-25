@@ -23,9 +23,11 @@ public interface ReviewMapper {
             @Param("reviewRating") Integer reviewRating
     );
 
-    Optional<Review> findReviewById(@Param("reviewId") Long rId);
+    Optional<Review> findReviewById(@Param("reviewId") Long reviewId);
 
     void insertReply(@Param("reviewId") Long reviewId, @Param("comment") String comment, @Param("now") LocalDateTime now);
 
     void updateReply(@Param("reviewId") Long reviewId, @Param("comment") String comment, @Param("now") LocalDateTime now);
+
+    Optional<Review> findReviewByReservationId(@Param("reservationId") Long reservationId);
 }
