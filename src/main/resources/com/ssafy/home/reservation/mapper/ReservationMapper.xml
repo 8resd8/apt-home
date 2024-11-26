@@ -72,6 +72,7 @@
             <result property="description" column="desc"/>
             <result property="latitude" column="latitude"/>
             <result property="longitude" column="longitude"/>
+            <result property="estate_image" column="estate_image"/>
         </collection>
     </resultMap>
 
@@ -161,6 +162,7 @@
                e.floor,
                e.total_floor,
                e.desc,
+               e.estate_image,
                h.apt_nm,
                h.road_nm,
                h.latitude,

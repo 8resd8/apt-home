@@ -184,8 +184,9 @@
     </select>
 
     <select id="findAll" resultType="com.ssafy.home.estate.dto.Estate">
-        SELECT *
-        FROM estate
+        SELECT e.*,  h.latitude, h.longitude
+        FROM estate e
+                 JOIN houseinfos h ON e.apt_seq = h.apt_seq
         WHERE broker_id = #{bid}
     </select>
 

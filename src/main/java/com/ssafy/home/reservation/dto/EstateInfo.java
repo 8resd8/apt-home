@@ -21,4 +21,5 @@ public class EstateInfo {
     private String description;
     private Double latitude;
     private Double longitude;
+    private String estate_image;
 }
