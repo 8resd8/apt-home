@@ -3,7 +3,9 @@ package com.ssafy.home.reservation.service;
 import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationMemberResponse;
 import com.ssafy.home.reservation.dto.ReservationResponse;
+import com.ssafy.home.reservation.repository.ReservationFindMapper;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.NoSuchElementException;
 public class MemberReservationServiceImpl implements MemberReservationService {
 
     private final ReservationMapper reservationMapper;
+    private final ReservationFindMapper reservationFindMapper;
 
     @Override
     public void addReservation(ReservationCreateRequest request, String memberId) {
@@ -68,10 +71,10 @@ public class MemberReservationServiceImpl implements MemberReservationService {
     }
 
     @Override
-    public List<ReservationResponse> getReservationsByMember(String memberId) {
-        List<ReservationResponse> findAllReservation = reservationMapper.findAllReservationsByMemberId(memberId);
+    public List<ReservationMemberResponse> getReservationsByMember(String memberId) {
+        List<ReservationMemberResponse> response = reservationFindMapper.findAllByMemberId(memberId);
 
-        return findAllReservation;
+        return response;
     }
 
 }

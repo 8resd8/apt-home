@@ -3,6 +3,7 @@ package com.ssafy.home.reservation.controller;
 import com.ssafy.home.auth.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationMemberResponse;
 import com.ssafy.home.reservation.dto.ReservationResponse;
 import com.ssafy.home.reservation.service.MemberReservationService;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,8 @@ public class MemberReservationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReservationResponse>> getReservations(@Login Member member) {
-        List<ReservationResponse> reservations = memberReservationService.getReservationsByMember(member.getMid());
+    public ResponseEntity<List<ReservationMemberResponse>> getReservations(@Login Member member) {
+        List<ReservationMemberResponse> reservations = memberReservationService.getReservationsByMember(member.getMid());
         return ResponseEntity.ok(reservations);
     }
 }
