@@ -1,6 +1,7 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
+import com.ssafy.home.reservation.dto.ReservationMemberResponse;
 import com.ssafy.home.reservation.dto.ReservationResponse;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface MemberReservationService {
 
     ReservationResponse getReservation(Long rid);
 
-    List<ReservationResponse> getReservationsByMember(String memberId);
+    List<ReservationMemberResponse> getReservationsByMember(String memberId);
 }
