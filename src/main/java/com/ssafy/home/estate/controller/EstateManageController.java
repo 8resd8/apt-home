@@ -31,6 +31,8 @@ public class EstateManageController {
     @PostMapping
     public ResponseEntity<Long> postEstate(@Login Broker broker, @Validated @RequestPart("estate") RegistEstateRequest request,
                                            @RequestPart("estateImages") MultipartFile[] estateImages) {
+
+        System.out.println("....... ㅜㅜㅜㅜㅜㅜ");
         Long createdId = estateService.createEstate(broker, request, estateImages);
 
         return ResponseEntity.ok().body(createdId);
