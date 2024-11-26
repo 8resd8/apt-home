@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.home.reservation.repository.ReservationFindMapper">
+
+    <select id="findAllByMemberId" parameterType="string" resultType="com.ssafy.home.reservation.dto.ReservationMemberResponse">
+        SELECT
+            r.rid AS rid,
+            r.start_time AS startTime,
+            r.end_time AS endTime,
+            b.broker_name AS brokerName,
+            b.phone_num AS brokerPhoneNumber,
+            b.address AS brokerAddress,
+            b.profile_image_url AS brokerImage,
+            r.broker_memo AS brokerMemo,
+            b.email AS brokerEmail,
+            m.profile_image_url AS memberImage,
+            r.client_memo AS memberMemo,
+            m.name AS memberName,
+            r.status AS status
+        FROM
+            reservation r
+                JOIN broker b ON r.broker_id = b.bid
+                JOIN member m ON r.member_id = m.mid
+        WHERE
+            r.member_id = #{memberId}
+        ORDER BY
+            r.created_at DESC
+    </select>
+
+</mapper>
