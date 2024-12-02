@@ -1,7 +1,14 @@
-/gradlew text eol=lf
-*.bat text eol=crlf
-*.jar binary
-*.properties text working-tree-encoding=UTF-8
+# Java 파일을 주요 언어로 설정
+*.java linguist-vendored=false linguist-language=Java
 
-* linguist-vendored
-*.java linguist-vendored=false
+# gradlew 파일 텍스트로 처리 (Java로 표시되지 않음)
+gradlew linguist-detectable=false
+*.bat linguist-detectable=false
+*.jar linguist-detectable=false
+*.sh linguist-detectable=false
+
+# 속성 파일도 Java 언어로 처리
+*.properties linguist-language=Java
+
+# 기타 파일 모두 무시
+* linguist-detectable=false
