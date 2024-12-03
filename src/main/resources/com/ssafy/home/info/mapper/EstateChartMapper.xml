@@ -19,7 +19,7 @@
 <!--        <result property="aptNm" column="apt_nm"/>-->
 
         <!-- Houseinfo 매핑 -->
-        <association property="houseinfoChart" javaType="com.ssafy.home.info.domain.HouseinfoChart">
+        <association property="houseinfo" javaType="com.ssafy.home.domain.HouseInfo">
             <id property="aptSeq" column="apt_seq"/>
             <result property="sggCd" column="sgg_cd"/>
             <result property="umdCd" column="umd_cd"/>

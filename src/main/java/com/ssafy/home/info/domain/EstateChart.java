@@ -1,6 +1,7 @@
 package com.ssafy.home.info.domain;
 
 import com.ssafy.home.domain.Broker;
+import com.ssafy.home.domain.HouseInfo;
 import lombok.Getter;
 
 @Getter
@@ -21,5 +22,5 @@ public class EstateChart {
 
     // 관계 매핑
     private Broker broker;
-    private HouseinfoChart houseinfoChart;
+    private HouseInfo houseInfo;
 }

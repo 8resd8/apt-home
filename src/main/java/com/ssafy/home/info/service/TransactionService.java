@@ -23,7 +23,7 @@ public class TransactionService {
         }
 
         // sggCd 추출
-        String sggCd = estateDetail.getHouseinfoChart().getSggCd();
+        String sggCd = estateDetail.getHouseInfo().getSggCd();
         System.out.println("시군구: " + sggCd);
         if (sggCd == null || sggCd.isEmpty()) {
             throw new NoSuchElementException("매물이 속한 구 코드를 찾을 수 없습니다. apt_seq: " + aptSeq);
