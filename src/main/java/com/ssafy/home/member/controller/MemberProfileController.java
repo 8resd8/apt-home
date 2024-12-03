@@ -1,9 +1,10 @@
-package com.ssafy.home.profile.member.controller;
+package com.ssafy.home.member.controller;
 
 import com.ssafy.home.domain.Member;
 import com.ssafy.home.global.annotation.Login;
+import com.ssafy.home.member.dto.*;
 import com.ssafy.home.profile.member.dto.*;
-import com.ssafy.home.profile.member.service.MemberProfileService;
+import com.ssafy.home.member.service.MemberProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

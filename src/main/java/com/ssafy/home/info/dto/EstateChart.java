@@ -1,4 +1,4 @@
-package com.ssafy.home.info.domain;
+package com.ssafy.home.info.dto;
 
 import com.ssafy.home.domain.Broker;
 import com.ssafy.home.domain.HouseInfo;

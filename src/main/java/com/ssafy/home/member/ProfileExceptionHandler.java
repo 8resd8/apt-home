@@ -1,8 +1,8 @@
-package com.ssafy.home.profile.member;
+package com.ssafy.home.member;
 
-import com.ssafy.home.profile.member.exception.CannotUpdateMemberException;
-import com.ssafy.home.profile.member.exception.NotFoundMemberException;
-import com.ssafy.home.profile.member.exception.ValidPasswordException;
+import com.ssafy.home.member.exception.CannotUpdateMemberException;
+import com.ssafy.home.member.exception.NotFoundMemberException;
+import com.ssafy.home.member.exception.ValidPasswordException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

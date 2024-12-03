@@ -1,13 +1,14 @@
-package com.ssafy.home.profile.member.service;
+package com.ssafy.home.member.service;
 
 import com.ssafy.home.domain.Member;
 import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.auth.service.signup.StorageService;
+import com.ssafy.home.member.dto.*;
 import com.ssafy.home.profile.member.dto.*;
-import com.ssafy.home.profile.member.exception.CannotUpdateMemberException;
-import com.ssafy.home.profile.member.exception.NotFoundMemberException;
-import com.ssafy.home.profile.member.exception.ValidPasswordException;
-import com.ssafy.home.profile.member.repository.MemberProfileMapper;
+import com.ssafy.home.member.exception.CannotUpdateMemberException;
+import com.ssafy.home.member.exception.NotFoundMemberException;
+import com.ssafy.home.member.exception.ValidPasswordException;
+import com.ssafy.home.member.repository.MemberProfileMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

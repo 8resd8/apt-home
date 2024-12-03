@@ -1,4 +1,4 @@
-package com.ssafy.home.profile.member.dto;
+package com.ssafy.home.member.dto;
 
 import java.time.LocalDateTime;
 

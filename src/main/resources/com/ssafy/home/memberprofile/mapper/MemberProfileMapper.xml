@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.home.profile.member.repository.MemberProfileMapper">
+<mapper namespace="com.ssafy.home.member.repository.MemberProfileMapper">
 
     <!-- 회원 정보 조회 -->
-    <select id="findMemberById" resultType="com.ssafy.home.profile.member.dto.MemberResponse">
+    <select id="findMemberById" resultType="com.ssafy.home.member.dto.MemberResponse">
         SELECT mid, phone_num, name, email, profile_image_url, last_login, created_at, updated_at
         FROM member
         WHERE mid = #{memberId}

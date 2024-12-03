@@ -1,4 +1,4 @@
-package com.ssafy.home.profile.member.exception;
+package com.ssafy.home.member.exception;
 
 public class ValidPasswordException extends RuntimeException {
     public ValidPasswordException(String message) {

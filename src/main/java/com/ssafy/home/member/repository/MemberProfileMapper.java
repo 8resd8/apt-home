@@ -1,8 +1,8 @@
-package com.ssafy.home.profile.member.repository;
+package com.ssafy.home.member.repository;
 
 
-import com.ssafy.home.profile.member.dto.MemberResponse;
-import com.ssafy.home.profile.member.dto.MemberUpdateRequest;
+import com.ssafy.home.member.dto.MemberResponse;
+import com.ssafy.home.member.dto.MemberUpdateRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
