@@ -1,10 +1,9 @@
 package com.ssafy.home.member.service;
 
-import com.ssafy.home.domain.Member;
 import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.auth.service.signup.StorageService;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.member.dto.*;
-import com.ssafy.home.profile.member.dto.*;
 import com.ssafy.home.member.exception.CannotUpdateMemberException;
 import com.ssafy.home.member.exception.NotFoundMemberException;
 import com.ssafy.home.member.exception.ValidPasswordException;

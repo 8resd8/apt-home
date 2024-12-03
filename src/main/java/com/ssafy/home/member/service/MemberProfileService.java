@@ -2,7 +2,6 @@ package com.ssafy.home.member.service;
 
 import com.ssafy.home.domain.Member;
 import com.ssafy.home.member.dto.*;
-import com.ssafy.home.profile.member.dto.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface MemberProfileService {
