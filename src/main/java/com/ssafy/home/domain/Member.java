@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
-@ToString
 @Builder
 public class Member {
     private final String mid;

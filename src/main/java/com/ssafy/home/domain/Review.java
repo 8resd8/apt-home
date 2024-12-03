@@ -7,7 +7,6 @@ import lombok.ToString;
 import java.sql.Timestamp;
 
 @Getter
-@ToString
 @Builder
 public class Review {
     private Long reviewId;
