@@ -1,5 +1,6 @@
 package com.ssafy.home.estate.repository;
 
+import com.ssafy.home.domain.Estate;
 import com.ssafy.home.estate.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

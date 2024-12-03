@@ -1,8 +1,8 @@
 package com.ssafy.home.global.interceptor;
 
 import com.ssafy.home.global.annotation.Login;
-import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Broker;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.auth.repository.BrokerMapper;
 import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.global.enums.Session;

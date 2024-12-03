@@ -1,6 +1,6 @@
 package com.ssafy.home.info.domain;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import lombok.Getter;
 
 @Getter

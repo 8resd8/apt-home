@@ -1,10 +1,9 @@
-package com.ssafy.home.review.domain;
+package com.ssafy.home.domain;
 
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
 public class HouseInfo {
     private String aptSeq;      // 아파트 고유 번호
     private String sggCd;       // 시군구 코드

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.home.auth.repository.MemberMapper">
-    <insert id="insertMember" parameterType="com.ssafy.home.auth.domain.Member">
+    <insert id="insertMember" parameterType="com.ssafy.home.domain.Member">
         INSERT INTO member (mid, password, salt, email, phone_num, name
         <if test="profileImageUrl != null">
             , profile_image_url
@@ -13,7 +13,7 @@
         </if>)
     </insert>
 
-    <select id="findById" parameterType="String" resultType="com.ssafy.home.auth.domain.Member">
+    <select id="findById" parameterType="String" resultType="com.ssafy.home.domain.Member">
         SELECT * FROM member WHERE mid = #{id}
     </select>
 

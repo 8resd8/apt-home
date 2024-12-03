@@ -1,6 +1,6 @@
 package com.ssafy.home.reservation.controller;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
 import com.ssafy.home.reservation.dto.ReservationMemberResponse;

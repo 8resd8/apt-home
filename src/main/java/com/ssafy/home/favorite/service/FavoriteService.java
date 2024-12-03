@@ -1,7 +1,6 @@
 package com.ssafy.home.favorite.service;
 
-import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.favorite.domain.Favorite;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;
 import com.ssafy.home.favorite.dto.FavoriteResponse;
 

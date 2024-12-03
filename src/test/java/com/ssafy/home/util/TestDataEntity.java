@@ -2,13 +2,12 @@ package com.ssafy.home.util;
 
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.PriorityConstructorArbitraryIntrospector;
-import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.estate.dto.Estate;
-import com.ssafy.home.favorite.domain.Favorite;
+import com.ssafy.home.domain.Broker;
+import com.ssafy.home.domain.Member;
+import com.ssafy.home.domain.Estate;
+import com.ssafy.home.domain.Favorite;
 import com.ssafy.home.reservation.domain.Reservation;
-import com.ssafy.home.review.domain.HouseInfo;
-import net.jqwik.api.Arbitraries;
+import com.ssafy.home.domain.HouseInfo;
 
 import java.util.ArrayList;
 import java.util.List;

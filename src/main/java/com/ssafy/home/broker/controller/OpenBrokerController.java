@@ -2,7 +2,7 @@ package com.ssafy.home.broker.controller;
 
 import com.ssafy.home.broker.dto.BrokerInfoResponse;
 import com.ssafy.home.broker.service.BrokerProfileService;
-import com.ssafy.home.estate.dto.Estate;
+import com.ssafy.home.domain.Estate;
 import com.ssafy.home.estate.service.EstateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.ssafy.home.profile.member.controller;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.profile.member.dto.*;
 import com.ssafy.home.profile.member.service.MemberProfileService;

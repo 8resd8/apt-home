@@ -1,4 +1,4 @@
-package com.ssafy.home.estate.dto;
+package com.ssafy.home.domain;
 
 import com.ssafy.home.global.enums.EstateType;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.ssafy.home.estate.controller;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.estate.dto.EstateDetailResponse;
 import com.ssafy.home.estate.service.EstateService;
 import com.ssafy.home.global.annotation.Login;

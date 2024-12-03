@@ -1,6 +1,6 @@
 package com.ssafy.home.auth.repository;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

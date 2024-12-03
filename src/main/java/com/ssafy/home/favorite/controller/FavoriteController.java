@@ -1,6 +1,6 @@
 package com.ssafy.home.favorite.controller;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.estate.dto.EstateFindResponse;
 import com.ssafy.home.estate.service.EstateService;
 import com.ssafy.home.favorite.dto.FavoriteAddRequest;

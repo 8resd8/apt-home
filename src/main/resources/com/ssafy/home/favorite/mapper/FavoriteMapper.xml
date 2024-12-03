@@ -16,7 +16,7 @@
     </delete>
 
 
-    <select id="findFavorite" resultType="com.ssafy.home.favorite.domain.Favorite">
+    <select id="findFavorite" resultType="com.ssafy.home.domain.Favorite">
         SELECT fid, member_id AS memberId, estate_id AS estateId, created_at AS createdAt, updated_at AS updatedAt
         FROM favorite
         WHERE member_id = #{memberId}

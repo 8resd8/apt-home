@@ -1,7 +1,7 @@
 package com.ssafy.home.review.service;
 
 import com.ssafy.home.global.util.PromptGenerator;
-import com.ssafy.home.review.domain.Review;
+import com.ssafy.home.domain.Review;
 import com.ssafy.home.review.dto.ReplyCommentRequest;
 import com.ssafy.home.review.dto.ReplyCommentResponse;
 import com.ssafy.home.review.repository.ReviewMapper;

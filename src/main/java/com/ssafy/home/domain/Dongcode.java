@@ -1,4 +1,4 @@
-package com.ssafy.home.info.domain;
+package com.ssafy.home.domain;
 
 import lombok.Getter;
 

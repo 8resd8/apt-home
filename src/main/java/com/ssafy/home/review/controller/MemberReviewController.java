@@ -1,6 +1,6 @@
 package com.ssafy.home.review.controller;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;

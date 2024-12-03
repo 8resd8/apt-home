@@ -1,6 +1,6 @@
 package com.ssafy.home.broker.service;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.broker.dto.BrokerInfoResponse;
 import com.ssafy.home.broker.dto.BrokerUpdateRequest;
 

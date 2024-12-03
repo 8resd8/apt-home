@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ssafy.home.review.repository.HouseInfoMapper">
 
-    <select id="findHouseInfoById" resultType="com.ssafy.home.review.domain.HouseInfo">
+    <select id="findHouseInfoById" resultType="com.ssafy.home.domain.HouseInfo">
         SELECT hi.*
         FROM reservation r
                  JOIN reservation_estate re ON r.rid = re.reservation_id

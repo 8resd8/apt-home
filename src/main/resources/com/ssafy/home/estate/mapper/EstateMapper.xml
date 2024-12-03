@@ -183,7 +183,7 @@
           AND h.longitude BETWEEN #{lngMin} AND #{lngMax}
     </select>
 
-    <select id="findAll" resultType="com.ssafy.home.estate.dto.Estate">
+    <select id="findAll" resultType="com.ssafy.home.domain.Estate">
         SELECT e.*,  h.latitude, h.longitude
         FROM estate e
                  JOIN houseinfos h ON e.apt_seq = h.apt_seq

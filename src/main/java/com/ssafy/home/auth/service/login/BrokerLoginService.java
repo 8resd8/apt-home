@@ -1,6 +1,6 @@
 package com.ssafy.home.auth.service.login;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.auth.dto.request.LoginRequest;
 import com.ssafy.home.auth.dto.response.LoginResponse;
 import com.ssafy.home.auth.exception.LoginFailedException;

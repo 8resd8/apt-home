@@ -1,6 +1,6 @@
 package com.ssafy.home.reservation.service;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.reservation.dto.ReservationResponse;
 
 import java.util.List;

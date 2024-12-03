@@ -1,7 +1,7 @@
 package com.ssafy.home.global.util;
 
-import com.ssafy.home.auth.domain.Member;
-import com.ssafy.home.review.domain.HouseInfo;
+import com.ssafy.home.domain.Member;
+import com.ssafy.home.domain.HouseInfo;
 
 public class PromptGenerator {
 

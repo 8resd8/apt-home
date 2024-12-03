@@ -10,7 +10,7 @@
     </insert>
 
     <!-- 리뷰 조회 - reviewId로 해당하는 리뷰가 있는지 확인 -->
-    <select id="findReviewById" resultType="com.ssafy.home.review.domain.Review">
+    <select id="findReviewById" resultType="com.ssafy.home.domain.Review">
         SELECT review_id      AS reviewId,
                reservation_id AS reservationId,
                member_id      AS memberId,
@@ -24,7 +24,7 @@
     </select>
 
     <!-- reservationId 예약 Id로 리뷰가 이미 존재하는지 확인   -->
-    <select id="findReviewByReservationId" resultType="com.ssafy.home.review.domain.Review">
+    <select id="findReviewByReservationId" resultType="com.ssafy.home.domain.Review">
         SELECT review_id      AS reviewId,
                reservation_id AS reservationId,
                member_id      AS memberId,

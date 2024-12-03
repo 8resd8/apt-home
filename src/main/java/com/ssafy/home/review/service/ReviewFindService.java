@@ -1,7 +1,7 @@
 package com.ssafy.home.review.service;
 
-import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Broker;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.review.dto.ReviewResponse;
 import com.ssafy.home.review.dto.ReviewScoreResponse;
 import com.ssafy.home.review.repository.ReviewFindMapper;

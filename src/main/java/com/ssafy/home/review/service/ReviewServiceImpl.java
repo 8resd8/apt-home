@@ -1,11 +1,11 @@
 package com.ssafy.home.review.service;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.global.enums.ReservationStatus;
 import com.ssafy.home.global.util.PromptGenerator;
 import com.ssafy.home.reservation.dto.ReservationResponse;
 import com.ssafy.home.reservation.repository.ReservationMapper;
-import com.ssafy.home.review.domain.Review;
+import com.ssafy.home.domain.Review;
 import com.ssafy.home.review.dto.ReviewAISummaryRequest;
 import com.ssafy.home.review.dto.ReviewRequest;
 import com.ssafy.home.review.exception.CannotUpdateReviewException;

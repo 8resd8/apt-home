@@ -1,6 +1,6 @@
 package com.ssafy.home.review.controller;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.global.annotation.Login;
 import com.ssafy.home.review.dto.ReplyCommentRequest;
 import com.ssafy.home.review.dto.ReplyCommentResponse;

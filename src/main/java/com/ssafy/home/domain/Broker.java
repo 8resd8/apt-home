@@ -1,4 +1,4 @@
-package com.ssafy.home.auth.domain;
+package com.ssafy.home.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,14 +10,17 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Builder
-public class Member {
-    private final String mid;
+public class Broker {
+    private final String bid;
     private final String password;
     private final String salt;
     private final String email;
     private final String phoneNum;
-    private final String name;
+    private final String address;
+    private final String licenseNum;
+    private final String brokerName;
 
+    private String officeName;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private LocalDateTime lastLogin;

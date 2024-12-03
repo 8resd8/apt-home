@@ -1,6 +1,6 @@
 package com.ssafy.home.auth.service.signup;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.auth.dto.request.BrokerSignUpRequest;
 import com.ssafy.home.auth.dto.response.SignUpResponse;
 import com.ssafy.home.auth.repository.BrokerMapper;

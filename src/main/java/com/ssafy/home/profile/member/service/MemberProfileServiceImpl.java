@@ -1,6 +1,6 @@
 package com.ssafy.home.profile.member.service;
 
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.auth.repository.MemberMapper;
 import com.ssafy.home.auth.service.signup.StorageService;
 import com.ssafy.home.profile.member.dto.*;

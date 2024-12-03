@@ -1,10 +1,10 @@
 package com.ssafy.home.broker.controller;
 
-import com.ssafy.home.auth.domain.Broker;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.broker.dto.BrokerInfoResponse;
 import com.ssafy.home.broker.dto.BrokerUpdateRequest;
 import com.ssafy.home.broker.service.BrokerService;
-import com.ssafy.home.estate.dto.Estate;
+import com.ssafy.home.domain.Estate;
 import com.ssafy.home.global.annotation.Login;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

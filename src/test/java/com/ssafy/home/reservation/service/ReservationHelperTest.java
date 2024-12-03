@@ -1,7 +1,6 @@
 package com.ssafy.home.reservation.service;
 
-import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.repository.MemberMapper;
+import com.ssafy.home.domain.Broker;
 import com.ssafy.home.reservation.domain.Reservation;
 import com.ssafy.home.reservation.exception.UpdateStatusReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
@@ -13,8 +12,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 import static com.ssafy.home.global.enums.ReservationStatus.*;
 import static org.junit.jupiter.api.Assertions.*;

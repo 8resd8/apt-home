@@ -1,7 +1,7 @@
 package com.ssafy.home.estate.controller;
 
-import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.estate.dto.Estate;
+import com.ssafy.home.domain.Broker;
+import com.ssafy.home.domain.Estate;
 import com.ssafy.home.estate.dto.RegistEstateRequest;
 import com.ssafy.home.estate.dto.UpdateEstateRequest;
 import com.ssafy.home.estate.service.EstateService;

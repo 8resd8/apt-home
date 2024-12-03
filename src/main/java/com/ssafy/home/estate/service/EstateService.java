@@ -1,7 +1,8 @@
 package com.ssafy.home.estate.service;
 
-import com.ssafy.home.auth.domain.Broker;
-import com.ssafy.home.auth.domain.Member;
+import com.ssafy.home.domain.Broker;
+import com.ssafy.home.domain.Estate;
+import com.ssafy.home.domain.Member;
 import com.ssafy.home.estate.dto.*;
 import org.springframework.web.multipart.MultipartFile;
 
