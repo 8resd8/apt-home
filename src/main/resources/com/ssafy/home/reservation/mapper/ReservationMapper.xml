@@ -4,7 +4,7 @@
 <mapper namespace="com.ssafy.home.reservation.repository.ReservationMapper">
 
     <!-- 예약 생성 -->
-    <insert id="insertReservationByMember" parameterType="com.ssafy.home.reservation.domain.Reservation"
+    <insert id="insertReservationByMember" parameterType="com.ssafy.home.domain.Reservation"
             useGeneratedKeys="true"
             keyProperty="rid">
         INSERT INTO reservation (member_id, broker_id, broker_name, start_time, end_time, status, client_memo,
@@ -22,7 +22,7 @@
     </insert>
 
     <!-- 예약 수정 쿼리 -->
-    <update id="updateReservationByMember" parameterType="com.ssafy.home.reservation.domain.Reservation">
+    <update id="updateReservationByMember" parameterType="com.ssafy.home.domain.Reservation">
         UPDATE
             reservation r
                 INNER JOIN broker b ON b.bid = #{brokerId}

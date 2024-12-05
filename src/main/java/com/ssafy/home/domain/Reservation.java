@@ -1,8 +1,7 @@
-package com.ssafy.home.reservation.domain;
+package com.ssafy.home.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -10,7 +9,6 @@ import java.sql.Timestamp;
 
 @Getter
 @Builder
-@ToString
 public class Reservation {
     private Long rid;
     private String memberId;

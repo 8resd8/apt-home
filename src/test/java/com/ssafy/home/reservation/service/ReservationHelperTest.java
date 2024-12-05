@@ -1,7 +1,7 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.domain.Broker;
-import com.ssafy.home.reservation.domain.Reservation;
+import com.ssafy.home.domain.Reservation;
 import com.ssafy.home.reservation.exception.UpdateStatusReservationException;
 import com.ssafy.home.reservation.repository.ReservationMapper;
 import com.ssafy.home.util.TestDataEntity;

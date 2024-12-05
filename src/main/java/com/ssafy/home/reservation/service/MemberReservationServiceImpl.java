@@ -1,7 +1,7 @@
 package com.ssafy.home.reservation.service;
 
 import com.ssafy.home.global.enums.ReservationStatus;
-import com.ssafy.home.reservation.domain.Reservation;
+import com.ssafy.home.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationCreateRequest;
 import com.ssafy.home.reservation.dto.ReservationMemberResponse;
 import com.ssafy.home.reservation.dto.ReservationResponse;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
