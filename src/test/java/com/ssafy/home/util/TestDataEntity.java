@@ -6,7 +6,7 @@ import com.ssafy.home.domain.Broker;
 import com.ssafy.home.domain.Member;
 import com.ssafy.home.domain.Estate;
 import com.ssafy.home.domain.Favorite;
-import com.ssafy.home.reservation.domain.Reservation;
+import com.ssafy.home.domain.Reservation;
 import com.ssafy.home.domain.HouseInfo;
 
 import java.util.ArrayList;

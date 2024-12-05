@@ -1,6 +1,6 @@
 package com.ssafy.home.reservation.repository;
 
-import com.ssafy.home.reservation.domain.Reservation;
+import com.ssafy.home.domain.Reservation;
 import com.ssafy.home.reservation.dto.ReservationResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
